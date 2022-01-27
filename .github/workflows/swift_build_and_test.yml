@@ -1,0 +1,54 @@
+name: Swift Build and Test
+
+on:
+  push:
+    branches:
+      - development
+      - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  swift-build-and-test:
+    name: Swift Build and Test
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Create env.json file
+        env:
+          API_HOST: ${{ secrets.API_HOST }}
+          NETWORK_STATUS_SERVICE_PORT: ${{ secrets.NETWORK_STATUS_SERVICE_PORT }}
+          ACTIVE_VALIDATOR_LIST_SERVICE_PORT: ${{ secrets.ACTIVE_VALIDATOR_LIST_SERVICE_PORT }}
+          INACTIVE_VALIDATOR_LIST_SERVICE_PORT: ${{ secrets.INACTIVE_VALIDATOR_LIST_SERVICE_PORT }}
+          VALIDATOR_DETAILS_SERVICE_PORT: ${{ secrets.VALIDATOR_DETAILS_SERVICE_PORT }}
+          REPORT_SERVICE_PORT: ${{ secrets.REPORT_SERVICE_PORT }}
+          APP_SERVICE_PORT: ${{ secrets.APP_SERVICE_PORT }}
+        run: |
+          mkdir -p Sources/SubVTData/Resources
+          cd Sources/SubVTData/Resources
+          dqt='"'
+          echo
+          echo "{" >> env.json
+          echo "    ${dqt}apiHost${dqt}: $API_HOST," >> env.json
+          echo "    ${dqt}networkStatusServicePort${dqt}: $NETWORK_STATUS_SERVICE_PORT," >> env.json
+          echo "    ${dqt}activeValidatorListServicePort${dqt}: $ACTIVE_VALIDATOR_LIST_SERVICE_PORT," >> env.json
+          echo "    ${dqt}inactiveValidatorListServicePort${dqt}: $INACTIVE_VALIDATOR_LIST_SERVICE_PORT," >> env.json
+          echo "    ${dqt}validatorDetailsServicePort${dqt}: $VALIDATOR_DETAILS_SERVICE_PORT," >> env.json
+          echo "    ${dqt}reportServicePort${dqt}: $REPORT_SERVICE_PORT," >> env.json
+          echo "    ${dqt}appServicePort${dqt}: $APP_SERVICE_PORT" >> env.json
+          echo "}" >> env.json
+          pwd
+          more env.json
+          cd ../../..
+      - name: Build
+        run: swift build
+      - name: Test
+        run: swift test
