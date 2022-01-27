@@ -3,11 +3,18 @@ import AlamofireNetworkActivityLogger
 import Combine
 import Foundation
 
+/**
+ Base class for all network services.
+ */
 public class BaseService {
     private let baseURL: String
+    private let session: Session
     
     init(baseURL: String) {
         self.baseURL = baseURL
+        self.session = Session(
+            interceptor: AuthInterceptor(storage: KeychainStorage.shared)
+        )
         #if DEBUG
         NetworkActivityLogger.shared.startLogging()
         NetworkActivityLogger.shared.level = .debug
@@ -49,7 +56,7 @@ public class BaseService {
         let headers: HTTPHeaders = [
             "Accept": "application/json"
         ]
-        return AF.request(
+        return session.request(
             baseURL + path,
             method: .get,
             parameters: parameters,
@@ -58,6 +65,25 @@ public class BaseService {
         )
             .validate()
             .publishDecodable(type: T.self, decoder: jsonDecoder)
+            .map(mapResponse)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func post<U: Decodable>(
+        path: String
+    ) -> AnyPublisher<DataResponse<U, APIError>, Never> {
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            "Content-Type": "application/json; charset=utf-8"
+        ]
+        return session.request(
+            baseURL + path,
+            method: .post,
+            headers: headers
+        )
+            .validate()
+            .publishDecodable(type: U.self, decoder: jsonDecoder)
             .map(mapResponse)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()

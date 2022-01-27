@@ -12,7 +12,7 @@ final class ReportServiceTests: XCTestCase {
         cancellables = []
     }
     
-    func testGetSingleEraReport() {
+    func test01GetSingleEraReport() {
         let expectation = self.expectation(description: "Single era report request.")
         var error: APIError? = nil
         var reports = [EraReport]()
@@ -27,12 +27,11 @@ final class ReportServiceTests: XCTestCase {
             }
             .store(in: &cancellables)
         waitForExpectations(timeout: 5)
-        
         XCTAssertNil(error)
         XCTAssertEqual(1, reports.count)
     }
     
-    func testGetMultipleEraReport() {
+    func test02GetMultipleEraReport() {
         let expectation = self.expectation(description: "Single era report request.")
         var error: APIError? = nil
         var reports = [EraReport]()
@@ -52,7 +51,7 @@ final class ReportServiceTests: XCTestCase {
         XCTAssertEqual(10, reports.count)
     }
     
-    func testGetSingleEraValidatorReport() {
+    func test03GetSingleEraValidatorReport() {
         let expectation = self.expectation(description: "Single era validator report request.")
         var error: APIError? = nil
         var reports = [EraValidatorReport]()
@@ -75,7 +74,7 @@ final class ReportServiceTests: XCTestCase {
         XCTAssertEqual(1, reports.count)
     }
     
-    func testGetMultipleEraValidatorReport() {
+    func test04GetMultipleEraValidatorReport() {
         let expectation = self.expectation(description: "Single era validator report request.")
         var error: APIError? = nil
         var reports = [EraValidatorReport]()
@@ -100,7 +99,9 @@ final class ReportServiceTests: XCTestCase {
     }
     
     static var allTests = [
-        ("testGetSingleEraReport", testGetSingleEraReport),
-        ("testGetMultipleEraReport", testGetMultipleEraReport),
+        ("test01GetSingleEraReport", test01GetSingleEraReport),
+        ("test02GetMultipleEraReport", test02GetMultipleEraReport),
+        ("test03GetSingleEraValidatorReport", test03GetSingleEraValidatorReport),
+        ("test04GetMultipleEraValidatorReport", test04GetMultipleEraValidatorReport),
     ]
 }

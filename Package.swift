@@ -33,6 +33,10 @@ let package = Package(
             .upToNextMajor(from: "5.3.0")
         ),
         .package(
+            url: "https://github.com/kishikawakatsumi/KeychainAccess.git",
+            .upToNextMajor(from: "4.0.0")
+        ),
+        .package(
             name: "secp256k1",
             url: "https://github.com/GigaBitcoin/secp256k1.swift.git",
             .upToNextMajor(from: "0.3.4")
@@ -51,6 +55,7 @@ let package = Package(
                 "Alamofire",
                 "AlamofireNetworkActivityLogger",
                 "BigInt",
+                "KeychainAccess",
                 "secp256k1",
                 "Starscream",
             ],

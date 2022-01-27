@@ -1,3 +1,6 @@
+/**
+ Account id-related classes and functions.
+ */
 import Foundation
 
 public struct AccountId: CustomStringConvertible {

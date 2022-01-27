@@ -1,6 +1,11 @@
 import BigInt
 import Foundation
 
+/*
+ Balance wrapper type - u128 in the backend domain.
+ Represented by the BigUInt type in the Swift domain.
+ Contains code/decode logic.
+ */
 public struct Balance: Codable {
     let value: BigUInt
     

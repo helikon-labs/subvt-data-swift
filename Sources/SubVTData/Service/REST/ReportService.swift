@@ -2,10 +2,12 @@ import Alamofire
 import Combine
 import Foundation
 
+/**
+ SubVT report REST service.
+ */
 public final class ReportService: BaseService {
-    
     init() {
-        super.init(baseURL: "http://\(Settings.shared.apiHost):\(Settings.shared.reportServicePort)")
+        super.init(baseURL: Settings.shared.reportServiceURL)
     }
     
     public func getEraReport(
@@ -40,7 +42,4 @@ public final class ReportService: BaseService {
             parameters: parameters
         )
     }
-    
-    
-    
 }

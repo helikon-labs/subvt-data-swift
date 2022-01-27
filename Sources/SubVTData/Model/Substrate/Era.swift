@@ -1,5 +1,8 @@
 import Foundation
 
+/**
+ Substrate era as represented in the SubVT system.
+ */
 public struct Era: Codable {
     public let index: UInt
     public let startTimestamp: UInt64

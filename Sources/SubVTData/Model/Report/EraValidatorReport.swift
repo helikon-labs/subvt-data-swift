@@ -1,3 +1,6 @@
+/**
+ Report for a single era-validator.
+ */
 public struct EraValidatorReport: Codable {
     public let era: Era
     public let isActive: Bool?

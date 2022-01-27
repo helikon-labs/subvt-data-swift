@@ -1,7 +1,12 @@
+// API error type.
+// Contains the causing error.
 import Alamofire
 
 public struct APIError: Error {
     let initialError: AFError
+    /**
+     Non-null if the error is coming from the backend.
+     */
     let error: BackendError?
 }
 

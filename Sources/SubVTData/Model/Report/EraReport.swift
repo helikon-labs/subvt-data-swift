@@ -1,3 +1,6 @@
+/**
+ Report for a single era.
+ */
 public struct EraReport: Codable {
     public let era: Era
     public let minimumStake: Balance?
