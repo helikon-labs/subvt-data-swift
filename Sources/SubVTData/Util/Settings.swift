@@ -7,6 +7,14 @@
 
 import Foundation
 
+private func getEnvValue<T>(_ json: [String: AnyObject], _ key: String) -> T {
+    if let value = json[key] as? T {
+        return value
+    } else {
+        fatalError("Cannot get value from env settings: \(key)")
+    }
+}
+
 struct Settings {
     static let shared = Settings()
     let apiHost: String
@@ -38,47 +46,13 @@ struct Settings {
             fatalError("Could not parse environment file JSON data.")
         }
         // read data
-        if let apiHost = json["apiHost"] as? String, !apiHost.isEmpty {
-            self.apiHost = apiHost
-        } else {
-            fatalError("API host address not found in the environment file.")
-        }
-        if let networkStatusServicePort = json["networkStatusServicePort"] as? UInt16,
-           networkStatusServicePort > 0 {
-            self.networkStatusServicePort = networkStatusServicePort
-        } else {
-            fatalError("Network status service port not found in the environment file.")
-        }
-        if let activeValidatorListServicePort = json["activeValidatorListServicePort"] as? UInt16,
-           activeValidatorListServicePort > 0 {
-            self.activeValidatorListServicePort = activeValidatorListServicePort
-        } else {
-            fatalError("Active validator list service port not found in the environment file.")
-        }
-        if let inactiveValidatorListServicePort = json["inactiveValidatorListServicePort"] as? UInt16,
-           inactiveValidatorListServicePort > 0 {
-            self.inactiveValidatorListServicePort = inactiveValidatorListServicePort
-        } else {
-            fatalError("Inactive validator list service port not found in the environment file.")
-        }
-        if let validatorDetailsServicePort = json["validatorDetailsServicePort"] as? UInt16,
-           validatorDetailsServicePort > 0 {
-            self.validatorDetailsServicePort = validatorDetailsServicePort
-        } else {
-            fatalError("Validator details service port not found in the environment file.")
-        }
-        if let reportServicePort = json["reportServicePort"] as? UInt16,
-           reportServicePort > 0 {
-            self.reportServicePort = reportServicePort
-        } else {
-            fatalError("Report service port not found in the environment file.")
-        }
-        if let appServicePort = json["appServicePort"] as? UInt16,
-           appServicePort > 0 {
-            self.appServicePort = appServicePort
-        } else {
-            fatalError("App service port not found in the environment file.")
-        }
+        apiHost = getEnvValue(json, "apiHost")
+        networkStatusServicePort = getEnvValue(json, "networkStatusServicePort")
+        activeValidatorListServicePort = getEnvValue(json, "activeValidatorListServicePort")
+        inactiveValidatorListServicePort = getEnvValue(json, "inactiveValidatorListServicePort")
+        validatorDetailsServicePort = getEnvValue(json, "validatorDetailsServicePort")
+        reportServicePort = getEnvValue(json, "reportServicePort")
+        appServicePort = getEnvValue(json, "appServicePort")
     }
     
     var isUnitTesting: Bool {

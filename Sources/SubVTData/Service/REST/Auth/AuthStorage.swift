@@ -33,13 +33,17 @@ class KeychainStorage: AuthStorage {
      Generates and stores the private key if it doesn't exist yet.
      */
     private init() {
-        if let privateKeyData = keychain[data: privateKeyKey] {
-            privateKey = try! PrivateKey(rawRepresentation: privateKeyData)
-            publicKey = privateKey.publicKey
-        } else {
-            privateKey = try! PrivateKey.init()
-            publicKey = privateKey.publicKey
-            keychain[data: privateKeyKey] = privateKey.rawRepresentation
+        do {
+            if let privateKeyData = keychain[data: privateKeyKey] {
+                privateKey = try PrivateKey(rawRepresentation: privateKeyData)
+                publicKey = privateKey.publicKey
+            } else {
+                privateKey = try PrivateKey.init()
+                publicKey = privateKey.publicKey
+                keychain[data: privateKeyKey] = privateKey.rawRepresentation
+            }
+        } catch {
+            fatalError("Cannot initialize keychain: \(error.localizedDescription)")
         }
     }
     

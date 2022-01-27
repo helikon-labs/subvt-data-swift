@@ -18,7 +18,7 @@ final class AuthInterceptor: Alamofire.RequestInterceptor {
         for session: Session,
         completion: @escaping (Result<URLRequest, Error>) -> Void
     ) {
-        guard urlRequest.url!.relativePath.hasPrefix("/secure") == true else {
+        guard urlRequest.url!.relativePath.hasPrefix("/secure") else {
             return completion(.success(urlRequest))
         }
         let method = urlRequest.method!.rawValue.uppercased()
@@ -32,19 +32,22 @@ final class AuthInterceptor: Alamofire.RequestInterceptor {
         let nonce = Int64(Date().timeIntervalSince1970 * 1000)
         let bytesToSign = (method + path + body + "\(nonce)").data(using: .utf8)!
         let digest = SHA256.hash(data: bytesToSign)
-        let signature = try! storage.privateKey.signature(for: digest)
-        let signatureDer = try! signature.derRepresentation()
-        let signatureHex = signatureDer.map({
-            String(format: "%02hhX", $0)
-        }).joined()
-        let publicKeyHex = storage.publicKey.rawRepresentation.map {
-            String(format: "%02hhX", $0)
-        }.joined()
-        
-        var urlRequest = urlRequest
-        urlRequest.setValue(publicKeyHex, forHTTPHeaderField: "SubVT-Public-Key")
-        urlRequest.setValue("\(nonce)", forHTTPHeaderField: "SubVT-Nonce")
-        urlRequest.setValue(signatureHex, forHTTPHeaderField: "SubVT-Signature")
-        completion(.success(urlRequest))
+        do {
+            let signature = try storage.privateKey.signature(for: digest)
+            let signatureDer = try signature.derRepresentation()
+            let signatureHex = signatureDer.map({
+                String(format: "%02hhX", $0)
+            }).joined()
+            let publicKeyHex = storage.publicKey.rawRepresentation.map {
+                String(format: "%02hhX", $0)
+            }.joined()
+            var urlRequest = urlRequest
+            urlRequest.setValue(publicKeyHex, forHTTPHeaderField: "SubVT-Public-Key")
+            urlRequest.setValue("\(nonce)", forHTTPHeaderField: "SubVT-Nonce")
+            urlRequest.setValue(signatureHex, forHTTPHeaderField: "SubVT-Signature")
+            completion(.success(urlRequest))
+        } catch {
+            completion(.failure(error))
+        }
     }
 }
