@@ -9,7 +9,7 @@ public struct APIError: Error {
     /**
      Non-null if the error is coming from the backend.
      */
-    let error: BackendError?
+    let backendError: BackendError?
 }
 
 public struct BackendError: Codable, Error {

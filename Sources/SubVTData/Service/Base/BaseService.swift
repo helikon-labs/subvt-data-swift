@@ -5,6 +5,8 @@ import Foundation
 
 public typealias ServiceResponsePublisher<T> = AnyPublisher<DataResponse<T, APIError>, Never>
 
+public struct EmptyResponse: Codable {}
+
 /**
  Base class for all network services.
  */
@@ -37,14 +39,15 @@ public class BaseService {
             }
             return APIError(
                 initialError: error,
-                error: backendError
+                backendError: backendError
             )
         }
         return mapped
     }
     
-    func get<T: Decodable>(
+    func perform<T: Decodable>(
         path: String,
+        method: HTTPMethod,
         parameters: [String: Any]? = nil
     ) -> AnyPublisher<DataResponse<T, APIError>, Never> {
         let headers: HTTPHeaders = [
@@ -52,7 +55,7 @@ public class BaseService {
         ]
         return session.request(
             baseURL + path,
-            method: .get,
+            method: method,
             parameters: parameters,
             encoding: URLEncoding.queryString,
             headers: headers
@@ -64,20 +67,24 @@ public class BaseService {
             .eraseToAnyPublisher()
     }
     
-    func post<U: Decodable>(
-        path: String
-    ) -> AnyPublisher<DataResponse<U, APIError>, Never> {
+    func performWithBody<E: Encodable, T: Decodable>(
+        path: String,
+        method: HTTPMethod,
+        body: E? = nil
+    ) -> AnyPublisher<DataResponse<T, APIError>, Never> {
         let headers: HTTPHeaders = [
             "Accept": "application/json",
             "Content-Type": "application/json; charset=utf-8"
         ]
         return session.request(
             baseURL + path,
-            method: .post,
+            method: method,
+            parameters: body,
+            encoder: JSONParameterEncoder.default,
             headers: headers
         )
             .validate()
-            .publishDecodable(type: U.self, decoder: jsonDecoder)
+            .publishDecodable(type: T.self, decoder: jsonDecoder)
             .map(mapResponse)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()

@@ -19,8 +19,9 @@ public final class ReportService: BaseService {
         if let endEraIndex = endEraIndex {
             parameters["end_era_index"] = endEraIndex
         }
-        return get(
+        return perform(
             path: "/report/era",
+            method: .get,
             parameters: parameters
         )
     }
@@ -36,8 +37,9 @@ public final class ReportService: BaseService {
         if let endEraIndex = endEraIndex {
             parameters["end_era_index"] = endEraIndex
         }
-        return get(
+        return perform(
             path: "/report/validator/\(validatorAccountId.toHex())",
+            method: .get,
             parameters: parameters
         )
     }
