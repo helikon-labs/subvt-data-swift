@@ -12,4 +12,8 @@ public struct APIError: Error {
 
 public struct BackendError: Codable, Error {
     let description: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case description
+    }
 }

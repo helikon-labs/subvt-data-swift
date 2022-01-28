@@ -13,7 +13,7 @@ public final class ReportService: BaseService {
     public func getEraReport(
         startEraIndex: Int,
         endEraIndex: UInt? = nil
-    ) -> AnyPublisher<DataResponse<[EraReport], APIError>, Never> {
+    ) -> ServiceResponsePublisher<[EraReport]> {
         var parameters: Parameters = [
             "start_era_index": startEraIndex,
         ]
@@ -30,7 +30,7 @@ public final class ReportService: BaseService {
         validatorAccountId: AccountId,
         startEraIndex: Int,
         endEraIndex: UInt? = nil
-    ) -> AnyPublisher<DataResponse<[EraValidatorReport], APIError>, Never> {
+    ) -> ServiceResponsePublisher<[EraValidatorReport]> {
         var parameters: Parameters = [
             "start_era_index": startEraIndex,
         ]

@@ -3,6 +3,8 @@ import AlamofireNetworkActivityLogger
 import Combine
 import Foundation
 
+public typealias ServiceResponsePublisher<T> = AnyPublisher<DataResponse<T, APIError>, Never>
+
 /**
  Base class for all network services.
  */
@@ -21,17 +23,9 @@ public class BaseService {
         #endif
     }
     
-    private let jsonEncoder: JSONEncoder = {
-        let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
-        return encoder
-    }()
+    private let jsonEncoder = JSONEncoder()
 
-    private let jsonDecoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return decoder
-    }()
+    private let jsonDecoder = JSONDecoder()
     
     private func mapResponse<T>(response: DataResponsePublisher<T>.Output) -> DataResponse<T, APIError> {
         let mapped: DataResponse<T, APIError> = response.mapError { error in
@@ -51,7 +45,7 @@ public class BaseService {
     
     func get<T: Decodable>(
         path: String,
-        parameters: [String: Any]
+        parameters: [String: Any]? = nil
     ) -> AnyPublisher<DataResponse<T, APIError>, Never> {
         let headers: HTTPHeaders = [
             "Accept": "application/json"

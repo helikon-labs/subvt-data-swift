@@ -9,7 +9,15 @@ public final class AppService: BaseService {
         super.init(baseURL: Settings.shared.appServiceURL)
     }
     
-    public func createUser() -> AnyPublisher<DataResponse<User, APIError>, Never> {
+    public func getNetworks() -> ServiceResponsePublisher<[Network]> {
+        return get(path: "/network")
+    }
+    
+    public func getNotificationChannels() -> ServiceResponsePublisher<[NotificationChannel]> {
+        return get(path: "/notification/channel")
+    }
+    
+    public func createUser() -> ServiceResponsePublisher<User> {
         return post(path: "/secure/user")
     }
 }
