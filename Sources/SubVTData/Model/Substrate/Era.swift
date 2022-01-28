@@ -1,5 +1,3 @@
-import Foundation
-
 /**
  Substrate era as represented in the SubVT system.
  */

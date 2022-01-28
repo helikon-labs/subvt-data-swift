@@ -1,6 +1,5 @@
 import Alamofire
 import Combine
-import Foundation
 
 /**
  SubVT report REST service.

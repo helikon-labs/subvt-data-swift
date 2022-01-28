@@ -1,5 +1,4 @@
 import BigInt
-import Foundation
 
 /*
  Balance wrapper type - u128 in the backend domain.

@@ -1,4 +1,3 @@
-import Foundation
 import KeychainAccess
 import secp256k1
 

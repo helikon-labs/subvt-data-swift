@@ -17,6 +17,10 @@ public final class AppService: BaseService {
         return get(path: "/notification/channel")
     }
     
+    public func getNotificationTypes() -> ServiceResponsePublisher<[NotificationType]> {
+        return get(path: "/notification/type")
+    }
+    
     public func createUser() -> ServiceResponsePublisher<User> {
         return post(path: "/secure/user")
     }

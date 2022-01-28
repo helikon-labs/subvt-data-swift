@@ -22,6 +22,14 @@ final class AppServiceTests: BaseTest {
         }
     }
     
+    func test03GetNotificationTypes() {
+        testServiceCall(publisher: service.getNotificationTypes()) {
+            (notificationTypes, error) in
+            XCTAssertNil(error)
+            XCTAssertTrue(notificationTypes?.count ?? 0 > 0)
+        }
+    }
+    
     func test04CreateUser() {
         KeychainStorage.shared.clear()
         testServiceCall(publisher: service.createUser()){
@@ -41,6 +49,7 @@ final class AppServiceTests: BaseTest {
     static var allTests = [
         ("test01GetNetworks", test01GetNetworks),
         ("test02GetNotificationChannels", test02GetNotificationChannels),
+        ("test03GetNotificationTypes", test03GetNotificationTypes),
         ("test04CreateUser", test04CreateUser),
     ]
 }

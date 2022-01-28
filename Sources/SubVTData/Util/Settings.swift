@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by kutsal kaan bilgin on 27.01.2022.
-//
-
 import Foundation
 
 private func getEnvValue<T>(_ json: [String: AnyObject], _ key: String) -> T {

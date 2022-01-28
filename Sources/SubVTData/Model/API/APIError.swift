@@ -1,5 +1,7 @@
-// API error type.
-// Contains the causing error.
+/**
+ API error type.
+ Contains the causing error.
+ */
 import Alamofire
 
 public struct APIError: Error {
