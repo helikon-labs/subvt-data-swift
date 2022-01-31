@@ -2,22 +2,22 @@
  Returned by the network status service right after the initial subscription.
  */
 public struct NetworkStatus: Codable {
-    let finalizedBlockNumber: UInt64
-    let finalizedBlockHash: String
-    let bestBlockNumber: UInt64
-    let bestBlockHash: String
-    let activeEra: Era
-    let currentEpoch: Epoch
-    let activeValidatorCount: Int
-    let inactiveValidatorCount: Int
-    let lastEraTotalReward: Balance
-    let totalStake: Balance
-    let returnRatePerMillion: Int
-    let minStake: Balance
-    let maxStake: Balance
-    let averageStake: Balance
-    let medianStake: Balance
-    let eraRewardPoints: UInt64
+    public let finalizedBlockNumber: UInt64
+    public let finalizedBlockHash: String
+    public let bestBlockNumber: UInt64
+    public let bestBlockHash: String
+    public let activeEra: Era
+    public let currentEpoch: Epoch
+    public let activeValidatorCount: Int
+    public let inactiveValidatorCount: Int
+    public let lastEraTotalReward: Balance
+    public let totalStake: Balance
+    public let returnRatePerMillion: Int
+    public let minStake: Balance
+    public let maxStake: Balance
+    public let averageStake: Balance
+    public let medianStake: Balance
+    public let eraRewardPoints: UInt64
     
     private enum CodingKeys: String, CodingKey {
         case finalizedBlockNumber = "finalized_block_number"
@@ -44,22 +44,22 @@ public struct NetworkStatus: Codable {
  to the previous state.
  */
 public struct NetworkStatusDiff: Codable {
-    let finalizedBlockNumber: UInt64?
-    let finalizedBlockHash: String?
-    let bestBlockNumber: UInt64?
-    let bestBlockHash: String?
-    let activeEra: Era?
-    let currentEpoch: Epoch?
-    let activeValidatorCount: Int?
-    let inactiveValidatorCount: Int?
-    let lastEraTotalReward: Balance?
-    let totalStake: Balance?
-    let returnRatePerMillion: Int?
-    let minStake: Balance?
-    let maxStake: Balance?
-    let averageStake: Balance?
-    let medianStake: Balance?
-    let eraRewardPoints: UInt64?
+    public let finalizedBlockNumber: UInt64?
+    public let finalizedBlockHash: String?
+    public let bestBlockNumber: UInt64?
+    public let bestBlockHash: String?
+    public let activeEra: Era?
+    public let currentEpoch: Epoch?
+    public let activeValidatorCount: Int?
+    public let inactiveValidatorCount: Int?
+    public let lastEraTotalReward: Balance?
+    public let totalStake: Balance?
+    public let returnRatePerMillion: Int?
+    public let minStake: Balance?
+    public let maxStake: Balance?
+    public let averageStake: Balance?
+    public let medianStake: Balance?
+    public let eraRewardPoints: UInt64?
     
     private enum CodingKeys: String, CodingKey {
         case finalizedBlockNumber = "finalized_block_number"
@@ -82,7 +82,7 @@ public struct NetworkStatusDiff: Codable {
 }
 
 public struct NetworkStatusUpdate: Codable {
-    let network: String
-    let status: NetworkStatus?
-    let diff: NetworkStatusDiff?
+    public let network: String
+    public let status: NetworkStatus?
+    public let diff: NetworkStatusDiff?
 }

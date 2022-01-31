@@ -6,7 +6,7 @@ import BigInt
  Contains code/decode logic.
  */
 public struct Balance: Codable {
-    let value: BigUInt
+    public let value: BigUInt
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()

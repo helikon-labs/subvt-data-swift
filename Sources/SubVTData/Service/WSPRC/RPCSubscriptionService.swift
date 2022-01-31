@@ -12,6 +12,7 @@ enum RPCEvent<T: Codable> {
 enum RPCError: Error {
     case dataReadError
     case disconnected(code: UInt16, reason: String)
+    case backendError(code: Int, message: String)
     case error(error: Error?)
 }
 
@@ -33,6 +34,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
     
     private var state = State.idle
     private var rpcId: UInt64 = 0
+    private var subscriptionParameter: String? = nil
     
     private let jsonEncoder = JSONEncoder()
     private let jsonDecoder = JSONDecoder()
@@ -50,7 +52,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
         self.subscribeMethod = subscribeMethod
         self.unsubscribeMethod = unsubscribeMethod
         let url = URL(
-            string: "http://\(Settings.shared.apiHost):\(Settings.shared.networkStatusServicePort)"
+            string: "http://\(host):\(port)"
         )!
         var request = URLRequest(url: url)
         request.timeoutInterval = 60
@@ -123,7 +125,8 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
         }
     }
     
-    func subscribe() -> AnyPublisher<RPCEvent<T>, RPCError> {
+    func subscribe(parameter: String? = nil) -> AnyPublisher<RPCEvent<T>, RPCError> {
+        subscriptionParameter = parameter
         switch state {
         case .disconnected(_, _):
             fallthrough
@@ -154,10 +157,15 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
     
     private func sendSubscriptionRequest() {
         rpcId = UInt64.random(in: 0...UInt64.max)
-        let request = RPCRequest<String>(
+        var params = [String]()
+        if let parameter = subscriptionParameter {
+            params.append(parameter)
+        }
+        subscriptionParameter = nil
+        let request = RPCRequest(
             id: rpcId,
             method: subscribeMethod,
-            params: []
+            params: params
         )
         if let jsonData = try? jsonEncoder.encode(request),
            let jsonString = String(data: jsonData, encoding: .utf8) {
@@ -209,14 +217,30 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
                     break
                 }
             } catch {
-                eventBus.send(
-                    completion: .failure(
-                        RPCError.error(
-                            error: error
+                do {
+                    let backendError = try jsonDecoder.decode(
+                        RPCBackendErrorResponse.self,
+                        from: data
+                    )
+                    eventBus.send(
+                        completion: .failure(
+                            RPCError.backendError(
+                                code: backendError.error.code,
+                                message: backendError.error.message
+                            )
                         )
                     )
-                )
-                state = .error(error: error)
+                    state = .error(error: nil)
+                } catch {
+                    eventBus.send(
+                        completion: .failure(
+                            RPCError.error(
+                                error: error
+                            )
+                        )
+                    )
+                    state = .error(error: error)
+                }
                 socket.disconnect()
             }
         } else {

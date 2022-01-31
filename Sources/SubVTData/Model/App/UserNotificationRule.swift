@@ -2,16 +2,16 @@
  Used when creating a new notification rule for the user.
  */
 public struct CreateUserNotificationRuleRequest: Codable {
-    let notificationTypeCode: String
-    let name: String?
-    let networkId: UInt64?
-    let isForAllValidators: Bool
-    let userValidatorIds: [UInt64]
-    let periodType: NotificationPeriodType
-    let period: UInt16
-    let userNotificationChannelIds: [UInt64]
-    let parameters: [NewUserNotificationRuleParameter]
-    let notes: String?
+    public let notificationTypeCode: String
+    public let name: String?
+    public let networkId: UInt64?
+    public let isForAllValidators: Bool
+    public let userValidatorIds: [UInt64]
+    public let periodType: NotificationPeriodType
+    public let period: UInt16
+    public let userNotificationChannelIds: [UInt64]
+    public let parameters: [NewUserNotificationRuleParameter]
+    public let notes: String?
     
     private enum CodingKeys: String, CodingKey {
         case notificationTypeCode = "notification_type_code"
@@ -31,11 +31,11 @@ public struct CreateUserNotificationRuleRequest: Codable {
  Actual parameter for a rule - returned by the GET rule service.
  */
 public struct UserNotificationRuleParameter: Codable {
-    let userNotificationRuleId: UInt64
-    let parameterTypeId: UInt64
-    let parameterTypeCode: String
-    let order: UInt8
-    let value: String
+    public let userNotificationRuleId: UInt64
+    public let parameterTypeId: UInt64
+    public let parameterTypeCode: String
+    public let order: UInt8
+    public let value: String
     
     private enum CodingKeys: String, CodingKey {
         case userNotificationRuleId = "user_notification_rule_id"
@@ -50,8 +50,8 @@ public struct UserNotificationRuleParameter: Codable {
  Used in the request to create a new notification rule for the user.
  */
 public struct NewUserNotificationRuleParameter: Codable {
-    let parameterTypeId: UInt64
-    let value: String
+    public let parameterTypeId: UInt64
+    public let value: String
     
     private enum CodingKeys: String, CodingKey {
         case parameterTypeId = "parameter_type_id"
@@ -63,18 +63,18 @@ public struct NewUserNotificationRuleParameter: Codable {
  Returned by the GETter service for the user's notification rules.
  */
 public struct UserNotificationRule: Codable {
-    let id: UInt64
-    let userId: UInt64
-    let notificationType: NotificationType
-    let name: String?
-    let network: Network?
-    let isForAllValidators: Bool
-    let periodType: NotificationPeriodType
-    let period: UInt16
-    let validators: [UserValidator]
-    let notificationChannels: [UserNotificationChannel]
-    let parameters: [UserNotificationRuleParameter]
-    let notes: String?
+    public let id: UInt64
+    public let userId: UInt64
+    public let notificationType: NotificationType
+    public let name: String?
+    public let network: Network?
+    public let isForAllValidators: Bool
+    public let periodType: NotificationPeriodType
+    public let period: UInt16
+    public let validators: [UserValidator]
+    public let notificationChannels: [UserNotificationChannel]
+    public let parameters: [UserNotificationRuleParameter]
+    public let notes: String?
     
     private enum CodingKeys: String, CodingKey {
         case id

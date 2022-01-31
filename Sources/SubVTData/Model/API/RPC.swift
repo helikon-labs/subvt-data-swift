@@ -1,4 +1,4 @@
-struct RPCRequest<T: Codable>: Codable {
+struct RPCRequest<T: Encodable>: Encodable {
     let jsonrpc: String
     let id: UInt64
     let method: String
@@ -66,5 +66,27 @@ struct RPCSubscriptionMessageParams<T: Codable>: Codable {
     private enum CodingKeys: String, CodingKey {
         case subscriptionId = "subscription"
         case body = "result"
+    }
+}
+
+struct RPCBackendErrorResponse: Codable {
+    let jsonrpc: String
+    let id: UInt64
+    let error: RPCBackendError
+    
+    private enum CodingKeys: String, CodingKey {
+        case jsonrpc
+        case id
+        case error
+    }
+}
+
+struct RPCBackendError: Codable {
+    let code: Int
+    let message: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case code
+        case message
     }
 }

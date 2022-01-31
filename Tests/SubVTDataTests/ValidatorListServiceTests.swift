@@ -4,21 +4,20 @@ import Starscream
 import XCTest
 @testable import SubVTData
 
-final class NetworkStatusServiceTests: XCTestCase {
+final class ValidatorListServiceTests: XCTestCase {
     private var cancellables: Set<AnyCancellable>!
     
     override func setUp() {
         cancellables = []
     }
     
-    func testNetworkStatusSubscription() {
+    private func validatorListSubscriptionTest(active: Bool) {
         var error: Error? = nil
-        var update: NetworkStatusUpdate? = nil
         let subscribeExpectation = self.expectation(description: "Subscribed.")
-        let updateExpectation = self.expectation(description: "Network status updates received.")
+        let updateExpectation = self.expectation(description: "Validator list updates received.")
         let unsubscribeExpectation = self.expectation(description: "Unsubscribed.")
         let finishExpectation = self.expectation(description: "Finished.")
-        let service = NetworkStatusService()
+        let service = ValidatorListService(active: active)
         var updateCount = 0
         service
             .subscribe()
@@ -36,14 +35,14 @@ final class NetworkStatusServiceTests: XCTestCase {
                 switch event {
                 case .subscribed(_):
                     subscribeExpectation.fulfill()
-                case .update(let statusUpdate):
-                    update = statusUpdate
+                case .update(let listUpdate):
                     updateCount += 1
                     if updateCount == 1 {
-                        XCTAssertNotNil(update?.status)
-                        testLogger.debug("Status received.")
+                        XCTAssertTrue(listUpdate.insert.count > 0)
+                        XCTAssertEqual(0, listUpdate.update.count)
+                        XCTAssertEqual(0, listUpdate.removeIds.count)
+                        testLogger.debug("Initial list received.")
                     } else {
-                        XCTAssertNotNil(update?.diff)
                         testLogger.debug("Status diff received.")
                         if updateCount == 3 {
                             updateExpectation.fulfill()
@@ -60,7 +59,15 @@ final class NetworkStatusServiceTests: XCTestCase {
         XCTAssertNil(error)
     }
     
+    func testActiveValidatorListSubscription() {
+        validatorListSubscriptionTest(active: true)
+    }
+    
+    func testInactiveValidatorListSubscription() {
+        validatorListSubscriptionTest(active: false)
+    }
+    
     static var allTests = [
-        ("testNetworkStatusSubscription", testNetworkStatusSubscription),
+        ("testActiveValidatorListSubscription", testActiveValidatorListSubscription),
     ]
 }

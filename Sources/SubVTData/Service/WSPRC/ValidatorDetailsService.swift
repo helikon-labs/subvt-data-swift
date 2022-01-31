@@ -1,0 +1,10 @@
+public class ValidatorDetailsService: RPCSubscriptionService<ValidatorDetailsUpdate> {
+    init() {
+        super.init(
+            host: Settings.shared.apiHost,
+            port: Settings.shared.validatorDetailsServicePort,
+            subscribeMethod: "subscribe_validatorDetails",
+            unsubscribeMethod: "unsubscribe_validatorDetails"
+        )
+    }
+}

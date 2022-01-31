@@ -10,7 +10,7 @@ public struct EmptyResponse: Codable {}
 /**
  Base class for all network services.
  */
-public class BaseService {
+public class BaseRESTService {
     private let baseURL: String
     private let session: Session
     
