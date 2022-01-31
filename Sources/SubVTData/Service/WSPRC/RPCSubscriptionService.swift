@@ -16,6 +16,9 @@ enum RPCError: Error {
     case error(error: Error?)
 }
 
+/**
+ Base class for RPC pub/sub services.
+ */
 public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
     private enum State {
         case connected

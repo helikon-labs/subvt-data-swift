@@ -1,3 +1,6 @@
+/**
+ Network status RPC pub/sub service.
+ */
 public class NetworkStatusService: RPCSubscriptionService<NetworkStatusUpdate> {
     init() {
         super.init(

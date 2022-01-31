@@ -1,3 +1,6 @@
+/**
+ Active/inactive validator list RPC pub/sub service.
+ */
 public class ValidatorListService: RPCSubscriptionService<ValidatorListUpdate> {
     init(active: Bool) {
         super.init(

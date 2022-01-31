@@ -1,3 +1,6 @@
+/**
+ Validator details RPC pub/sub service.
+ */
 public class ValidatorDetailsService: RPCSubscriptionService<ValidatorDetailsUpdate> {
     init() {
         super.init(
