@@ -8,15 +8,6 @@ public struct Account: Codable {
     public let childDisplay: String?
     public let discoveredAt: UInt64?
     public let killedAt: UInt64?
-    
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case identity
-        case parent
-        case childDisplay = "child_display"
-        case discoveredAt = "discovered_at"
-        case killedAt = "killed_at"
-    }
 }
 
 public class Box<T: Codable>: Codable {

@@ -12,19 +12,6 @@ public struct CreateUserNotificationRuleRequest: Codable {
     public let userNotificationChannelIds: [UInt64]
     public let parameters: [NewUserNotificationRuleParameter]
     public let notes: String?
-    
-    private enum CodingKeys: String, CodingKey {
-        case notificationTypeCode = "notification_type_code"
-        case name
-        case networkId = "network_id"
-        case isForAllValidators = "is_for_all_validators"
-        case userValidatorIds = "user_validator_ids"
-        case periodType = "period_type"
-        case period
-        case userNotificationChannelIds = "user_notification_channel_ids"
-        case parameters
-        case notes
-    }
 }
 
 /**
@@ -36,14 +23,6 @@ public struct UserNotificationRuleParameter: Codable {
     public let parameterTypeCode: String
     public let order: UInt8
     public let value: String
-    
-    private enum CodingKeys: String, CodingKey {
-        case userNotificationRuleId = "user_notification_rule_id"
-        case parameterTypeId = "parameter_type_id"
-        case parameterTypeCode = "parameter_type_code"
-        case order
-        case value
-    }
 }
 
 /**
@@ -52,11 +31,6 @@ public struct UserNotificationRuleParameter: Codable {
 public struct NewUserNotificationRuleParameter: Codable {
     public let parameterTypeId: UInt64
     public let value: String
-    
-    private enum CodingKeys: String, CodingKey {
-        case parameterTypeId = "parameter_type_id"
-        case value
-    }
 }
 
 /**
@@ -75,19 +49,4 @@ public struct UserNotificationRule: Codable {
     public let notificationChannels: [UserNotificationChannel]
     public let parameters: [UserNotificationRuleParameter]
     public let notes: String?
-    
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case userId = "user_id"
-        case notificationType = "notification_type"
-        case name
-        case network
-        case isForAllValidators = "is_for_all_validators"
-        case periodType = "period_type"
-        case period
-        case validators
-        case notificationChannels = "notification_channels"
-        case parameters
-        case notes
-    }
 }

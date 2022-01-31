@@ -19,15 +19,4 @@ public struct NotificationParamType: Codable {
     public let min: String?
     public let max: String?
     public let isOptional: Bool
-    
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case notificationTypeCode = "notification_type_code"
-        case order
-        case code
-        case type
-        case min
-        case max
-        case isOptional = "is_optional"
-    }
 }

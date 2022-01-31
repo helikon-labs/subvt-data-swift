@@ -16,11 +16,11 @@ public struct Network: Codable {
         case id
         case hash
         case name
-        case ss58Prefix = "ss58_prefix"
-        case networkStatusServiceURL = "network_status_service_url"
-        case reportServiceURL = "report_service_url"
-        case validatorDetailsServiceURL = "validator_details_service_url"
-        case activeValidatorListServiceURL = "active_validator_list_service_url"
-        case inactiveValidatorListServiceURL = "inactive_validator_list_service_url"
+        case ss58Prefix
+        case networkStatusServiceURL = "networkStatusServiceUrl"
+        case reportServiceURL = "reportServiceUrl"
+        case validatorDetailsServiceURL = "validatorDetailsServiceUrl"
+        case activeValidatorListServiceURL = "activeValidatorListServiceUrl"
+        case inactiveValidatorListServiceURL = "inactiveValidatorListServiceUrl"
     }
 }

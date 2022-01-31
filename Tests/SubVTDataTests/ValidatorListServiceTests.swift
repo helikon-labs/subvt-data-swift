@@ -24,10 +24,10 @@ final class ValidatorListServiceTests: XCTestCase {
             .sink { (completion) in
                 switch completion {
                 case .finished:
-                    testLogger.debug("Finished.")
+                    print("Finished.")
                     finishExpectation.fulfill()
                 case .failure(let rpcError):
-                    testLogger.error("Finished with error: \(rpcError)")
+                    print("Finished with error: \(rpcError)")
                     error = rpcError
                     finishExpectation.fulfill()
                 }
@@ -41,9 +41,9 @@ final class ValidatorListServiceTests: XCTestCase {
                         XCTAssertTrue(listUpdate.insert.count > 0)
                         XCTAssertEqual(0, listUpdate.update.count)
                         XCTAssertEqual(0, listUpdate.removeIds.count)
-                        testLogger.debug("Initial list received.")
+                        print("Initial list received.")
                     } else {
-                        testLogger.debug("Status diff received.")
+                        print("List diff received.")
                         if updateCount == 3 {
                             updateExpectation.fulfill()
                             service.unsubscribe()

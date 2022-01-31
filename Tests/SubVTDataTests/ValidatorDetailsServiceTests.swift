@@ -24,10 +24,10 @@ final class ValidatorDetailsServiceTests: XCTestCase {
             .sink { (completion) in
                 switch completion {
                 case .finished:
-                    testLogger.debug("Finished.")
+                    print("Finished.")
                     finishExpectation.fulfill()
                 case .failure(let rpcError):
-                    testLogger.error("Finished with error: \(rpcError)")
+                    print("Finished with error: \(rpcError)")
                     error = rpcError
                     finishExpectation.fulfill()
                 }
@@ -39,9 +39,9 @@ final class ValidatorDetailsServiceTests: XCTestCase {
                     updateCount += 1
                     if updateCount == 1 {
                         XCTAssertNotNil(validatorDetailsUpdate.validatorDetails)
-                        testLogger.debug("Validator details received.")
+                        print("Validator details received.")
                     } else {
-                        testLogger.debug("Validator details diff received.")
+                        print("Validator details diff received.")
                         if updateCount == 3 {
                             updateExpectation.fulfill()
                             service.unsubscribe()

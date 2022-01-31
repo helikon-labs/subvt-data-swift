@@ -3,8 +3,6 @@ import Logging
 import XCTest
 @testable import SubVTData
 
-let testLogger = Logger(label: "io.helikon.subvt.ios.data.test")
-
 class BaseTest: XCTestCase {
     private var cancellables: Set<AnyCancellable>!
     

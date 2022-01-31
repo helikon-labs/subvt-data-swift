@@ -25,10 +25,10 @@ final class NetworkStatusServiceTests: XCTestCase {
             .sink { (completion) in
                 switch completion {
                 case .finished:
-                    testLogger.debug("Finished.")
+                    print("Finished.")
                     finishExpectation.fulfill()
                 case .failure(let rpcError):
-                    testLogger.error("Finished with error: \(rpcError)")
+                    print("Finished with error: \(rpcError)")
                     error = rpcError
                     finishExpectation.fulfill()
                 }
@@ -41,10 +41,10 @@ final class NetworkStatusServiceTests: XCTestCase {
                     updateCount += 1
                     if updateCount == 1 {
                         XCTAssertNotNil(update?.status)
-                        testLogger.debug("Status received.")
+                        print("Status received.")
                     } else {
                         XCTAssertNotNil(update?.diff)
-                        testLogger.debug("Status diff received.")
+                        print("Status diff received.")
                         if updateCount == 3 {
                             updateExpectation.fulfill()
                             service.unsubscribe()

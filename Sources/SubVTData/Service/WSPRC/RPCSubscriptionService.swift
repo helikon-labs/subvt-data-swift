@@ -58,6 +58,8 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
         request.timeoutInterval = 60
         self.socket = WebSocket(request: request)
         self.socket.delegate = self
+        self.jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+        self.jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
     }
     
     public func didReceive(event: WebSocketEvent, client: WebSocket) {
@@ -217,6 +219,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
                     break
                 }
             } catch {
+                print("process err 3")
                 do {
                     let backendError = try jsonDecoder.decode(
                         RPCBackendErrorResponse.self,
