@@ -197,7 +197,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
                 case .subscribed(let subscriptionId):
                     do {
                         let update = try jsonDecoder.decode(
-                            RPCSubscriptionMessage<T>.self,
+                            RPCPublishedMessage<T>.self,
                             from: data
                         )
                         if update.params.subscriptionId != subscriptionId {

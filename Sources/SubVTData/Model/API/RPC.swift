@@ -1,3 +1,6 @@
+/**
+ Generic RPC request.
+ */
 struct RPCRequest<T: Encodable>: Encodable {
     let jsonrpc: String
     let id: UInt64
@@ -23,6 +26,9 @@ struct RPCRequest<T: Encodable>: Encodable {
     }
 }
 
+/**
+ Initial response received after a successful subscription request.
+ */
 struct RPCSubscribeResponse: Codable {
     let jsonrpc: String
     let id: UInt64
@@ -35,6 +41,9 @@ struct RPCSubscribeResponse: Codable {
     }
 }
 
+/**
+ Initial response received after a successful unsubscription request.
+ */
 struct RPCUnsubscribeResponse: Codable {
     let jsonrpc: String
     let id: UInt64
@@ -47,10 +56,14 @@ struct RPCUnsubscribeResponse: Codable {
     }
 }
 
-struct RPCSubscriptionMessage<T: Codable>: Codable {
+/**
+ Published message for a subscription.
+ Starts being published after the first message of type `RPCSubscribeResponse`.
+ */
+struct RPCPublishedMessage<T: Codable>: Codable {
     let jsonrpc: String
     let method: String
-    let params: RPCSubscriptionMessageParams<T>
+    let params: RPCPublishedMessageParams<T>
     
     private enum CodingKeys: String, CodingKey {
         case jsonrpc
@@ -59,7 +72,10 @@ struct RPCSubscriptionMessage<T: Codable>: Codable {
     }
 }
 
-struct RPCSubscriptionMessageParams<T: Codable>: Codable {
+/**
+ Contains the actual data inside a published message.
+ */
+struct RPCPublishedMessageParams<T: Codable>: Codable {
     let subscriptionId: UInt64
     let body: T
     
@@ -69,6 +85,9 @@ struct RPCSubscriptionMessageParams<T: Codable>: Codable {
     }
 }
 
+/**
+ RPC service backend error body.
+ */
 struct RPCBackendErrorResponse: Codable {
     let jsonrpc: String
     let id: UInt64
@@ -81,6 +100,9 @@ struct RPCBackendErrorResponse: Codable {
     }
 }
 
+/**
+ RPC error body inner error data.
+ */
 struct RPCBackendError: Codable {
     let code: Int
     let message: String
