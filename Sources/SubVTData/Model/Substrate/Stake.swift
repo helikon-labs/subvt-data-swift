@@ -8,6 +8,6 @@ public struct Stake: Codable {
 }
 
 public struct StakeSummary: Codable {
-    public let stashAccountId: String
+    public let stashAccountId: AccountId
     public let activeAmount: Balance
 }

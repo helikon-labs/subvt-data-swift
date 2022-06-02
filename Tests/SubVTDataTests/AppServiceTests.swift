@@ -54,7 +54,7 @@ final class AppServiceTests: BaseTest {
     
     func test06CreateUserNotificationChannel() {
         let channel = NewUserNotificationChannel(
-            channelCode: .email,
+            channel: .email,
             target: "test@test.org"
         )
         testServiceCall(
@@ -174,7 +174,7 @@ final class AppServiceTests: BaseTest {
     func test14CreateUserNotificationRule() {
         var channelId: UInt64 = 0
         let channel = NewUserNotificationChannel(
-            channelCode: .gsm,
+            channel: .gsm,
             target: "+905321234567"
         )
         let publisher = service

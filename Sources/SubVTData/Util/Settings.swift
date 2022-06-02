@@ -53,10 +53,10 @@ struct Settings {
     }
     
     var reportServiceURL: String {
-        return "http://" + apiHost + ":\(reportServicePort)"
+        return "https://" + apiHost + ":\(reportServicePort)"
     }
     
     var appServiceURL: String {
-        return "http://" + apiHost + ":\(appServicePort)"
+        return "https://" + apiHost + ":\(appServicePort)"
     }
 }

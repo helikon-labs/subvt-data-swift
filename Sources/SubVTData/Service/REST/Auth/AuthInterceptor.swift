@@ -33,8 +33,8 @@ final class AuthInterceptor: Alamofire.RequestInterceptor {
         let bytesToSign = (method + path + body + "\(nonce)").data(using: .utf8)!
         let digest = SHA256.hash(data: bytesToSign)
         do {
-            let signature = try storage.privateKey.signature(for: digest)
-            let signatureDer = try signature.derRepresentation()
+            let signature = try storage.privateKey.ecdsa.signature(for: digest)
+            let signatureDer = try signature.derRepresentation
             let signatureHex = signatureDer.map({
                 String(format: "%02hhX", $0)
             }).joined()

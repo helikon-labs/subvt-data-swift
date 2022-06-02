@@ -4,8 +4,11 @@
 public struct Network: Codable {
     public let id: UInt64
     public let hash: String
-    public let name: String
+    public let chain: String
+    public let display: String
     public let ss58Prefix: UInt32
+    public let tokenTicker: String
+    public let tokenDecimalCount: UInt8
     public let networkStatusServiceURL: String?
     public let reportServiceURL: String?
     public let validatorDetailsServiceURL: String?
@@ -15,8 +18,11 @@ public struct Network: Codable {
     private enum CodingKeys: String, CodingKey {
         case id
         case hash
-        case name
+        case chain
+        case display
         case ss58Prefix
+        case tokenTicker
+        case tokenDecimalCount
         case networkStatusServiceURL = "networkStatusServiceUrl"
         case reportServiceURL = "reportServiceUrl"
         case validatorDetailsServiceURL = "validatorDetailsServiceUrl"

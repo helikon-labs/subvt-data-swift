@@ -17,7 +17,7 @@ final class ReportServiceTests: BaseTest {
     func test01GetSingleEraReport() {
         testServiceCall(
             publisher: service.getEraReport(
-                startEraIndex: 3200
+                startEraIndex: 3391
             )
         ) {
             (reports, error) in
@@ -29,8 +29,8 @@ final class ReportServiceTests: BaseTest {
     func test02GetMultipleEraReport() {
         testServiceCall(
             publisher: service.getEraReport(
-                startEraIndex: 3201,
-                endEraIndex: 3210
+                startEraIndex: 3391,
+                endEraIndex: 3400
             )
         ) {
             (reports, error) in
@@ -43,7 +43,7 @@ final class ReportServiceTests: BaseTest {
         testServiceCall(
             publisher: service.getEraValidatorReport(
                 validatorAccountId: validatorAccountId,
-                startEraIndex: 3200
+                startEraIndex: 3391
             )
         ) {
             (reports, error) in
@@ -56,13 +56,13 @@ final class ReportServiceTests: BaseTest {
         testServiceCall(
             publisher: service.getEraValidatorReport(
                 validatorAccountId: validatorAccountId,
-                startEraIndex: 3275,
-                endEraIndex: 3279
+                startEraIndex: 3391,
+                endEraIndex: 3400
             )
         ) {
             (reports, error) in
             XCTAssertNil(error)
-            XCTAssertEqual(5, reports?.count ?? 0)
+            XCTAssertEqual(10, reports?.count ?? 0)
         }
     }
     

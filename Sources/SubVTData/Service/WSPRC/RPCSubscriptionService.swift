@@ -55,7 +55,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
         self.subscribeMethod = subscribeMethod
         self.unsubscribeMethod = unsubscribeMethod
         let url = URL(
-            string: "http://\(host):\(port)"
+            string: "https://\(host):\(port)"
         )!
         var request = URLRequest(url: url)
         request.timeoutInterval = 60
@@ -222,7 +222,6 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
                     break
                 }
             } catch {
-                print("process err 3")
                 do {
                     let backendError = try jsonDecoder.decode(
                         RPCBackendErrorResponse.self,

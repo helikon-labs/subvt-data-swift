@@ -13,7 +13,7 @@ typealias PublicKey = secp256k1.Signing.PublicKey
 /**
  Authentication storage protocol.
  */
-protocol AuthStorage: class {
+protocol AuthStorage: AnyObject {
     var privateKey: PrivateKey { get }
     var publicKey: PublicKey { get }
 }

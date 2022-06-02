@@ -47,7 +47,7 @@ struct RPCSubscribeResponse: Codable {
 struct RPCUnsubscribeResponse: Codable {
     let jsonrpc: String
     let id: UInt64
-    let result: String
+    let result: Bool
     
     private enum CodingKeys: String, CodingKey {
         case jsonrpc
