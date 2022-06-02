@@ -62,11 +62,9 @@ let package = Package(
                 "Starscream",
                 .product(name: "Logging", package: "swift-log")
             ],
-            exclude: [
-                "Resources/env-example.json"
-            ],
             resources: [
                 .copy("Resources/env.json"),
+                .copy("Resources/env-example.json"),
             ]
         ),
         .testTarget(

@@ -19,25 +19,18 @@ struct Settings {
     let appServicePort: UInt16
     
     private init() {
-        #if SWIFT_PACKAGE
         guard let envPath = Bundle.module.path(forResource: "env", ofType: "json") else {
             fatalError("Could not find environment file.")
         }
-        #else
-        guard let envPath = Bundle.main.path(forResource: "env", ofType: "json") else {
-            fatalError("Could not find environment file.")
-        }
-        #endif
-        
         guard let data = try? Data(
-                contentsOf: URL(fileURLWithPath: envPath),
-                options: .mappedIfSafe
+            contentsOf: URL(fileURLWithPath: envPath),
+            options: .mappedIfSafe
         ) else {
             fatalError("Could not read environment file.")
         }
         guard let jsonObject = try? JSONSerialization.jsonObject(
-                with: data,
-                options: .mutableLeaves
+            with: data,
+            options: .mutableLeaves
         ) else {
             fatalError("Could not parse environment file JSON data.")
         }
