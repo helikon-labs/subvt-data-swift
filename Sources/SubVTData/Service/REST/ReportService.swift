@@ -5,7 +5,7 @@ import Combine
  SubVT report REST service.
  */
 public final class ReportService: BaseRESTService {
-    init() {
+    public init() {
         super.init(baseURL: Settings.shared.reportServiceURL)
     }
     

@@ -2,7 +2,7 @@
  Active/inactive validator list RPC pub/sub service.
  */
 public class ValidatorListService: RPCSubscriptionService<ValidatorListUpdate> {
-    init(active: Bool) {
+    public init(active: Bool) {
         super.init(
             host: Settings.shared.apiHost,
             port: active

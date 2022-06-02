@@ -2,7 +2,7 @@
  Validator details RPC pub/sub service.
  */
 public class ValidatorDetailsService: RPCSubscriptionService<ValidatorDetailsUpdate> {
-    init() {
+    public init() {
         super.init(
             host: Settings.shared.apiHost,
             port: Settings.shared.validatorDetailsServicePort,

@@ -2,7 +2,7 @@
  Network status RPC pub/sub service.
  */
 public class NetworkStatusService: RPCSubscriptionService<NetworkStatusUpdate> {
-    init() {
+    public init() {
         super.init(
             host: Settings.shared.apiHost,
             port: Settings.shared.networkStatusServicePort,

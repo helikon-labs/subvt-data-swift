@@ -5,7 +5,7 @@ import Combine
  SubVT application REST service.
  */
 public final class AppService: BaseRESTService {
-    init() {
+    public init() {
         super.init(baseURL: Settings.shared.appServiceURL)
     }
     
