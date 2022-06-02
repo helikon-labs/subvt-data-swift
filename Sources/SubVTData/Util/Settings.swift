@@ -19,9 +19,15 @@ struct Settings {
     let appServicePort: UInt16
     
     private init() {
+        #if SWIFT_PACKAGE
         guard let envPath = Bundle.module.path(forResource: "env", ofType: "json") else {
             fatalError("Could not find environment file.")
         }
+        #else
+        guard let envPath = Bundle.main.path(forResource: "env", ofType: "json") else {
+            fatalError("Could not find environment file.")
+        }
+        #endif
         
         guard let data = try? Data(
                 contentsOf: URL(fileURLWithPath: envPath),
