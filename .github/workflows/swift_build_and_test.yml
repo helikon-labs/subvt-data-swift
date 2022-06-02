@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Create env.json file
+      - name: Create data-env.json file
         env:
           API_HOST: ${{ secrets.API_HOST }}
           NETWORK_STATUS_SERVICE_PORT: ${{ secrets.NETWORK_STATUS_SERVICE_PORT }}
@@ -36,17 +36,17 @@ jobs:
           cd Sources/SubVTData/Resources
           dqt='"'
           echo
-          echo "{" >> env.json
-          echo "    ${dqt}apiHost${dqt}: $API_HOST," >> env.json
-          echo "    ${dqt}networkStatusServicePort${dqt}: $NETWORK_STATUS_SERVICE_PORT," >> env.json
-          echo "    ${dqt}activeValidatorListServicePort${dqt}: $ACTIVE_VALIDATOR_LIST_SERVICE_PORT," >> env.json
-          echo "    ${dqt}inactiveValidatorListServicePort${dqt}: $INACTIVE_VALIDATOR_LIST_SERVICE_PORT," >> env.json
-          echo "    ${dqt}validatorDetailsServicePort${dqt}: $VALIDATOR_DETAILS_SERVICE_PORT," >> env.json
-          echo "    ${dqt}reportServicePort${dqt}: $REPORT_SERVICE_PORT," >> env.json
-          echo "    ${dqt}appServicePort${dqt}: $APP_SERVICE_PORT" >> env.json
-          echo "}" >> env.json
+          echo "{" >> data-env.json
+          echo "    ${dqt}apiHost${dqt}: $API_HOST," >> data-env.json
+          echo "    ${dqt}networkStatusServicePort${dqt}: $NETWORK_STATUS_SERVICE_PORT," >> data-env.json
+          echo "    ${dqt}activeValidatorListServicePort${dqt}: $ACTIVE_VALIDATOR_LIST_SERVICE_PORT," >> data-env.json
+          echo "    ${dqt}inactiveValidatorListServicePort${dqt}: $INACTIVE_VALIDATOR_LIST_SERVICE_PORT," >> data-env.json
+          echo "    ${dqt}validatorDetailsServicePort${dqt}: $VALIDATOR_DETAILS_SERVICE_PORT," >> data-env.json
+          echo "    ${dqt}reportServicePort${dqt}: $REPORT_SERVICE_PORT," >> data-env.json
+          echo "    ${dqt}appServicePort${dqt}: $APP_SERVICE_PORT" >> data-env.json
+          echo "}" >> data-env.json
           pwd
-          more env.json
+          more data-env.json
           cd ../../..
       - name: Build
         run: swift build
