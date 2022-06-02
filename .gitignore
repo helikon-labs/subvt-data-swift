@@ -17,5 +17,5 @@ Package.resolved
 *.pyc
 .docc-build
 
-env.json
+data-env.json
 

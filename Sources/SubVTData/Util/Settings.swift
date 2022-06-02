@@ -19,7 +19,8 @@ struct Settings {
     let appServicePort: UInt16
     
     private init() {
-        guard let envPath = Bundle.module.path(forResource: "env", ofType: "json") else {
+        guard let envPath = Bundle.module.path(forResource: "data-env", ofType: "json")
+                ?? Bundle.main.path(forResource: "data-env", ofType: "json") else {
             fatalError("Could not find environment file.")
         }
         guard let data = try? Data(

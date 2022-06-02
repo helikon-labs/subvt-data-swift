@@ -13,7 +13,7 @@ Please visit the [top-level Subvt repository](https://github.com/helikon-labs/su
 
 ## Build & Test
 
-- Rename the file `Sources/SubVTData/Resources/env-example.json` to `env.json`, and edit the file contents with the service host and port details.
+- Rename the file `Sources/SubVTData/Resources/data-env-example.json` to `data-env.json`, and edit the file contents with the service host and port details.
 - Run `swift test` in the root folder to test.
 - Run `swift build` in the root folder to build.
 
@@ -27,8 +27,8 @@ let package = Package(
     dependencies: [
         // ...
         .package(
-            url: "https://github.com/helikon-labs/subvt-data-ios.git",
-            .upToNextMinor(from: "0.2.1")
+            url: "https://github.com/helikon-labs/subvt-data-swift.git",
+            .upToNextMinor(from: "0.2.4")
         )
     ],
     targets: [
@@ -36,7 +36,7 @@ let package = Package(
             name = "YourTarget",
             dependencies: [
                 // ...
-                .product(name: "SubVTData", package: "subvt-data-ios"),
+                .product(name: "SubVTData", package: "subvt-data-swift"),
                 // ...
             ],
             // ...

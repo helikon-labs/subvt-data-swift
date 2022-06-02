@@ -63,8 +63,8 @@ let package = Package(
                 .product(name: "Logging", package: "swift-log")
             ],
             resources: [
-                .copy("Resources/env.json"),
-                .copy("Resources/env-example.json"),
+                .copy("Resources/data-env.json"),
+                .copy("Resources/data-env-example.json"),
             ]
         ),
         .testTarget(
