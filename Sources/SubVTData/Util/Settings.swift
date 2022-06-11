@@ -11,6 +11,7 @@ private func getEnvValue<T>(_ json: [String: AnyObject], _ key: String) -> T {
 struct Settings {
     static let shared = Settings()
     let apiHost: String
+    let rpcHost: String
     let networkStatusServicePort: UInt16
     let activeValidatorListServicePort: UInt16
     let inactiveValidatorListServicePort: UInt16
@@ -40,6 +41,7 @@ struct Settings {
         }
         // read data
         apiHost = getEnvValue(json, "apiHost")
+        rpcHost = getEnvValue(json, "rpcHost")
         networkStatusServicePort = getEnvValue(json, "networkStatusServicePort")
         activeValidatorListServicePort = getEnvValue(json, "activeValidatorListServicePort")
         inactiveValidatorListServicePort = getEnvValue(json, "inactiveValidatorListServicePort")

@@ -4,7 +4,7 @@
 public class ValidatorDetailsService: RPCSubscriptionService<ValidatorDetailsUpdate> {
     public init() {
         super.init(
-            host: Settings.shared.apiHost,
+            host: Settings.shared.rpcHost,
             port: Settings.shared.validatorDetailsServicePort,
             subscribeMethod: "subscribe_validatorDetails",
             unsubscribeMethod: "unsubscribe_validatorDetails"

@@ -4,7 +4,7 @@
 public class ValidatorListService: RPCSubscriptionService<ValidatorListUpdate> {
     public init(active: Bool) {
         super.init(
-            host: Settings.shared.apiHost,
+            host: Settings.shared.rpcHost,
             port: active
                 ? Settings.shared.activeValidatorListServicePort
                 : Settings.shared.inactiveValidatorListServicePort,

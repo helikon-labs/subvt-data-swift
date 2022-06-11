@@ -38,6 +38,7 @@ jobs:
           echo
           echo "{" >> data-env.json
           echo "    ${dqt}apiHost${dqt}: $API_HOST," >> data-env.json
+          echo "    ${dqt}rpcHost${dqt}: $RPC_HOST," >> data-env.json
           echo "    ${dqt}networkStatusServicePort${dqt}: $NETWORK_STATUS_SERVICE_PORT," >> data-env.json
           echo "    ${dqt}activeValidatorListServicePort${dqt}: $ACTIVE_VALIDATOR_LIST_SERVICE_PORT," >> data-env.json
           echo "    ${dqt}inactiveValidatorListServicePort${dqt}: $INACTIVE_VALIDATOR_LIST_SERVICE_PORT," >> data-env.json

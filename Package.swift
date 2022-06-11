@@ -20,32 +20,32 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/Alamofire/Alamofire.git",
-            .upToNextMajor(from: "5.0.0")
+            .upToNextMinor(from: "5.6.1")
         ),
         .package(
             url: "https://github.com/konkab/AlamofireNetworkActivityLogger.git",
-            .upToNextMajor(from: "3.4.0")
+            .upToNextMinor(from: "3.4.0")
         ),
         .package(
             url: "https://github.com/attaswift/BigInt.git",
-            .upToNextMajor(from: "5.3.0")
+            .upToNextMinor(from: "5.3.0")
         ),
         .package(
             url: "https://github.com/kishikawakatsumi/KeychainAccess.git",
-            .upToNextMajor(from: "4.0.0")
+            .upToNextMinor(from: "4.2.2")
         ),
         .package(
             name: "secp256k1",
             url: "https://github.com/GigaBitcoin/secp256k1.swift.git",
-            .upToNextMajor(from: "0.3.4")
+            .upToNextMinor(from: "0.4.0")
         ),
         .package(
             url: "https://github.com/daltoniam/Starscream.git",
-            .upToNextMajor(from: "4.0.0")
+            .upToNextMinor(from: "4.0.4")
         ),
         .package(
             url: "https://github.com/apple/swift-log.git",
-            .upToNextMajor(from: "1.0.0")
+            .upToNextMinor(from: "1.4.2")
         )
     ],
     targets: [

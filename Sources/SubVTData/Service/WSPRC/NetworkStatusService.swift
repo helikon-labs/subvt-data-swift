@@ -4,7 +4,7 @@
 public class NetworkStatusService: RPCSubscriptionService<NetworkStatusUpdate> {
     public init() {
         super.init(
-            host: Settings.shared.apiHost,
+            host: Settings.shared.rpcHost,
             port: Settings.shared.networkStatusServicePort,
             subscribeMethod: "subscribe_networkStatus",
             unsubscribeMethod: "unsubscribe_networkStatus"
