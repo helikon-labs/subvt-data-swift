@@ -25,6 +25,7 @@ jobs:
       - name: Create data-env.json file
         env:
           API_HOST: ${{ secrets.API_HOST }}
+          RPC_HOST: ${{ secrets.RPC_HOST }}
           NETWORK_STATUS_SERVICE_PORT: ${{ secrets.NETWORK_STATUS_SERVICE_PORT }}
           ACTIVE_VALIDATOR_LIST_SERVICE_PORT: ${{ secrets.ACTIVE_VALIDATOR_LIST_SERVICE_PORT }}
           INACTIVE_VALIDATOR_LIST_SERVICE_PORT: ${{ secrets.INACTIVE_VALIDATOR_LIST_SERVICE_PORT }}
