@@ -23,6 +23,52 @@ public struct ValidatorSummary: Codable {
     public let rewardPoints: UInt64?
     public let heartbeatReceived: Bool?
     public let validatorStake: ValidatorStakeSummary?
+    
+    public init(
+        accountId: AccountId,
+        controllerAccountId: AccountId?,
+        display: String?,
+        parentDisplay: String?,
+        childDisplay: String?,
+        confirmed: Bool,
+        preferences: ValidatorPreferences,
+        selfStake: StakeSummary,
+        isActive: Bool,
+        activeNextSession: Bool,
+        inactiveNominations: InactiveNominationsSummary,
+        oversubscribed: Bool,
+        slashCount: Int,
+        isEnrolledIn1Kv: Bool,
+        isParaValidator: Bool,
+        paraId: Int?,
+        returnRatePerBillion: UInt64?,
+        blocksAuthored: Int?,
+        rewardPoints: UInt64?,
+        heartbeatReceived: Bool?,
+        validatorStake: ValidatorStakeSummary?
+    ) {
+        self.accountId = accountId
+        self.controllerAccountId = controllerAccountId
+        self.display = display
+        self.parentDisplay = parentDisplay
+        self.childDisplay = childDisplay
+        self.confirmed = confirmed
+        self.preferences = preferences
+        self.selfStake = selfStake
+        self.isActive = isActive
+        self.activeNextSession = activeNextSession
+        self.inactiveNominations = inactiveNominations
+        self.oversubscribed = oversubscribed
+        self.slashCount = slashCount
+        self.isEnrolledIn1Kv = isEnrolledIn1Kv
+        self.isParaValidator = isParaValidator
+        self.paraId = paraId
+        self.returnRatePerBillion = returnRatePerBillion
+        self.blocksAuthored = blocksAuthored
+        self.rewardPoints = rewardPoints
+        self.heartbeatReceived = heartbeatReceived
+        self.validatorStake = validatorStake
+    }
 }
 
 public struct ValidatorSummaryDiff: Codable {
@@ -47,6 +93,52 @@ public struct ValidatorSummaryDiff: Codable {
     public let rewardPoints: UInt64?
     public let heartbeatReceived: Bool?
     public let validatorStake: ValidatorStakeSummary?
+    
+    public init(
+        accountId: AccountId,
+        controllerAccountId: AccountId?,
+        display: String?,
+        parentDisplay: String?,
+        childDisplay: String?,
+        confirmed: Bool?,
+        preferences: ValidatorPreferences?,
+        selfStake: StakeSummary?,
+        isActive: Bool?,
+        activeNextSession: Bool?,
+        inactiveNominations: InactiveNominationsSummary?,
+        oversubscribed: Bool?,
+        slashCount: Int?,
+        isEnrolledIn1Kv: Bool?,
+        isParaValidator: Bool?,
+        paraId: Int?,
+        returnRatePerBillion: UInt64?,
+        blocksAuthored: Int?,
+        rewardPoints: UInt64?,
+        heartbeatReceived: Bool?,
+        validatorStake: ValidatorStakeSummary?
+    ) {
+        self.accountId = accountId
+        self.controllerAccountId = controllerAccountId
+        self.display = display
+        self.parentDisplay = parentDisplay
+        self.childDisplay = childDisplay
+        self.confirmed = confirmed
+        self.preferences = preferences
+        self.selfStake = selfStake
+        self.isActive = isActive
+        self.activeNextSession = activeNextSession
+        self.inactiveNominations = inactiveNominations
+        self.oversubscribed = oversubscribed
+        self.slashCount = slashCount
+        self.isEnrolledIn1Kv = isEnrolledIn1Kv
+        self.isParaValidator = isParaValidator
+        self.paraId = paraId
+        self.returnRatePerBillion = returnRatePerBillion
+        self.blocksAuthored = blocksAuthored
+        self.rewardPoints = rewardPoints
+        self.heartbeatReceived = heartbeatReceived
+        self.validatorStake = validatorStake
+    }
 }
 
 public struct ValidatorListUpdate: Codable {
@@ -54,4 +146,16 @@ public struct ValidatorListUpdate: Codable {
     public let insert: [ValidatorSummary]
     public let update: [ValidatorSummaryDiff]
     public let removeIds: [String]
+    
+    public init(
+        finalizedBlockNumber: UInt64?,
+        insert: [ValidatorSummary],
+        update: [ValidatorSummaryDiff],
+        removeIds: [String]
+    ) {
+        self.finalizedBlockNumber = finalizedBlockNumber
+        self.insert = insert
+        self.update = update
+        self.removeIds = removeIds
+    }
 }

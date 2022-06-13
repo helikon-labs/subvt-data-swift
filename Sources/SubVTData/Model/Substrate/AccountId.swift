@@ -6,7 +6,11 @@ import Foundation
 public struct AccountId: CustomStringConvertible {
     let bytes: [UInt8]
     
-    init(hex: String) {
+    public init(bytes: [UInt8]) {
+        self.bytes = bytes
+    }
+    
+    public init(hex: String) {
         if hex.starts(with: "0x") {
             bytes = hex.dropFirst(2).hexBytes
         } else {
@@ -18,9 +22,7 @@ public struct AccountId: CustomStringConvertible {
         )
     }
     
-    
-    
-    func toHex() -> String {
+    public func toHex() -> String {
         return "0x" + bytes.map {
             String(format: "%02hhX", $0)
         }.joined()

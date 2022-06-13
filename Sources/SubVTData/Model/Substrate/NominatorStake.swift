@@ -4,6 +4,14 @@
 public struct NominatorStake {
     public let account: Account
     public let stake: Balance
+    
+    public init(
+        account: Account,
+        stake: Balance
+    ) {
+        self.account = account
+        self.stake = stake
+    }
 }
 
 extension NominatorStake: Codable {}

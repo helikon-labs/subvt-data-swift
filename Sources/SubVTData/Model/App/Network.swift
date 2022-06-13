@@ -14,6 +14,34 @@ public struct Network {
     public let validatorDetailsServiceURL: String?
     public let activeValidatorListServiceURL: String?
     public let inactiveValidatorListServiceURL: String?
+    
+    public init(
+        id: UInt64,
+        hash: String,
+        chain: String,
+        display: String,
+        ss58Prefix: UInt32,
+        tokenTicker: String,
+        tokenDecimalCount: UInt8,
+        networkStatusServiceURL: String?,
+        reportServiceURL: String?,
+        validatorDetailsServiceURL: String?,
+        activeValidatorListServiceURL: String?,
+        inactiveValidatorListServiceURL: String?
+    ) {
+        self.id = id
+        self.hash = hash
+        self.chain = chain
+        self.display = display
+        self.ss58Prefix = ss58Prefix
+        self.tokenTicker = tokenTicker
+        self.tokenDecimalCount = tokenDecimalCount
+        self.networkStatusServiceURL = networkStatusServiceURL
+        self.reportServiceURL = reportServiceURL
+        self.validatorDetailsServiceURL = validatorDetailsServiceURL
+        self.activeValidatorListServiceURL = activeValidatorListServiceURL
+        self.inactiveValidatorListServiceURL = inactiveValidatorListServiceURL
+    }
 }
 
 extension Network: Codable {

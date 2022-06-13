@@ -5,6 +5,16 @@ public struct Stake {
     public let stashAccountId: AccountId
     public let totalAmount: Balance
     public let activeAmount: Balance
+    
+    public init(
+        stashAccountId: AccountId,
+        totalAmount: Balance,
+        activeAmount: Balance
+    ) {
+        self.stashAccountId = stashAccountId
+        self.totalAmount = totalAmount
+        self.activeAmount = activeAmount
+    }
 }
 
 extension Stake: Codable {}
@@ -12,6 +22,14 @@ extension Stake: Codable {}
 public struct StakeSummary {
     public let stashAccountId: AccountId
     public let activeAmount: Balance
+    
+    public init(
+        stashAccountId: AccountId,
+        activeAmount: Balance
+    ) {
+        self.stashAccountId = stashAccountId
+        self.activeAmount = activeAmount
+    }
 }
 
 extension StakeSummary: Codable {}
