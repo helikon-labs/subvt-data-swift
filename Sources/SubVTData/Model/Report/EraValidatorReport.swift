@@ -1,7 +1,7 @@
 /**
  Report for a single era-validator.
  */
-public struct EraValidatorReport: Codable {
+public struct EraValidatorReport {
     public let era: Era
     public let isActive: Bool?
     public let commissionPerBillion: UInt64?
@@ -15,3 +15,5 @@ public struct EraValidatorReport: Codable {
     public let slashedAmount: Balance
     public let chillingCount: UInt16
 }
+
+extension EraValidatorReport: Codable {}

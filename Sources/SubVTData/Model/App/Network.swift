@@ -1,7 +1,7 @@
 /**
  SubVT Substrate network model.
  */
-public struct Network: Codable {
+public struct Network {
     public let id: UInt64
     public let hash: String
     public let chain: String
@@ -14,7 +14,9 @@ public struct Network: Codable {
     public let validatorDetailsServiceURL: String?
     public let activeValidatorListServiceURL: String?
     public let inactiveValidatorListServiceURL: String?
-    
+}
+
+extension Network: Codable {
     private enum CodingKeys: String, CodingKey {
         case id
         case hash

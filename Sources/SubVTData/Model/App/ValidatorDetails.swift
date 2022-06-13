@@ -1,7 +1,7 @@
 /**
  Returned by the validatod details service right after the initial subscription.
  */
-public struct ValidatorDetails: Codable {
+public struct ValidatorDetails {
     public let account: Account
     public let controllerAccountId: AccountId
     public let preferences: ValidatorPreferences
@@ -33,11 +33,13 @@ public struct ValidatorDetails: Codable {
     public let onekvOfflineSince: UInt64?
 }
 
+extension ValidatorDetails: Codable {}
+
 /**
  Subsequent data from the validator details service, reflecting the changes
  to the previous state.
  */
-public struct ValidatorDetailsDiff: Codable {
+public struct ValidatorDetailsDiff {
     public let account: Account
     public let controllerAccountId: AccountId?
     public let preferences: ValidatorPreferences?
@@ -69,8 +71,12 @@ public struct ValidatorDetailsDiff: Codable {
     public let onekvOfflineSince: UInt64?
 }
 
-public struct ValidatorDetailsUpdate: Codable {
+extension ValidatorDetailsDiff: Codable {}
+
+public struct ValidatorDetailsUpdate {
     public let finalizedBlockNumber: UInt64?
     public let validatorDetails: ValidatorDetails?
     public let validatorDetailsUpdate: ValidatorDetailsDiff?
 }
+
+extension ValidatorDetailsUpdate: Codable {}

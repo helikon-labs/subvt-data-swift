@@ -1,7 +1,7 @@
 /**
  Used when creating a new notification rule for the user.
  */
-public struct CreateUserNotificationRuleRequest: Codable {
+public struct CreateUserNotificationRuleRequest {
     public let notificationTypeCode: String
     public let name: String?
     public let networkId: UInt64?
@@ -14,10 +14,12 @@ public struct CreateUserNotificationRuleRequest: Codable {
     public let notes: String?
 }
 
+extension CreateUserNotificationRuleRequest: Codable {}
+
 /**
  Actual parameter for a rule - returned by the GET rule service.
  */
-public struct UserNotificationRuleParameter: Codable {
+public struct UserNotificationRuleParameter {
     public let userNotificationRuleId: UInt64
     public let parameterTypeId: UInt64
     public let parameterTypeCode: String
@@ -25,18 +27,22 @@ public struct UserNotificationRuleParameter: Codable {
     public let value: String
 }
 
+extension UserNotificationRuleParameter: Codable {}
+
 /**
  Used in the request to create a new notification rule for the user.
  */
-public struct NewUserNotificationRuleParameter: Codable {
+public struct NewUserNotificationRuleParameter {
     public let parameterTypeId: UInt64
     public let value: String
 }
 
+extension NewUserNotificationRuleParameter: Codable {}
+
 /**
  Returned by the GETter service for the user's notification rules.
  */
-public struct UserNotificationRule: Codable {
+public struct UserNotificationRule {
     public let id: UInt64
     public let userId: UInt64
     public let notificationType: NotificationType
@@ -50,3 +56,5 @@ public struct UserNotificationRule: Codable {
     public let parameters: [UserNotificationRuleParameter]
     public let notes: String?
 }
+
+extension UserNotificationRule: Codable {}

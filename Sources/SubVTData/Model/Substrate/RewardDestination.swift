@@ -1,10 +1,12 @@
-public enum RewardDestination: Codable {
+public enum RewardDestination {
     case account(accountId: AccountId)
     case controller
     case none
     case staked
     case stash
-    
+}
+
+extension RewardDestination: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let value = try container.decode(String.self)
@@ -48,5 +50,3 @@ public enum RewardDestination: Codable {
         }
     }
 }
-
-

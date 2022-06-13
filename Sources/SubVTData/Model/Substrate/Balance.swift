@@ -5,9 +5,11 @@ import BigInt
  Represented by the BigUInt type in the Swift domain.
  Contains code/decode logic.
  */
-public struct Balance: Codable {
+public struct Balance {
     public let value: BigUInt
-    
+}
+
+extension Balance: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let double = try container.decode(Double.self)

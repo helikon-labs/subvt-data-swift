@@ -3,7 +3,7 @@
  */
 import Foundation
 
-public struct AccountId: CustomStringConvertible, Codable {
+public struct AccountId: CustomStringConvertible {
     let bytes: [UInt8]
     
     init(hex: String) {
@@ -18,11 +18,7 @@ public struct AccountId: CustomStringConvertible, Codable {
         )
     }
     
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let hex = try container.decode(String.self)
-        self.init(hex: hex)
-    }
+    
     
     func toHex() -> String {
         return "0x" + bytes.map {
@@ -32,6 +28,14 @@ public struct AccountId: CustomStringConvertible, Codable {
     
     public var description: String {
         return toHex()
+    }
+}
+
+extension AccountId: Codable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let hex = try container.decode(String.self)
+        self.init(hex: hex)
     }
     
     public func encode(to encoder: Encoder) throws {

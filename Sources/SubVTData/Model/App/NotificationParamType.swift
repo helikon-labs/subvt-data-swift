@@ -10,7 +10,7 @@ public enum NotificationParamDataType: String, Codable {
  Notification parameter type.
  These types are predefined in the SubVT database.
  */
-public struct NotificationParamType: Codable {
+public struct NotificationParamType {
     public let id: UInt64
     public let notificationTypeCode: String
     public let order: UInt8
@@ -20,3 +20,5 @@ public struct NotificationParamType: Codable {
     public let max: String?
     public let isOptional: Bool
 }
+
+extension NotificationParamType: Codable {}

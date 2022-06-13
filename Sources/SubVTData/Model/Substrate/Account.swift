@@ -1,7 +1,7 @@
 /**
  A Substrate account as represented in the SubVT system.
  */
-public struct Account: Codable {
+public struct Account {
     public let id: AccountId
     public let identity: IdentityRegistration?
     public let parent: Box<Account>?
@@ -9,6 +9,8 @@ public struct Account: Codable {
     public let discoveredAt: UInt64?
     public let killedAt: UInt64?
 }
+
+extension Account: Codable {}
 
 public class Box<T: Codable>: Codable {
     public let boxed: T
