@@ -9,6 +9,10 @@ public final class ReportService: BaseRESTService {
         super.init(baseURL: Settings.shared.reportServiceURL)
     }
     
+    public override init(baseURL: String) {
+        super.init(baseURL: baseURL)
+    }
+    
     public func getEraReport(
         startEraIndex: Int,
         endEraIndex: UInt? = nil

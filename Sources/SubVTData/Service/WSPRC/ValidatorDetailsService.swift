@@ -10,4 +10,16 @@ public class ValidatorDetailsService: RPCSubscriptionService<ValidatorDetailsUpd
             unsubscribeMethod: "unsubscribe_validatorDetails"
         )
     }
+    
+    public init(
+        rpcHost: String,
+        rpcPort: UInt16
+    ) {
+        super.init(
+            host: rpcHost,
+            port: rpcPort,
+            subscribeMethod: "subscribe_validatorDetails",
+            unsubscribeMethod: "unsubscribe_validatorDetails"
+        )
+    }
 }

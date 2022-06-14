@@ -9,6 +9,10 @@ public final class AppService: BaseRESTService {
         super.init(baseURL: Settings.shared.appServiceURL)
     }
     
+    public override init(baseURL: String) {
+        super.init(baseURL: baseURL)
+    }
+    
     public func getNetworks() -> ServiceResponsePublisher<[Network]> {
         return perform(path: "/network", method: .get)
     }
