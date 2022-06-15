@@ -9,11 +9,16 @@ public struct Network {
     public let ss58Prefix: UInt32
     public let tokenTicker: String
     public let tokenDecimalCount: UInt8
-    public let networkStatusServiceURL: String?
-    public let reportServiceURL: String?
-    public let validatorDetailsServiceURL: String?
-    public let activeValidatorListServiceURL: String?
-    public let inactiveValidatorListServiceURL: String?
+    public let networkStatusServiceHost: String?
+    public let networkStatusServicePort: UInt16?
+    public let reportServiceHost: String?
+    public let reportServicePort: UInt16?
+    public let validatorDetailsServiceHost: String?
+    public let validatorDetailsServicePort: UInt16?
+    public let activeValidatorListServiceHost: String?
+    public let activeValidatorListServicePort: UInt16?
+    public let inactiveValidatorListServiceHost: String?
+    public let inactiveValidatorListServicePort: UInt16?
     
     public init(
         id: UInt64,
@@ -23,11 +28,16 @@ public struct Network {
         ss58Prefix: UInt32,
         tokenTicker: String,
         tokenDecimalCount: UInt8,
-        networkStatusServiceURL: String?,
-        reportServiceURL: String?,
-        validatorDetailsServiceURL: String?,
-        activeValidatorListServiceURL: String?,
-        inactiveValidatorListServiceURL: String?
+        networkStatusServiceHost: String?,
+        networkStatusServicePort: UInt16?,
+        reportServiceHost: String?,
+        reportServicePort: UInt16?,
+        validatorDetailsServiceHost: String?,
+        validatorDetailsServicePort: UInt16?,
+        activeValidatorListServiceHost: String?,
+        activeValidatorListServicePort: UInt16?,
+        inactiveValidatorListServiceHost: String?,
+        inactiveValidatorListServicePort: UInt16?
     ) {
         self.id = id
         self.hash = hash
@@ -36,27 +46,17 @@ public struct Network {
         self.ss58Prefix = ss58Prefix
         self.tokenTicker = tokenTicker
         self.tokenDecimalCount = tokenDecimalCount
-        self.networkStatusServiceURL = networkStatusServiceURL
-        self.reportServiceURL = reportServiceURL
-        self.validatorDetailsServiceURL = validatorDetailsServiceURL
-        self.activeValidatorListServiceURL = activeValidatorListServiceURL
-        self.inactiveValidatorListServiceURL = inactiveValidatorListServiceURL
+        self.networkStatusServiceHost = networkStatusServiceHost
+        self.networkStatusServicePort = networkStatusServicePort
+        self.reportServiceHost = reportServiceHost
+        self.reportServicePort = reportServicePort
+        self.validatorDetailsServiceHost = validatorDetailsServiceHost
+        self.validatorDetailsServicePort = validatorDetailsServicePort
+        self.activeValidatorListServiceHost = activeValidatorListServiceHost
+        self.activeValidatorListServicePort = activeValidatorListServicePort
+        self.inactiveValidatorListServiceHost = inactiveValidatorListServiceHost
+        self.inactiveValidatorListServicePort = inactiveValidatorListServicePort
     }
 }
 
-extension Network: Codable {
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case hash
-        case chain
-        case display
-        case ss58Prefix
-        case tokenTicker
-        case tokenDecimalCount
-        case networkStatusServiceURL = "networkStatusServiceUrl"
-        case reportServiceURL = "reportServiceUrl"
-        case validatorDetailsServiceURL = "validatorDetailsServiceUrl"
-        case activeValidatorListServiceURL = "activeValidatorListServiceUrl"
-        case inactiveValidatorListServiceURL = "inactiveValidatorListServiceUrl"
-    }
-}
+extension Network: Codable {}
