@@ -1,7 +1,7 @@
 /**
  Era staker account id, total staked amount and active amount.
  */
-public struct Stake {
+public struct Stake: Hashable {
     public let stashAccountId: AccountId
     public let totalAmount: Balance
     public let activeAmount: Balance
@@ -19,7 +19,7 @@ public struct Stake {
 
 extension Stake: Codable {}
 
-public struct StakeSummary {
+public struct StakeSummary: Hashable {
     public let stashAccountId: AccountId
     public let activeAmount: Balance
     

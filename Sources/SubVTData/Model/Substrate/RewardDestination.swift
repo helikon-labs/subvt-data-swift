@@ -1,4 +1,4 @@
-public enum RewardDestination {
+public enum RewardDestination: Hashable {
     case account(accountId: AccountId)
     case controller
     case none

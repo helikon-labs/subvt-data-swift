@@ -5,7 +5,7 @@ import BigInt
  Represented by the BigUInt type in the Swift domain.
  Contains code/decode logic.
  */
-public struct Balance {
+public struct Balance: Hashable {
     public let value: BigUInt
     
     public init(value: BigUInt) {

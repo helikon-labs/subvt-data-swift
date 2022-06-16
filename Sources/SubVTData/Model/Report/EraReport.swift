@@ -1,7 +1,7 @@
 /**
  Report for a single era.
  */
-public struct EraReport {
+public struct EraReport: Hashable {
     public let era: Era
     public let minimumStake: Balance?
     public let maximumStake: Balance?

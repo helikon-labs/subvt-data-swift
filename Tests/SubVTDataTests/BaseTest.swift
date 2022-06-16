@@ -12,7 +12,7 @@ class BaseTest: XCTestCase {
  
     func testServiceCall<T>(
         publisher: ServiceResponsePublisher<T>,
-        timeoutSec: Double = 10,
+        timeoutSec: Double = 15,
         afterCall: ((T?, APIError?) -> ())? = nil
     ) {
         let expectation = self.expectation(description: "")

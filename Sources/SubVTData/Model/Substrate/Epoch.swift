@@ -1,7 +1,7 @@
 /**
  Substrate epoch as represented in the SubVT system.
  */
-public struct Epoch {
+public struct Epoch: Hashable {
     public let index: UInt32
     public let startBlockNumber: UInt64
     public let startTimestamp: UInt64

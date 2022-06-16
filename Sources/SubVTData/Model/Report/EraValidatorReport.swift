@@ -1,7 +1,7 @@
 /**
  Report for a single era-validator.
  */
-public struct EraValidatorReport {
+public struct EraValidatorReport: Hashable {
     public let era: Era
     public let isActive: Bool?
     public let commissionPerBillion: UInt64?

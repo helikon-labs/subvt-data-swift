@@ -1,7 +1,7 @@
 /**
  A Substrate account as represented in the SubVT system.
  */
-public struct Account {
+public struct Account: Hashable {
     public let id: AccountId
     public let identity: IdentityRegistration?
     public let parent: Box<Account>?
@@ -28,7 +28,7 @@ public struct Account {
 
 extension Account: Codable {}
 
-public class Box<T: Codable>: Codable {
+public class Box<T: Codable & Hashable>: Codable, Hashable {
     public let boxed: T
     public init(_ thingToBox: T) { boxed = thingToBox }
     
@@ -38,5 +38,13 @@ public class Box<T: Codable>: Codable {
     
     public func encode(to encoder: Encoder) throws {
         try boxed.encode(to: encoder)
+    }
+    
+    public static func == (lhs: Box<T>, rhs: Box<T>) -> Bool {
+        lhs.boxed.hashValue == rhs.boxed.hashValue
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.boxed.hashValue)
     }
 }

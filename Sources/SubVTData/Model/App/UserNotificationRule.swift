@@ -1,7 +1,7 @@
 /**
  Used when creating a new notification rule for the user.
  */
-public struct CreateUserNotificationRuleRequest {
+public struct CreateUserNotificationRuleRequest: Hashable {
     public let notificationTypeCode: String
     public let name: String?
     public let networkId: UInt64?
@@ -42,7 +42,7 @@ extension CreateUserNotificationRuleRequest: Codable {}
 /**
  Actual parameter for a rule - returned by the GET rule service.
  */
-public struct UserNotificationRuleParameter {
+public struct UserNotificationRuleParameter: Hashable {
     public let userNotificationRuleId: UInt64
     public let parameterTypeId: UInt64
     public let parameterTypeCode: String
@@ -69,7 +69,7 @@ extension UserNotificationRuleParameter: Codable {}
 /**
  Used in the request to create a new notification rule for the user.
  */
-public struct NewUserNotificationRuleParameter {
+public struct NewUserNotificationRuleParameter: Hashable {
     public let parameterTypeId: UInt64
     public let value: String
     
@@ -84,7 +84,7 @@ extension NewUserNotificationRuleParameter: Codable {}
 /**
  Returned by the GETter service for the user's notification rules.
  */
-public struct UserNotificationRule {
+public struct UserNotificationRule: Hashable {
     public let id: UInt64
     public let userId: UInt64
     public let notificationType: NotificationType

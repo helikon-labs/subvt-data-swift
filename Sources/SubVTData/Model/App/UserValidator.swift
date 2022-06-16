@@ -1,7 +1,7 @@
 /**
  One of the user's validators.
  */
-public struct UserValidator {
+public struct UserValidator: Hashable {
     public let id: UInt64
     public let userId: UInt64
     public let networkId: UInt64
@@ -22,7 +22,7 @@ public struct UserValidator {
 
 extension UserValidator: Codable {}
 
-public struct NewUserValidator {
+public struct NewUserValidator: Hashable {
     public let networkId: UInt64
     public let validatorAccountId: AccountId
     

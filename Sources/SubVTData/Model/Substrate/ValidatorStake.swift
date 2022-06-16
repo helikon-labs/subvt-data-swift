@@ -1,7 +1,7 @@
 /**
  Complete staking information for an active validator account.
  */
-public struct ValidatorStake {
+public struct ValidatorStake: Hashable {
     public let account: Account
     public let selfStake: Balance
     public let totalStake: Balance
@@ -22,7 +22,7 @@ public struct ValidatorStake {
 
 extension ValidatorStake: Codable {}
 
-public struct ValidatorStakeSummary {
+public struct ValidatorStakeSummary: Hashable {
     public let selfStake: Balance
     public let totalStake: Balance
     public let nominatorCount: Int

@@ -1,4 +1,4 @@
-public enum NotificationParamDataType: String, Codable {
+public enum NotificationParamDataType: String, Codable, Hashable {
     case string,
          integer,
          balance,
@@ -10,7 +10,7 @@ public enum NotificationParamDataType: String, Codable {
  Notification parameter type.
  These types are predefined in the SubVT database.
  */
-public struct NotificationParamType {
+public struct NotificationParamType: Hashable {
     public let id: UInt64
     public let notificationTypeCode: String
     public let order: UInt8

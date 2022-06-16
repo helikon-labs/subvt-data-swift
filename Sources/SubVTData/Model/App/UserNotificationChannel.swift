@@ -1,7 +1,7 @@
 /**
  One of the user's notification channels.
  */
-public struct UserNotificationChannel {
+public struct UserNotificationChannel: Hashable {
     public let id: UInt64
     public let userId: UInt64
     public let channel: NotificationChannel
@@ -22,7 +22,7 @@ public struct UserNotificationChannel {
 
 extension UserNotificationChannel: Codable {}
 
-public struct NewUserNotificationChannel {
+public struct NewUserNotificationChannel: Hashable {
     public let channel: NotificationChannel
     public let target: String
     

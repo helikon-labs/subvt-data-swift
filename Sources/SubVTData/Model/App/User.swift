@@ -1,7 +1,7 @@
 /**
  A SubVT user defined by her public key (hex string).
  */
-public struct User {
+public struct User: Hashable {
     public let id: UInt64
     public let publicKeyHex: String
     

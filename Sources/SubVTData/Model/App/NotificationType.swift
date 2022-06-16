@@ -1,7 +1,7 @@
 /**
  Notification type and its parameters types.
  */
-public struct NotificationType {
+public struct NotificationType: Hashable {
     public let code: String
     public let paramTypes: [NotificationParamType]
     

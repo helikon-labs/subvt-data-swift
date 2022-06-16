@@ -1,7 +1,7 @@
 /**
  Account and total stake.
  */
-public struct NominatorStake {
+public struct NominatorStake: Hashable {
     public let account: Account
     public let stake: Balance
     

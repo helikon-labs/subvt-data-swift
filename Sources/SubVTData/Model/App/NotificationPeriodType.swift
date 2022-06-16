@@ -1,4 +1,4 @@
-public enum NotificationPeriodType: String, Codable {
+public enum NotificationPeriodType: String, Codable, Hashable {
     case immediate,
          hour,
          day,

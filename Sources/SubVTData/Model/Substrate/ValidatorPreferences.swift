@@ -1,7 +1,7 @@
 /**
  Validate intention parameters.
  */
-public struct ValidatorPreferences {
+public struct ValidatorPreferences: Hashable {
     public let commissionPerBillion: UInt64
     public let blocksNominations: Bool
     

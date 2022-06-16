@@ -1,7 +1,7 @@
 /**
  SubVT Substrate network model.
  */
-public struct Network {
+public struct Network: Hashable {
     public let id: UInt64
     public let hash: String
     public let chain: String

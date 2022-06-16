@@ -1,7 +1,7 @@
 /**
  Nominator, stake an nominees.
  */
-public struct Nomination {
+public struct Nomination: Hashable {
     public let stashAccount: Account
     public let submissionEraIndex: Int
     public let targetAccountIds: [String]
@@ -23,7 +23,7 @@ public struct Nomination {
 extension Nomination: Codable {}
 
 
-public struct InactiveNominationsSummary {
+public struct InactiveNominationsSummary: Hashable {
     public let nominationCount: Int
     public let totalAmount: Balance
     

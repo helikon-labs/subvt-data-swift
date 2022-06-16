@@ -1,7 +1,7 @@
 /**
  Returned by the validatod details service right after the initial subscription.
  */
-public struct ValidatorDetails {
+public struct ValidatorDetails: Hashable {
     public let account: Account
     public let controllerAccountId: AccountId
     public let preferences: ValidatorPreferences
@@ -101,7 +101,7 @@ extension ValidatorDetails: Codable {}
  Subsequent data from the validator details service, reflecting the changes
  to the previous state.
  */
-public struct ValidatorDetailsDiff {
+public struct ValidatorDetailsDiff: Hashable {
     public let account: Account
     public let controllerAccountId: AccountId?
     public let preferences: ValidatorPreferences?

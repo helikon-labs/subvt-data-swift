@@ -3,7 +3,7 @@
  */
 import Foundation
 
-public struct AccountId: CustomStringConvertible {
+public struct AccountId: CustomStringConvertible, Hashable {
     let bytes: [UInt8]
     
     public init(bytes: [UInt8]) {

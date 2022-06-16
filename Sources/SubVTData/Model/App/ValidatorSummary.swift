@@ -1,7 +1,7 @@
 /**
  A validator represented by the active or inactive validator details service.
  */
-public struct ValidatorSummary: Codable {
+public struct ValidatorSummary: Codable, Hashable {
     public let accountId: AccountId
     public let controllerAccountId: AccountId?
     public let display: String?
@@ -71,7 +71,7 @@ public struct ValidatorSummary: Codable {
     }
 }
 
-public struct ValidatorSummaryDiff: Codable {
+public struct ValidatorSummaryDiff: Codable, Hashable {
     public let accountId: AccountId
     public let controllerAccountId: AccountId?
     public let display: String?
@@ -141,7 +141,7 @@ public struct ValidatorSummaryDiff: Codable {
     }
 }
 
-public struct ValidatorListUpdate: Codable {
+public struct ValidatorListUpdate: Codable, Hashable {
     public let finalizedBlockNumber: UInt64?
     public let insert: [ValidatorSummary]
     public let update: [ValidatorSummaryDiff]

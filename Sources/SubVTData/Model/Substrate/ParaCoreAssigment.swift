@@ -1,4 +1,4 @@
-public enum ParaAssignmentKind: String {
+public enum ParaAssignmentKind: String, Hashable {
     case parathread = "Parathread"
     case parachain = "Parachain"
 }
@@ -8,7 +8,7 @@ extension ParaAssignmentKind: Codable {}
 /**
  Parachain or paravalidator assignment.
  */
-public struct ParaCoreAssignment {
+public struct ParaCoreAssignment: Hashable {
     public let coreIndex: UInt32
     public let paraId: UInt32
     public let paraAssignmentKind: ParaAssignmentKind

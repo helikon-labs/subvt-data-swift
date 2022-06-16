@@ -1,7 +1,7 @@
 /**
  Returned by the network status service right after the initial subscription.
  */
-public struct NetworkStatus {
+public struct NetworkStatus: Hashable {
     public let finalizedBlockNumber: UInt64
     public let finalizedBlockHash: String
     public let bestBlockNumber: UInt64
@@ -62,7 +62,7 @@ extension NetworkStatus: Codable {}
  Subsequent data from the network status service, reflecting the changes
  to the previous state.
  */
-public struct NetworkStatusDiff {
+public struct NetworkStatusDiff: Hashable {
     public let finalizedBlockNumber: UInt64?
     public let finalizedBlockHash: String?
     public let bestBlockNumber: UInt64?
@@ -119,7 +119,7 @@ public struct NetworkStatusDiff {
 
 extension NetworkStatusDiff: Codable {}
 
-public struct NetworkStatusUpdate {
+public struct NetworkStatusUpdate: Hashable {
     public let network: String
     public let status: NetworkStatus?
     public let diff: NetworkStatusDiff?

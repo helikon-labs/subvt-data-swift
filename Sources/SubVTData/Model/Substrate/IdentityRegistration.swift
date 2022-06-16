@@ -1,7 +1,7 @@
 /**
  Account identity (can be non-existent for an account).
  */
-public struct IdentityRegistration {
+public struct IdentityRegistration: Hashable {
     public let display: String?
     public let email: String?
     public let riot: String?
