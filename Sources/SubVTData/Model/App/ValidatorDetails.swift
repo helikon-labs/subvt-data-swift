@@ -131,68 +131,6 @@ public struct ValidatorDetailsDiff: Hashable {
     public let onekvIsValid: Bool?
     public let onekvOnlineSince: UInt64?
     public let onekvOfflineSince: UInt64?
-    
-    public init(
-        account: Account,
-        controllerAccountId: AccountId?,
-        preferences: ValidatorPreferences?,
-        selfStake: Stake?,
-        rewardDestination: RewardDestination?,
-        nextSessionKeys: String?,
-        isActive: Bool?,
-        activeNextSession: Bool?,
-        nominations: [Nomination]?,
-        oversubscribed: Bool?,
-        activeEraCount: UInt32?,
-        inactiveEraCount: UInt32?,
-        slashCount: UInt32?,
-        offlineOffenceCount: UInt32?,
-        unclaimedEraIndices: [UInt32]?,
-        isParaValidator: Bool?,
-        paraCoreAssignment: ParaCoreAssignment?,
-        returnRatePerBillion: UInt64?,
-        blocksAuthored: UInt32?,
-        rewardPoints: UInt64?,
-        heartbeatReceived: Bool?,
-        validatorStake: ValidatorStake?,
-        onekvCandidateRecordId: UInt64?,
-        onekvBinaryVersion: String?,
-        onekvRank: UInt32?,
-        onekvLocation: String?,
-        onekvIsValid: Bool?,
-        onekvOnlineSince: UInt64?,
-        onekvOfflineSince: UInt64?
-    ) {
-        self.account = account
-        self.controllerAccountId = controllerAccountId
-        self.preferences = preferences
-        self.selfStake = selfStake
-        self.rewardDestination = rewardDestination
-        self.nextSessionKeys = nextSessionKeys
-        self.isActive = isActive
-        self.activeNextSession = activeNextSession
-        self.nominations = nominations
-        self.oversubscribed = oversubscribed
-        self.activeEraCount = activeEraCount
-        self.inactiveEraCount = inactiveEraCount
-        self.slashCount = slashCount
-        self.offlineOffenceCount = offlineOffenceCount
-        self.unclaimedEraIndices = unclaimedEraIndices
-        self.isParaValidator = isParaValidator
-        self.paraCoreAssignment = paraCoreAssignment
-        self.returnRatePerBillion = returnRatePerBillion
-        self.blocksAuthored = blocksAuthored
-        self.rewardPoints = rewardPoints
-        self.heartbeatReceived = heartbeatReceived
-        self.validatorStake = validatorStake
-        self.onekvCandidateRecordId = onekvCandidateRecordId
-        self.onekvBinaryVersion = onekvBinaryVersion
-        self.onekvRank = onekvRank
-        self.onekvLocation = onekvLocation
-        self.onekvIsValid = onekvIsValid
-        self.onekvOnlineSince = onekvOnlineSince
-        self.onekvOfflineSince = onekvOfflineSince
-    }
 }
 
 extension ValidatorDetailsDiff: Codable {}
