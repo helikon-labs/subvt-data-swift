@@ -2,14 +2,14 @@ import Combine
 import Foundation
 import Starscream
 
-enum RPCEvent<T: Codable> {
+public enum RPCEvent<T: Codable> {
     case reconnectSuggested
     case subscribed(subscriptionId: UInt64)
     case unsubscribed
     case update(T)
 }
 
-enum RPCError: Error {
+public enum RPCError: Error {
     case dataReadError
     case disconnected(code: UInt16, reason: String)
     case backendError(code: Int, message: String)
@@ -130,7 +130,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
         }
     }
     
-    func subscribe(parameter: String? = nil) -> AnyPublisher<RPCEvent<T>, RPCError> {
+    public func subscribe(parameter: String? = nil) -> AnyPublisher<RPCEvent<T>, RPCError> {
         subscriptionParameter = parameter
         switch state {
         case .disconnected(_, _):
@@ -143,7 +143,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
         return eventBus.eraseToAnyPublisher()
     }
     
-    func unsubscribe() {
+    public func unsubscribe() {
         guard case .subscribed(let subscriptionId) = state else {
             return
         }
