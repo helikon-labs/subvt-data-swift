@@ -71,7 +71,7 @@ public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDele
     }
     
     deinit {
-        self.log.debug("Deinit RPC subscription service.")
+        self.log.debug("Deinit RPC subscription service [\(Unmanaged.passUnretained(self).toOpaque())].")
         switch self.status {
         case .subscribed(_):
             self.unsubscribe()
