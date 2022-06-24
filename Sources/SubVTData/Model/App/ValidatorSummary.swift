@@ -3,26 +3,26 @@
  */
 public struct ValidatorSummary: Codable, Hashable {
     public let accountId: AccountId
-    public let controllerAccountId: AccountId?
-    public let display: String?
-    public let parentDisplay: String?
-    public let childDisplay: String?
-    public let confirmed: Bool
-    public let preferences: ValidatorPreferences
-    public let selfStake: StakeSummary
-    public let isActive: Bool
-    public let activeNextSession: Bool
-    public let inactiveNominations: InactiveNominationsSummary
-    public let oversubscribed: Bool
-    public let slashCount: Int
-    public let isEnrolledIn1Kv: Bool
-    public let isParaValidator: Bool
-    public let paraId: Int?
-    public let returnRatePerBillion: UInt64?
-    public let blocksAuthored: Int?
-    public let rewardPoints: UInt64?
-    public let heartbeatReceived: Bool?
-    public let validatorStake: ValidatorStakeSummary?
+    public private(set) var controllerAccountId: AccountId?
+    public private(set) var display: String?
+    public private(set) var parentDisplay: String?
+    public private(set) var childDisplay: String?
+    public private(set) var confirmed: Bool
+    public private(set) var preferences: ValidatorPreferences
+    public private(set) var selfStake: StakeSummary
+    public private(set) var isActive: Bool
+    public private(set) var activeNextSession: Bool
+    public private(set) var inactiveNominations: InactiveNominationsSummary
+    public private(set) var oversubscribed: Bool
+    public private(set) var slashCount: Int
+    public private(set) var isEnrolledIn1Kv: Bool
+    public private(set) var isParaValidator: Bool
+    public private(set) var paraId: Int?
+    public private(set) var returnRatePerBillion: UInt64?
+    public private(set) var blocksAuthored: Int?
+    public private(set) var rewardPoints: UInt64?
+    public private(set) var heartbeatReceived: Bool?
+    public private(set) var validatorStake: ValidatorStakeSummary?
     
     public init(
         accountId: AccountId,
@@ -68,6 +68,31 @@ public struct ValidatorSummary: Codable, Hashable {
         self.rewardPoints = rewardPoints
         self.heartbeatReceived = heartbeatReceived
         self.validatorStake = validatorStake
+    }
+}
+
+extension ValidatorSummary {
+    public mutating func apply(diff: ValidatorSummaryDiff) {
+        self.controllerAccountId = diff.controllerAccountId ?? self.controllerAccountId
+        self.display = diff.display ?? self.display
+        self.parentDisplay = diff.parentDisplay ?? self.parentDisplay
+        self.childDisplay = diff.childDisplay ?? self.childDisplay
+        self.confirmed = diff.confirmed ?? self.confirmed
+        self.preferences = diff.preferences ?? self.preferences
+        self.selfStake = diff.selfStake ?? self.selfStake
+        self.isActive = diff.isActive ?? self.isActive
+        self.activeNextSession = diff.activeNextSession ?? self.activeNextSession
+        self.inactiveNominations = diff.inactiveNominations ?? self.inactiveNominations
+        self.oversubscribed = diff.oversubscribed ?? self.oversubscribed
+        self.slashCount = diff.slashCount ?? self.slashCount
+        self.isEnrolledIn1Kv = diff.isEnrolledIn1Kv ?? self.isEnrolledIn1Kv
+        self.isParaValidator = diff.isParaValidator ?? self.isParaValidator
+        self.paraId = diff.paraId ?? self.paraId
+        self.returnRatePerBillion = diff.returnRatePerBillion ?? self.returnRatePerBillion
+        self.blocksAuthored = diff.blocksAuthored ?? self.blocksAuthored
+        self.rewardPoints = diff.rewardPoints ?? self.rewardPoints
+        self.heartbeatReceived = diff.heartbeatReceived ?? self.heartbeatReceived
+        self.validatorStake = diff.validatorStake ?? self.validatorStake
     }
 }
 
