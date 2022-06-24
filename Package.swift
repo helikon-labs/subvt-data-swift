@@ -44,8 +44,8 @@ let package = Package(
             .upToNextMinor(from: "4.0.4")
         ),
         .package(
-            url: "https://github.com/apple/swift-log.git",
-            .upToNextMinor(from: "1.4.2")
+            url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git",
+            .upToNextMajor(from: "1.9.0")
         )
     ],
     targets: [
@@ -60,7 +60,7 @@ let package = Package(
                 "KeychainAccess",
                 "secp256k1",
                 "Starscream",
-                .product(name: "Logging", package: "swift-log")
+                "SwiftyBeaver"
             ],
             resources: [
                 .copy("Resources/data-env.json"),
