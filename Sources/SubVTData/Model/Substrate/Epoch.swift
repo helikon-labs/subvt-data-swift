@@ -7,6 +7,13 @@ public struct Epoch: Hashable {
     public let startTimestamp: UInt64
     public let endTimestamp: UInt64
     
+    public init() {
+        self.index = 0
+        self.startBlockNumber = 0
+        self.startTimestamp = 0
+        self.endTimestamp = 0
+    }
+    
     public init(
         index: UInt32,
         startBlockNumber: UInt64,

@@ -11,6 +11,10 @@ public struct Balance: Hashable {
     public init(value: BigUInt) {
         self.value = value
     }
+    
+    public init(integerLiteral: UInt64) {
+        self.value = BigUInt(integerLiteral: integerLiteral)
+    }
 }
 
 extension Balance: Codable {

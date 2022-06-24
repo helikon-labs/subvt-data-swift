@@ -19,6 +19,25 @@ public struct NetworkStatus: Hashable {
     public private(set) var medianStake: Balance
     public private(set) var eraRewardPoints: UInt64
     
+    public init() {
+        self.finalizedBlockNumber = 0
+        self.finalizedBlockHash = ""
+        self.bestBlockNumber = 0
+        self.bestBlockHash = ""
+        self.activeEra = Era()
+        self.currentEpoch = Epoch()
+        self.activeValidatorCount = 0
+        self.inactiveValidatorCount = 0
+        self.lastEraTotalReward = Balance(integerLiteral: 0)
+        self.totalStake = Balance(integerLiteral: 0)
+        self.returnRatePerMillion = 0
+        self.minStake = Balance(integerLiteral: 0)
+        self.maxStake = Balance(integerLiteral: 0)
+        self.averageStake = Balance(integerLiteral: 0)
+        self.medianStake = Balance(integerLiteral: 0)
+        self.eraRewardPoints = 0
+    }
+    
     public init(
         finalizedBlockNumber: UInt64,
         finalizedBlockHash: String,
