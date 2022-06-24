@@ -29,7 +29,7 @@ public enum RPCSubscriptionServiceStatus {
 /**
  Base class for RPC pub/sub services.
  */
-public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDelegate {
+public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
     private let host: String
     private let port: UInt16
     private let subscribeMethod: String
@@ -37,7 +37,7 @@ public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDele
     private let socket: WebSocket
     private let log = SwiftyBeaver.self
     
-    @Published public private(set) var status = RPCSubscriptionServiceStatus.idle
+    public private(set) var status = RPCSubscriptionServiceStatus.idle
     private var rpcId: UInt64 = 0
     private var subscriptionParameter: String? = nil
     
