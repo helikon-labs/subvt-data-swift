@@ -1,7 +1,6 @@
 import Combine
 import Foundation
 import Starscream
-import SwiftyBeaver
 
 public enum RPCEvent<T: Codable> {
     case reconnectSuggested
@@ -29,22 +28,21 @@ public enum RPCSubscriptionServiceStatus {
 /**
  Base class for RPC pub/sub services.
  */
-public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
+public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDelegate {
     private let host: String
     private let port: UInt16
     private let subscribeMethod: String
     private let unsubscribeMethod: String
     private let socket: WebSocket
-    private let log = SwiftyBeaver.self
     
-    public private(set) var status = RPCSubscriptionServiceStatus.idle
+    @Published public private(set) var status = RPCSubscriptionServiceStatus.idle
     private var rpcId: UInt64 = 0
     private var subscriptionParameter: String? = nil
     
     private let jsonEncoder = JSONEncoder()
     private let jsonDecoder = JSONDecoder()
     
-    private let eventBus = PassthroughSubject<RPCEvent<T>, RPCError>()
+    private var eventBus: PassthroughSubject<RPCEvent<T>, RPCError>!
     
     init(
         host: String,
@@ -52,7 +50,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
         subscribeMethod: String,
         unsubscribeMethod: String
     ) {
-        self.log.debug("Init RPC subscription service.")
+        log.debug("⬆️ Init RPC subscription service.")
         self.host = host
         self.port = port
         self.subscribeMethod = subscribeMethod
@@ -66,13 +64,10 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
         self.socket.delegate = self
         self.jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         self.jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
-        let console = ConsoleDestination()
-        console.format = "$DHH:mm:ss$d $L $n[$l]: $M"
-        self.log.addDestination(console)
     }
     
     deinit {
-        self.log.debug("Deinit RPC subscription service [\(Unmanaged.passUnretained(self).toOpaque())].")
+        log.debug("⬇️ Deinit RPC subscription service.")
         switch self.status {
         case .subscribed(_):
             self.unsubscribe()
@@ -91,9 +86,11 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
             self.status = .idle
             self.eventBus.send(completion: .finished)
         case .connected(_):
+            log.debug("🟢 RPC subscription service connected.")
             self.status = .connected
             self.sendSubscriptionRequest()
         case .disconnected(let reason, let code):
+            log.debug("🔴 RPC subscription service disconnected.")
             switch self.status {
             case .error(let error):
                 self.eventBus.send(
@@ -122,6 +119,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
                 reason: reason
             )
         case .error(let error):
+            log.debug("❌ RPC subscription service error: \(error?.localizedDescription ?? "no message")")
             self.status = .error(error: error)
             self.eventBus.send(
                 completion: .failure(
@@ -136,6 +134,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
         case .pong(_):
             break
         case .reconnectSuggested(let isSuggested):
+            log.debug("⚠️ RPC subscription service reconnect suggested.")
             if isSuggested {
                 self.eventBus.send(
                     RPCEvent.reconnectSuggested
@@ -154,6 +153,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
         case .disconnected(_, _):
             fallthrough
         case .idle:
+            self.eventBus = PassthroughSubject<RPCEvent<T>, RPCError>()
             self.socket.connect()
         default:
             break
@@ -174,7 +174,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
            let jsonString = String(data: jsonData, encoding: .utf8) {
             socket.write(string: jsonString)
         } else {
-            fatalError("Cannot encode unsubscription request data.")
+            fatalError("❌ Cannot encode unsubscription request data.")
         }
     }
     
@@ -194,7 +194,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
            let jsonString = String(data: jsonData, encoding: .utf8) {
             self.socket.write(string: jsonString)
         } else {
-            fatalError("Cannot encode subscription request data.")
+            fatalError("❌ Cannot encode subscription request data.")
         }
     }
     
@@ -210,6 +210,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
                     self.status = .subscribed(
                         subscriptionId: response.subscriptionId
                     )
+                    log.debug("🤝 RPC subscription service subscribed.")
                     self.eventBus.send(
                         RPCEvent.subscribed(
                             subscriptionId: response.subscriptionId
@@ -232,6 +233,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
                             RPCUnsubscribeResponse.self,
                             from: data
                         )
+                        log.debug("👋 RPC subscription service unsubscribed.")
                         self.eventBus.send(RPCEvent.unsubscribed)
                         self.status = .unsubscribed
                         self.socket.disconnect()
@@ -245,6 +247,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
                         RPCBackendErrorResponse.self,
                         from: data
                     )
+                    log.debug("❌ RPC subscription service backend error: \(backendError.error.message)")
                     self.eventBus.send(
                         completion: .failure(
                             RPCError.backendError(
@@ -262,6 +265,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
                             )
                         )
                     )
+                    log.debug("❌ RPC subscription service error: \(error.localizedDescription)")
                     self.status = .error(error: error)
                 }
                 self.socket.disconnect()
@@ -272,6 +276,7 @@ public class RPCSubscriptionService<T: Codable>: WebSocketDelegate {
                     RPCError.dataReadError
                 )
             )
+            log.debug("❌ RPC subscription service data read error.")
             self.status = .error(error: nil)
             self.socket.disconnect()
         }
