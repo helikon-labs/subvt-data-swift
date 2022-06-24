@@ -52,6 +52,7 @@ public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDele
         subscribeMethod: String,
         unsubscribeMethod: String
     ) {
+        self.log.debug("Init RPC subscription service.")
         self.host = host
         self.port = port
         self.subscribeMethod = subscribeMethod
