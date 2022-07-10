@@ -59,7 +59,7 @@ public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDele
             string: "https://\(host):\(port)"
         )!
         var request = URLRequest(url: url)
-        request.timeoutInterval = 60
+        request.timeoutInterval = 100
         self.socket = WebSocket(request: request)
         self.socket.delegate = self
         self.jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase

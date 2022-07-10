@@ -55,7 +55,7 @@ final class NetworkStatusServiceTests: XCTestCase {
                     break
                 }
             }.store(in: &cancellables)
-        waitForExpectations(timeout: 60)
+        waitForExpectations(timeout: 100)
         XCTAssertNil(error)
     }
     

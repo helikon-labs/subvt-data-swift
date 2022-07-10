@@ -11,6 +11,8 @@ public struct EraReport: Hashable {
     public let totalRewardPoints: UInt64?
     public let totalReward: Balance
     public let totalStake: Balance?
+    public let activeValidatorCount: UInt32
+    public let inactiveValidatorCount: UInt32
     public let activeNominatorCount: UInt64?
     public let offlineOffenceCount: UInt64
     public let slashedAmount: Balance
@@ -26,6 +28,8 @@ public struct EraReport: Hashable {
         totalRewardPoints: UInt64?,
         totalReward: Balance,
         totalStake: Balance?,
+        activeValidatorCount: UInt32,
+        inactiveValidatorCount: UInt32,
         activeNominatorCount: UInt64?,
         offlineOffenceCount: UInt64,
         slashedAmount: Balance,
@@ -40,6 +44,8 @@ public struct EraReport: Hashable {
         self.totalRewardPoints = totalRewardPoints
         self.totalReward = totalReward
         self.totalStake = totalStake
+        self.activeValidatorCount = activeValidatorCount
+        self.inactiveValidatorCount = inactiveValidatorCount
         self.activeNominatorCount = activeNominatorCount
         self.offlineOffenceCount = offlineOffenceCount
         self.slashedAmount = slashedAmount

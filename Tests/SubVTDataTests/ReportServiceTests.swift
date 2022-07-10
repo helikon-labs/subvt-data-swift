@@ -23,6 +23,9 @@ final class ReportServiceTests: BaseTest {
             (reports, error) in
             XCTAssertNil(error)
             XCTAssertEqual(1, reports?.count ?? 0)
+            let report = reports![0]
+            XCTAssertTrue(report.activeValidatorCount > 0)
+            XCTAssertTrue(report.inactiveValidatorCount > 0)
         }
     }
     
