@@ -35,7 +35,7 @@ final class AppServiceTests: BaseTest {
     }
     
     func test04CreateUser() {
-        KeychainStorage.shared.clear()
+        SubVTData.reset()
         testServiceCall(publisher: service.createUser()){
             (user, error) in
             XCTAssertNil(error)

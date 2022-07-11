@@ -34,19 +34,25 @@ class KeychainStorage: AuthStorage {
     private init() {
         do {
             if let privateKeyData = keychain[data: privateKeyKey] {
-                privateKey = try PrivateKey(rawRepresentation: privateKeyData)
-                publicKey = privateKey.publicKey
+                self.privateKey = try PrivateKey(rawRepresentation: privateKeyData)
+                self.publicKey = self.privateKey.publicKey
             } else {
-                privateKey = try PrivateKey.init()
-                publicKey = privateKey.publicKey
-                keychain[data: privateKeyKey] = privateKey.rawRepresentation
+                self.privateKey = try PrivateKey.init()
+                self.publicKey = self.privateKey.publicKey
+                self.keychain[data: privateKeyKey] = self.privateKey.rawRepresentation
             }
         } catch {
             fatalError("Cannot initialize keychain: \(error.localizedDescription)")
         }
     }
     
-    func clear() {
-        keychain[data: privateKeyKey] = nil
+    func resetUser() {
+        do {
+            self.privateKey = try PrivateKey.init()
+            self.publicKey = self.privateKey.publicKey
+            self.keychain[data: privateKeyKey] = self.privateKey.rawRepresentation
+        } catch {
+            fatalError("Cannot initialize keychain: \(error.localizedDescription)")
+        }
     }
 }
