@@ -27,8 +27,18 @@ let package = Package(
             .upToNextMinor(from: "3.4.0")
         ),
         .package(
+            name: "Base58Swift",
+            url: "https://github.com/keefertaylor/Base58Swift.git",
+            .upToNextMinor(from: "2.1.0")
+        ),
+        .package(
             url: "https://github.com/attaswift/BigInt.git",
             .upToNextMinor(from: "5.3.0")
+        ),
+        .package(
+            name: "Blake2",
+            url: "https://github.com/tesseract-one/Blake2.swift.git",
+            .upToNextMinor(from: "0.1.0")
         ),
         .package(
             url: "https://github.com/kishikawakatsumi/KeychainAccess.git",
@@ -56,6 +66,8 @@ let package = Package(
             dependencies: [
                 "Alamofire",
                 "AlamofireNetworkActivityLogger",
+                "Base58Swift",
+                "Blake2",
                 "BigInt",
                 "KeychainAccess",
                 "secp256k1",
