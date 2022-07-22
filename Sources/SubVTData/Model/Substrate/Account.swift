@@ -3,6 +3,7 @@
  */
 public struct Account: Hashable {
     public let id: AccountId
+    public let address: String
     public let identity: IdentityRegistration?
     public let parent: Box<Account>?
     public let childDisplay: String?
@@ -11,6 +12,7 @@ public struct Account: Hashable {
     
     public init(
         id: AccountId,
+        address: String,
         identity: IdentityRegistration?,
         parent: Box<Account>?,
         childDisplay: String?,
@@ -18,6 +20,7 @@ public struct Account: Hashable {
         killedAt: UInt64?
     ) {
         self.id = id
+        self.address = address
         self.identity = identity
         self.parent = parent
         self.childDisplay = childDisplay

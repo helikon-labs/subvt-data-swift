@@ -7,8 +7,8 @@ import Blake2
 import Foundation
 
 fileprivate let accountIdLength = 32
-fileprivate let checksumLength = 2;
-fileprivate let blake2bMaxLength = 64;
+fileprivate let checksumLength = 2
+fileprivate let blake2bMaxLength = 64
 fileprivate let ss58Pre = "SS58PRE"
 
 public struct AccountId: CustomStringConvertible, Hashable {

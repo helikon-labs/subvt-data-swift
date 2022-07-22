@@ -3,6 +3,7 @@
  */
 public struct ValidatorSummary: Codable, Hashable {
     public let accountId: AccountId
+    public let address: String
     public private(set) var controllerAccountId: AccountId?
     public private(set) var display: String?
     public private(set) var parentDisplay: String?
@@ -26,6 +27,7 @@ public struct ValidatorSummary: Codable, Hashable {
     
     public init(
         accountId: AccountId,
+        address: String,
         controllerAccountId: AccountId?,
         display: String?,
         parentDisplay: String?,
@@ -48,6 +50,7 @@ public struct ValidatorSummary: Codable, Hashable {
         validatorStake: ValidatorStakeSummary?
     ) {
         self.accountId = accountId
+        self.address = address
         self.controllerAccountId = controllerAccountId
         self.display = display
         self.parentDisplay = parentDisplay
