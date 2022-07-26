@@ -285,6 +285,7 @@ public class RPCSubscriptionService<T: Codable>: NSObject, ObservableObject, URL
         switch code {
         case .goingAway, .normalClosure:
             self.eventBus.send(completion: .finished)
+            self.status = .idle
         case .abnormalClosure:
             switch self.status {
             case .disconnected:
@@ -293,10 +294,11 @@ public class RPCSubscriptionService<T: Codable>: NSObject, ObservableObject, URL
                 self.eventBus.send(completion: .failure(error))
             default:
                 self.eventBus.send(completion: .failure(.connection))
+                self.status = .disconnected
             }
         default:
             self.eventBus.send(completion: .failure(.connection))
+            self.status = .disconnected
         }
-        self.status = .disconnected
     }
 }
