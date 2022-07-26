@@ -1,3 +1,4 @@
+import Foundation
 /**
  Generic RPC request.
  */
@@ -103,9 +104,11 @@ struct RPCBackendErrorResponse: Codable {
 /**
  RPC error body inner error data.
  */
-struct RPCBackendError: Codable {
+struct RPCBackendError: Codable, Error, CustomStringConvertible, LocalizedError {
     let code: Int
     let message: String
+    var description: String { self.message }
+    var errorDescription: String { self.message }
     
     private enum CodingKeys: String, CodingKey {
         case code

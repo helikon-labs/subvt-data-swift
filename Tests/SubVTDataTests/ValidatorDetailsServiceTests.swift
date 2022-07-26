@@ -1,5 +1,4 @@
 import Combine
-import Starscream
 import XCTest
 @testable import SubVTData
 
@@ -12,9 +11,6 @@ final class ValidatorDetailsServiceTests: XCTestCase {
     
     func testValidatorDetailsSubscription() {
         var error: Error? = nil
-        let subscribeExpectation = self.expectation(description: "Subscribed.")
-        let updateExpectation = self.expectation(description: "Validator details update received.")
-        let unsubscribeExpectation = self.expectation(description: "Unsubscribed.")
         let finishExpectation = self.expectation(description: "Finished.")
         let service = ValidatorDetailsService()
         var updateCount = 0
@@ -33,7 +29,7 @@ final class ValidatorDetailsServiceTests: XCTestCase {
             } receiveValue: { (event) in
                 switch event {
                 case .subscribed(_):
-                    subscribeExpectation.fulfill()
+                    break
                 case .update(let validatorDetailsUpdate):
                     updateCount += 1
                     if updateCount == 1 {
@@ -42,13 +38,10 @@ final class ValidatorDetailsServiceTests: XCTestCase {
                     } else {
                         print("Validator details diff received.")
                         if updateCount == 3 {
-                            updateExpectation.fulfill()
                             service.unsubscribe()
                         }
                     }
                 case .unsubscribed:
-                    unsubscribeExpectation.fulfill()
-                case .reconnectSuggested:
                     break
                 }
             }.store(in: &cancellables)

@@ -1,5 +1,4 @@
 import Combine
-import Starscream
 import XCTest
 @testable import SubVTData
 
@@ -50,8 +49,6 @@ final class ValidatorListServiceTests: XCTestCase {
                     }
                 case .unsubscribed:
                     unsubscribeExpectation.fulfill()
-                case .reconnectSuggested:
-                    break
                 }
             }.store(in: &cancellables)
         waitForExpectations(timeout: 100)

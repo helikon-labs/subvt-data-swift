@@ -1,25 +1,28 @@
 import Combine
 import Foundation
-import Starscream
+
+private let timeoutSeconds = 5.0
+private let pingPeriodSeconds = 30.0
 
 public enum RPCEvent<T: Codable> {
-    case reconnectSuggested
     case subscribed(subscriptionId: UInt64)
     case unsubscribed
     case update(T)
 }
 
 public enum RPCError: Error {
-    case dataReadError
-    case disconnected(code: UInt16, reason: String)
-    case backendError(code: Int, message: String)
-    case error(error: Error?)
+    case backend(error: Error)
+    case send(error: Error)
+    case connection
+    case other(error: Error)
+    case ping(error: Error)
+    case receive(error: Error)
 }
 
 public enum RPCSubscriptionServiceStatus {
     case connected
-    case disconnected(code: UInt16, reason: String)
-    case error(error: Error?)
+    case disconnected
+    case error(error: RPCError)
     case idle
     case subscribed(subscriptionId: UInt64)
     case unsubscribed
@@ -28,14 +31,15 @@ public enum RPCSubscriptionServiceStatus {
 /**
  Base class for RPC pub/sub services.
  */
-public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDelegate {
-    private let host: String
-    private let port: UInt16
+public class RPCSubscriptionService<T: Codable>: NSObject, ObservableObject, URLSessionWebSocketDelegate {
     private let subscribeMethod: String
     private let unsubscribeMethod: String
-    private let socket: WebSocket
     
-    @Published public private(set) var status = RPCSubscriptionServiceStatus.idle
+    private let url: URL
+    private var task: URLSessionWebSocketTask? = nil
+    private var pingTimer: Timer? = nil
+    
+    @Published public private(set) var status: RPCSubscriptionServiceStatus = .idle
     private var rpcId: UInt64 = 0
     private var subscriptionParameter: String? = nil
     
@@ -51,19 +55,16 @@ public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDele
         unsubscribeMethod: String
     ) {
         log.debug("⬆️ Init RPC subscription service.")
-        self.host = host
-        self.port = port
+        let urlString = "wss://\(host):\(port)"
+        guard let url = URL(string: urlString) else {
+            fatalError("Invalid host/port resulting in: \(urlString)")
+        }
+        self.url = url
         self.subscribeMethod = subscribeMethod
         self.unsubscribeMethod = unsubscribeMethod
-        let url = URL(
-            string: "https://\(host):\(port)"
-        )!
-        var request = URLRequest(url: url)
-        request.timeoutInterval = 100
-        self.socket = WebSocket(request: request)
-        self.socket.delegate = self
         self.jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         self.jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
+        super.init()
     }
     
     deinit {
@@ -72,110 +73,40 @@ public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDele
         case .subscribed(_):
             self.unsubscribe()
         case .connected:
-            self.socket.disconnect()
+            self.task?.cancel(with: .normalClosure, reason: nil)
         default:
             break
         }
     }
     
-    public func didReceive(event: WebSocketEvent, client: WebSocket) {
-        switch event {
-        case .binary(_):
-            break
-        case .cancelled:
-            self.status = .idle
-            self.eventBus.send(completion: .finished)
-        case .connected(_):
-            log.debug("🟢 RPC subscription service connected.")
-            self.status = .connected
-            self.sendSubscriptionRequest()
-        case .disconnected(let reason, let code):
-            log.debug("🔴 RPC subscription service disconnected.")
-            switch self.status {
-            case .error(let error):
-                self.eventBus.send(
-                    completion: .failure(
-                        RPCError.error(
-                            error: error
-                        )
-                    )
-                )
-            case .subscribed(_):
-                self.eventBus.send(
-                    completion: .failure(
-                        RPCError.disconnected(
-                            code: code,
-                            reason: reason
-                        )
-                    )
-                )
-            case .unsubscribed:
-                self.eventBus.send(completion: .finished)
-            default:
-                break
-            }
-            self.status = .disconnected(
-                code: code,
-                reason: reason
-            )
-        case .error(let error):
-            log.debug("❌ RPC subscription service error: \(error?.localizedDescription ?? "no message")")
+    private func closeConnectionWithError(_ error: RPCError) {
+        switch self.status {
+        case .idle:
+            log.error("❌ No connection.")
+            self.eventBus.send(completion: .failure(error))
+            self.status = .disconnected
+            self.task?.cancel(with: .abnormalClosure, reason: nil)
+        default:
+            self.pingTimer?.invalidate()
             self.status = .error(error: error)
-            self.eventBus.send(
-                completion: .failure(
-                    RPCError.error(
-                        error: error
-                    )
-                )
-            )
-            self.socket.disconnect()
-        case .ping(_):
-            break
-        case .pong(_):
-            break
-        case .reconnectSuggested(let isSuggested):
-            log.debug("⚠️ RPC subscription service reconnect suggested.")
-            if isSuggested {
-                self.eventBus.send(
-                    RPCEvent.reconnectSuggested
-                )
-            }
-        case .text(let text):
-            self.processText(text: text)
-        case .viabilityChanged(_):
-            break
+            self.task?.cancel(with: .abnormalClosure,reason: nil)
         }
     }
     
     public func subscribe(parameter: String? = nil) -> AnyPublisher<RPCEvent<T>, RPCError> {
         self.subscriptionParameter = parameter
         switch status {
-        case .disconnected(_, _):
-            fallthrough
-        case .idle:
+        case .idle, .disconnected, .error:
             self.eventBus = PassthroughSubject<RPCEvent<T>, RPCError>()
-            self.socket.connect()
+            let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
+            session.configuration.timeoutIntervalForRequest = timeoutSeconds
+            self.task = session.webSocketTask(with: url)
+            self.receive()
+            self.task?.resume()
         default:
             break
         }
         return self.eventBus.eraseToAnyPublisher()
-    }
-    
-    public func unsubscribe() {
-        guard case .subscribed(let subscriptionId) = status else {
-            return
-        }
-        let request = RPCRequest<UInt64>(
-            id: self.rpcId,
-            method: self.unsubscribeMethod,
-            params: [subscriptionId]
-        )
-        if let jsonData = try? self.jsonEncoder.encode(request),
-           let jsonString = String(data: jsonData, encoding: .utf8) {
-            socket.write(string: jsonString)
-        } else {
-            fatalError("❌ Cannot encode unsubscription request data.")
-        }
     }
     
     private func sendSubscriptionRequest() {
@@ -192,9 +123,80 @@ public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDele
         )
         if let jsonData = try? self.jsonEncoder.encode(request),
            let jsonString = String(data: jsonData, encoding: .utf8) {
-            self.socket.write(string: jsonString)
+            let message = URLSessionWebSocketTask.Message.string(jsonString)
+            self.task?.send(message) {
+                [weak self] error in
+                guard let error = error else { return }
+                log.error("❌ Cannot send subscription request data.")
+                self?.closeConnectionWithError(.send(error: error))
+            }
         } else {
             fatalError("❌ Cannot encode subscription request data.")
+        }
+    }
+    
+    public func unsubscribe() {
+        guard case .subscribed(let subscriptionId) = status else {
+            return
+        }
+        let request = RPCRequest<UInt64>(
+            id: self.rpcId,
+            method: self.unsubscribeMethod,
+            params: [subscriptionId]
+        )
+        if let jsonData = try? self.jsonEncoder.encode(request),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            let message = URLSessionWebSocketTask.Message.string(jsonString)
+            self.task?.send(message) {
+                [weak self] error in
+                guard let error = error else { return }
+                log.error("❌ Cannot send unsubscription request data.")
+                self?.closeConnectionWithError(.send(error: error))
+            }
+        } else {
+            fatalError("❌ Cannot encode unsubscription request data.")
+        }
+    }
+    
+    private func setupPingTimer() {
+        self.pingTimer = Timer.scheduledTimer(
+            withTimeInterval: pingPeriodSeconds,
+            repeats: true
+        ) { [weak self] timer in
+            self?.task?.sendPing(
+                pongReceiveHandler: {
+                    [weak self] error in
+                    guard let error = error else { return }
+                    log.error("❌ Ping request failed.")
+                    self?.closeConnectionWithError(.ping(error: error))
+                }
+            )
+        }
+    }
+    
+    func receive()  {
+        self.task?.receive { result in
+            switch result {
+            case .failure(let error):
+                log.error("❌ Message receive error: \(error.localizedDescription)")
+                self.closeConnectionWithError(.receive(error: error))
+            case .success(let message):
+                switch message {
+                case .string(let text):
+                    self.processText(text: text)
+                case .data:
+                    // ignore binary message
+                    break
+                @unknown default:
+                    fatalError("❌ Unknown message type from WS-RPC service.")
+                }
+                switch self.status {
+                case .connected, .idle, .subscribed:
+                    self.receive()
+                default:
+                    break
+                }
+            }
         }
     }
     
@@ -211,11 +213,9 @@ public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDele
                         subscriptionId: response.subscriptionId
                     )
                     log.debug("🤝 RPC subscription service subscribed.")
-                    self.eventBus.send(
-                        RPCEvent.subscribed(
-                            subscriptionId: response.subscriptionId
-                        )
-                    )
+                    self.eventBus.send(RPCEvent.subscribed(
+                        subscriptionId: response.subscriptionId
+                    ))
                 case .subscribed(let subscriptionId):
                     do {
                         let update = try self.jsonDecoder.decode(
@@ -225,9 +225,9 @@ public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDele
                         if update.params.subscriptionId != subscriptionId {
                             break
                         }
-                        self.eventBus.send(
-                            RPCEvent.update(update.params.body)
-                        )
+                        self.eventBus.send(RPCEvent.update(
+                            update.params.body
+                        ))
                     } catch {
                         let _ = try self.jsonDecoder.decode(
                             RPCUnsubscribeResponse.self,
@@ -236,49 +236,67 @@ public class RPCSubscriptionService<T: Codable>: ObservableObject, WebSocketDele
                         log.debug("👋 RPC subscription service unsubscribed.")
                         self.eventBus.send(RPCEvent.unsubscribed)
                         self.status = .unsubscribed
-                        self.socket.disconnect()
+                        self.task?.cancel(with: .goingAway, reason: nil)
                     }
                 default:
                     break
                 }
             } catch {
                 do {
-                    let backendError = try self.jsonDecoder.decode(
+                    let response = try self.jsonDecoder.decode(
                         RPCBackendErrorResponse.self,
                         from: data
                     )
-                    log.debug("❌ RPC subscription service backend error: \(backendError.error.message)")
-                    self.eventBus.send(
-                        completion: .failure(
-                            RPCError.backendError(
-                                code: backendError.error.code,
-                                message: backendError.error.message
-                            )
-                        )
-                    )
-                    status = .error(error: nil)
+                    let errorMessage = response.error.message
+                    log.debug("❌ RPC subscription service backend error: \(errorMessage)")
+                    self.closeConnectionWithError(.backend(error: response.error))
                 } catch {
-                    self.eventBus.send(
-                        completion: .failure(
-                            RPCError.error(
-                                error: error
-                            )
-                        )
-                    )
                     log.debug("❌ RPC subscription service error: \(error.localizedDescription)")
-                    self.status = .error(error: error)
+                    self.closeConnectionWithError(.other(error: error))
                 }
-                self.socket.disconnect()
             }
         } else {
-            self.eventBus.send(
-                completion: .failure(
-                    RPCError.dataReadError
-                )
-            )
             log.debug("❌ RPC subscription service data read error.")
-            self.status = .error(error: nil)
-            self.socket.disconnect()
+            self.task?.cancel(with: .abnormalClosure, reason: nil)
         }
+    }
+    
+    public func urlSession(
+        _ session: URLSession,
+        webSocketTask: URLSessionWebSocketTask,
+        didOpenWithProtocol protocol: String?
+    ) {
+        log.debug("🟢 RPC subscription service connection opened.")
+        self.status = .connected
+        self.sendSubscriptionRequest()
+        DispatchQueue.main.async {
+            self.setupPingTimer()
+        }
+    }
+
+    public func urlSession(
+        _ session: URLSession,
+        webSocketTask: URLSessionWebSocketTask,
+        didCloseWith code: URLSessionWebSocketTask.CloseCode,
+        reason: Data?
+    ) {
+        log.debug("🔴 RPC subscription service connection closed.")
+        self.pingTimer?.invalidate()
+        switch code {
+        case .goingAway, .normalClosure:
+            self.eventBus.send(completion: .finished)
+        case .abnormalClosure:
+            switch self.status {
+            case .disconnected:
+                break
+            case .error(let error):
+                self.eventBus.send(completion: .failure(error))
+            default:
+                self.eventBus.send(completion: .failure(.connection))
+            }
+        default:
+            self.eventBus.send(completion: .failure(.connection))
+        }
+        self.status = .disconnected
     }
 }

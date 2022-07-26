@@ -65,8 +65,8 @@ public struct AccountId: CustomStringConvertible, Hashable {
         checksumData.append(addressData as Data)
         let hash = try Blake2.hash(.b2b, size: blake2bMaxLength, data: checksumData as Data)
         addressData.append(hash.subdata(in: 0..<checksumLength))
-        let bytes = Array(addressData as Data)
-        return Base58.base58Encode(bytes)
+        let addressBytes = Array(addressData as Data)
+        return Base58.base58Encode(addressBytes)
     }
 }
 

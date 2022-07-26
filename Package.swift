@@ -50,10 +50,6 @@ let package = Package(
             .upToNextMinor(from: "0.4.0")
         ),
         .package(
-            url: "https://github.com/daltoniam/Starscream.git",
-            .upToNextMinor(from: "4.0.4")
-        ),
-        .package(
             url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git",
             .upToNextMajor(from: "1.9.0")
         )
@@ -71,7 +67,6 @@ let package = Package(
                 "BigInt",
                 "KeychainAccess",
                 "secp256k1",
-                "Starscream",
                 "SwiftyBeaver"
             ],
             resources: [
