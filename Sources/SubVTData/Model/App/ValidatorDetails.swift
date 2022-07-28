@@ -1,5 +1,5 @@
 /**
- Returned by the validatod details service right after the initial subscription.
+ Returned by the validator details service right after the initial subscription.
  */
 public struct ValidatorDetails: Hashable {
     public private(set) var account: Account
