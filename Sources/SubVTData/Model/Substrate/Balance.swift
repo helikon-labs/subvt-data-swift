@@ -5,7 +5,7 @@ import BigInt
  Represented by the BigUInt type in the Swift domain.
  Contains code/decode logic.
  */
-public struct Balance: Hashable {
+public struct Balance: Hashable, Equatable {
     public let value: BigUInt
     
     public init(value: BigUInt) {
@@ -42,4 +42,28 @@ func decodeBigUInt<T>(
         String(format: "%.0f", double),
         radix: 10
     )!
+}
+
+public func +(left: Balance, right: Balance) -> Balance { // 1
+    return Balance(value: left.value + right.value)
+}
+
+public func -(left: Balance, right: Balance) -> Balance { // 1
+    return Balance(value: left.value - right.value)
+}
+
+public func ==(lhs: Balance, rhs: Balance) -> Bool {
+    return lhs.value == rhs.value
+}
+
+public func *(left: Balance, right: Balance) -> Balance { // 1
+    return Balance(value: left.value * right.value)
+}
+
+public func /(left: Balance, right: Balance) -> Balance { // 1
+    return Balance(value: left.value / right.value)
+}
+
+public func %(left: Balance, right: Balance) -> Balance { // 1
+    return Balance(value: left.value % right.value)
 }

@@ -93,6 +93,30 @@ public struct ValidatorDetails: Hashable {
         self.onekvOnlineSince = onekvOnlineSince
         self.onekvOfflineSince = onekvOfflineSince
     }
+    
+    public var nominationTotal: Balance {
+        return self.nominations
+            .map { $0.stake.activeAmount }
+            .reduce(Balance(integerLiteral: 0)) { $0 + $1 }
+    }
+    
+    public var inactiveNominations: [Nomination] {
+        guard let activeStake = self.validatorStake else {
+            return []
+        }
+        return self.nominations
+            .filter { nomination in
+                activeStake.nominators.firstIndex { nominatorStake in
+                    nominatorStake.account.id == nomination.stashAccount.id
+                } == nil
+            }
+    }
+    
+    public var inactiveNominationTotal: Balance {
+        return self.inactiveNominations
+            .map { $0.stake.activeAmount }
+            .reduce(Balance(integerLiteral: 0)) { $0 + $1 }
+    }
 }
 
 extension ValidatorDetails: Codable {}
