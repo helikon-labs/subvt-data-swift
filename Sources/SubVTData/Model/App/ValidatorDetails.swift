@@ -102,7 +102,7 @@ public struct ValidatorDetails: Hashable {
     
     public var inactiveNominations: [Nomination] {
         guard let activeStake = self.validatorStake else {
-            return []
+            return self.nominations
         }
         return self.nominations
             .filter { nomination in
