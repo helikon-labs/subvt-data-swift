@@ -15,7 +15,7 @@ final class ValidatorDetailsServiceTests: XCTestCase {
         let service = ValidatorDetailsService()
         var updateCount = 0
         service
-            .subscribe(parameter: "0xa00505eb2a4607f27837f57232f0c456602e39540582685b4f58cde293f1a116")
+            .subscribe(parameter: "0xA00505EB2A4607F27837F57232F0C456602E39540582685B4F58CDE293F1A116")
             .sink { (completion) in
                 switch completion {
                 case .finished:

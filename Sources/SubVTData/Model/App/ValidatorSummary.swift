@@ -5,6 +5,7 @@ public struct ValidatorSummary: Codable, Hashable {
     public let accountId: AccountId
     public let address: String
     public private(set) var controllerAccountId: AccountId?
+    public private(set) var networkId: UInt64
     public private(set) var display: String?
     public private(set) var parentDisplay: String?
     public private(set) var childDisplay: String?
@@ -29,6 +30,7 @@ public struct ValidatorSummary: Codable, Hashable {
         accountId: AccountId,
         address: String,
         controllerAccountId: AccountId?,
+        networkId: UInt64,
         display: String?,
         parentDisplay: String?,
         childDisplay: String?,
@@ -52,6 +54,7 @@ public struct ValidatorSummary: Codable, Hashable {
         self.accountId = accountId
         self.address = address
         self.controllerAccountId = controllerAccountId
+        self.networkId = networkId
         self.display = display
         self.parentDisplay = parentDisplay
         self.childDisplay = childDisplay
@@ -77,6 +80,7 @@ public struct ValidatorSummary: Codable, Hashable {
 extension ValidatorSummary {
     public mutating func apply(diff: ValidatorSummaryDiff) {
         self.controllerAccountId = diff.controllerAccountId ?? self.controllerAccountId
+        self.networkId = diff.networkId ?? self.networkId
         self.display = diff.display ?? self.display
         self.parentDisplay = diff.parentDisplay ?? self.parentDisplay
         self.childDisplay = diff.childDisplay ?? self.childDisplay
@@ -102,6 +106,7 @@ extension ValidatorSummary {
 public struct ValidatorSummaryDiff: Codable, Hashable {
     public let accountId: AccountId
     public let controllerAccountId: AccountId?
+    public let networkId: UInt64?
     public let display: String?
     public let parentDisplay: String?
     public let childDisplay: String?

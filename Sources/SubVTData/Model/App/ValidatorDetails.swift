@@ -4,6 +4,7 @@
 public struct ValidatorDetails: Hashable {
     public private(set) var account: Account
     public private(set) var controllerAccountId: AccountId
+    public private(set) var networkId: UInt64
     public private(set) var preferences: ValidatorPreferences
     public private(set) var selfStake: Stake
     public private(set) var rewardDestination: RewardDestination
@@ -35,6 +36,7 @@ public struct ValidatorDetails: Hashable {
     public init(
         account: Account,
         controllerAccountId: AccountId,
+        networkId: UInt64,
         preferences: ValidatorPreferences,
         selfStake: Stake,
         rewardDestination: RewardDestination,
@@ -65,6 +67,7 @@ public struct ValidatorDetails: Hashable {
     ) {
         self.account = account
         self.controllerAccountId = controllerAccountId
+        self.networkId = networkId
         self.preferences = preferences
         self.selfStake = selfStake
         self.rewardDestination = rewardDestination
@@ -125,6 +128,7 @@ extension ValidatorDetails {
     public mutating func apply(diff: ValidatorDetailsDiff) {
         self.account = diff.account
         self.controllerAccountId = diff.controllerAccountId ?? self.controllerAccountId
+        self.networkId = diff.networkId ?? self.networkId
         self.preferences = diff.preferences ?? self.preferences
         self.selfStake = diff.selfStake ?? self.selfStake
         self.rewardDestination = diff.rewardDestination ?? self.rewardDestination
@@ -162,6 +166,7 @@ extension ValidatorDetails {
 public struct ValidatorDetailsDiff: Hashable {
     public let account: Account
     public let controllerAccountId: AccountId?
+    public let networkId: UInt64?
     public let preferences: ValidatorPreferences?
     public let selfStake: Stake?
     public let rewardDestination: RewardDestination?
