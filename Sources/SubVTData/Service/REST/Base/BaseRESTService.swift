@@ -5,7 +5,11 @@ import Foundation
 
 public typealias ServiceResponsePublisher<T> = AnyPublisher<DataResponse<T, APIError>, Never>
 
-public struct EmptyResponse: Codable {}
+public struct EmptyResponse: Codable, Alamofire.EmptyResponse {
+    public static func emptyValue() -> EmptyResponse {
+        return EmptyResponse.init()
+    }
+}
 
 /**
  Base class for all network services.
@@ -62,7 +66,11 @@ public class BaseRESTService {
             headers: headers
         )
             .validate()
-            .publishDecodable(type: T.self, decoder: jsonDecoder)
+            .publishDecodable(
+                type: T.self,
+                decoder: jsonDecoder,
+                emptyResponseCodes: [204]
+            )
             .map(mapResponse)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
@@ -85,7 +93,11 @@ public class BaseRESTService {
             headers: headers
         )
             .validate()
-            .publishDecodable(type: T.self, decoder: jsonDecoder)
+            .publishDecodable(
+                type: T.self,
+                decoder: jsonDecoder,
+                emptyResponseCodes: [204]
+            )
             .map(mapResponse)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
