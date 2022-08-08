@@ -13,7 +13,7 @@ public struct ValidatorSummary: Codable, Hashable {
     public private(set) var preferences: ValidatorPreferences
     public private(set) var selfStake: StakeSummary
     public private(set) var isActive: Bool
-    public private(set) var activeNextSession: Bool
+    public private(set) var isActiveNextSession: Bool
     public private(set) var inactiveNominations: InactiveNominationsSummary
     public private(set) var oversubscribed: Bool
     public private(set) var slashCount: Int
@@ -38,7 +38,7 @@ public struct ValidatorSummary: Codable, Hashable {
         preferences: ValidatorPreferences,
         selfStake: StakeSummary,
         isActive: Bool,
-        activeNextSession: Bool,
+        isActiveNextSession: Bool,
         inactiveNominations: InactiveNominationsSummary,
         oversubscribed: Bool,
         slashCount: Int,
@@ -62,7 +62,7 @@ public struct ValidatorSummary: Codable, Hashable {
         self.preferences = preferences
         self.selfStake = selfStake
         self.isActive = isActive
-        self.activeNextSession = activeNextSession
+        self.isActiveNextSession = isActiveNextSession
         self.inactiveNominations = inactiveNominations
         self.oversubscribed = oversubscribed
         self.slashCount = slashCount
@@ -88,7 +88,7 @@ extension ValidatorSummary {
         self.preferences = diff.preferences ?? self.preferences
         self.selfStake = diff.selfStake ?? self.selfStake
         self.isActive = diff.isActive ?? self.isActive
-        self.activeNextSession = diff.activeNextSession ?? self.activeNextSession
+        self.isActiveNextSession = diff.isActiveNextSession ?? self.isActiveNextSession
         self.inactiveNominations = diff.inactiveNominations ?? self.inactiveNominations
         self.oversubscribed = diff.oversubscribed ?? self.oversubscribed
         self.slashCount = diff.slashCount ?? self.slashCount
@@ -114,7 +114,7 @@ public struct ValidatorSummaryDiff: Codable, Hashable {
     public let preferences: ValidatorPreferences?
     public let selfStake: StakeSummary?
     public let isActive: Bool?
-    public let activeNextSession: Bool?
+    public let isActiveNextSession: Bool?
     public let inactiveNominations: InactiveNominationsSummary?
     public let oversubscribed: Bool?
     public let slashCount: Int?

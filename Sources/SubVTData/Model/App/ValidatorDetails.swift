@@ -10,7 +10,7 @@ public struct ValidatorDetails: Hashable {
     public private(set) var rewardDestination: RewardDestination
     public private(set) var nextSessionKeys: String
     public private(set) var isActive: Bool
-    public private(set) var activeNextSession: Bool
+    public private(set) var isActiveNextSession: Bool
     public private(set) var nominations: [Nomination]
     public private(set) var oversubscribed: Bool
     public private(set) var activeEraCount: UInt32
@@ -42,7 +42,7 @@ public struct ValidatorDetails: Hashable {
         rewardDestination: RewardDestination,
         nextSessionKeys: String,
         isActive: Bool,
-        activeNextSession: Bool,
+        isActiveNextSession: Bool,
         nominations: [Nomination],
         oversubscribed: Bool,
         activeEraCount: UInt32,
@@ -73,7 +73,7 @@ public struct ValidatorDetails: Hashable {
         self.rewardDestination = rewardDestination
         self.nextSessionKeys = nextSessionKeys
         self.isActive = isActive
-        self.activeNextSession = activeNextSession
+        self.isActiveNextSession = isActiveNextSession
         self.nominations = nominations
         self.oversubscribed = oversubscribed
         self.activeEraCount = activeEraCount
@@ -134,7 +134,7 @@ extension ValidatorDetails {
         self.rewardDestination = diff.rewardDestination ?? self.rewardDestination
         self.nextSessionKeys = diff.nextSessionKeys ?? self.nextSessionKeys
         self.isActive = diff.isActive ?? self.isActive
-        self.activeNextSession = diff.activeNextSession ?? self.activeNextSession
+        self.isActiveNextSession = diff.isActiveNextSession ?? self.isActiveNextSession
         self.nominations = diff.nominations ?? self.nominations
         self.oversubscribed = diff.oversubscribed ?? self.oversubscribed
         self.activeEraCount = diff.activeEraCount ?? self.activeEraCount
@@ -172,7 +172,7 @@ public struct ValidatorDetailsDiff: Hashable {
     public let rewardDestination: RewardDestination?
     public let nextSessionKeys: String?
     public let isActive: Bool?
-    public let activeNextSession: Bool?
+    public let isActiveNextSession: Bool?
     public let nominations: [Nomination]?
     public let oversubscribed: Bool?
     public let activeEraCount: UInt32?
