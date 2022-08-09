@@ -69,6 +69,64 @@ final class ReportServiceTests: BaseTest {
         }
     }
     
+    func test05GetValidatorSummaryReport() {
+        testServiceCall(
+            publisher: service.getValidatorSummaryReport(
+                validatorAccountId: validatorAccountId
+            )
+        ) {
+            [weak self]
+            (report, error) in
+            guard let self = self else { return }
+            XCTAssertNil(error)
+            XCTAssertEqual(report?.validatorSummary.accountId, self.validatorAccountId)
+        }
+    }
+    
+    func test05GetValidatorDetailsReport() {
+        testServiceCall(
+            publisher: service.getValidatorDetailsReport(
+                validatorAccountId: validatorAccountId
+            )
+        ) {
+            [weak self]
+            (report, error) in
+            guard let self = self else { return }
+            XCTAssertNil(error)
+            XCTAssertEqual(report?.validatorDetails.account.id, self.validatorAccountId)
+        }
+    }
+    
+    func test06GetValidatorListReport() {
+        testServiceCall(
+            publisher: service.getValidatorListReport()
+        ) {
+            (report, error) in
+            XCTAssertNil(error)
+            XCTAssertTrue(report?.validators.count ?? 0 > 0)
+        }
+    }
+    
+    func test07GetActiveValidatorListReport() {
+        testServiceCall(
+            publisher: service.getActiveValidatorListReport()
+        ) {
+            (report, error) in
+            XCTAssertNil(error)
+            XCTAssertTrue(report?.validators.count ?? 0 > 0)
+        }
+    }
+    
+    func test08GetInactiveValidatorListReport() {
+        testServiceCall(
+            publisher: service.getInactiveValidatorListReport()
+        ) {
+            (report, error) in
+            XCTAssertNil(error)
+            XCTAssertTrue(report?.validators.count ?? 0 > 0)
+        }
+    }
+    
     static var allTests = [
         ("test01GetSingleEraReport", test01GetSingleEraReport),
         ("test02GetMultipleEraReport", test02GetMultipleEraReport),

@@ -47,4 +47,43 @@ public final class ReportService: BaseRESTService {
             parameters: parameters
         )
     }
+    
+    public func getValidatorDetailsReport(
+        validatorAccountId: AccountId
+    ) -> ServiceResponsePublisher<ValidatorDetailsReport> {
+        return perform(
+            path: "/validator/\(validatorAccountId.toHex())/details",
+            method: .get
+        )
+    }
+    
+    public func getValidatorSummaryReport(
+        validatorAccountId: AccountId
+    ) -> ServiceResponsePublisher<ValidatorSummaryReport> {
+        return perform(
+            path: "/validator/\(validatorAccountId.toHex())/summary",
+            method: .get
+        )
+    }
+    
+    public func getValidatorListReport() -> ServiceResponsePublisher<ValidatorListReport> {
+        return perform(
+            path: "/validator/list",
+            method: .get
+        )
+    }
+    
+    public func getActiveValidatorListReport() -> ServiceResponsePublisher<ValidatorListReport> {
+        return perform(
+            path: "/validator/list/active",
+            method: .get
+        )
+    }
+    
+    public func getInactiveValidatorListReport() -> ServiceResponsePublisher<ValidatorListReport> {
+        return perform(
+            path: "/validator/list/inactive",
+            method: .get
+        )
+    }
 }
