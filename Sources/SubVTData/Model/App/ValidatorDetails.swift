@@ -26,11 +26,9 @@ public struct ValidatorDetails: Hashable {
     public private(set) var heartbeatReceived: Bool?
     public private(set) var validatorStake: ValidatorStake?
     public private(set) var onekvCandidateRecordId: UInt64?
-    public private(set) var onekvBinaryVersion: String?
     public private(set) var onekvRank: UInt32?
     public private(set) var onekvLocation: String?
     public private(set) var onekvIsValid: Bool?
-    public private(set) var onekvOnlineSince: UInt64?
     public private(set) var onekvOfflineSince: UInt64?
     
     public init(
@@ -58,11 +56,9 @@ public struct ValidatorDetails: Hashable {
         heartbeatReceived: Bool?,
         validatorStake: ValidatorStake?,
         onekvCandidateRecordId: UInt64?,
-        onekvBinaryVersion: String?,
         onekvRank: UInt32?,
         onekvLocation: String?,
         onekvIsValid: Bool?,
-        onekvOnlineSince: UInt64?,
         onekvOfflineSince: UInt64?
     ) {
         self.account = account
@@ -89,11 +85,9 @@ public struct ValidatorDetails: Hashable {
         self.heartbeatReceived = heartbeatReceived
         self.validatorStake = validatorStake
         self.onekvCandidateRecordId = onekvCandidateRecordId
-        self.onekvBinaryVersion = onekvBinaryVersion
         self.onekvRank = onekvRank
         self.onekvLocation = onekvLocation
         self.onekvIsValid = onekvIsValid
-        self.onekvOnlineSince = onekvOnlineSince
         self.onekvOfflineSince = onekvOfflineSince
     }
     
@@ -150,11 +144,9 @@ extension ValidatorDetails {
         self.heartbeatReceived = diff.heartbeatReceived ?? self.heartbeatReceived
         self.validatorStake = diff.validatorStake ?? self.validatorStake
         self.onekvCandidateRecordId = diff.onekvCandidateRecordId ?? self.onekvCandidateRecordId
-        self.onekvBinaryVersion = diff.onekvBinaryVersion ?? self.onekvBinaryVersion
         self.onekvRank = diff.onekvRank ?? self.onekvRank
         self.onekvLocation = diff.onekvLocation ?? self.onekvLocation
         self.onekvIsValid = diff.onekvIsValid ?? self.onekvIsValid
-        self.onekvOnlineSince = diff.onekvOnlineSince ?? self.onekvOnlineSince
         self.onekvOfflineSince = diff.onekvOfflineSince ?? self.onekvOfflineSince
     }
 }
@@ -188,11 +180,9 @@ public struct ValidatorDetailsDiff: Hashable {
     public let heartbeatReceived: Bool?
     public let validatorStake: ValidatorStake?
     public let onekvCandidateRecordId: UInt64?
-    public let onekvBinaryVersion: String?
     public let onekvRank: UInt32?
     public let onekvLocation: String?
     public let onekvIsValid: Bool?
-    public let onekvOnlineSince: UInt64?
     public let onekvOfflineSince: UInt64?
 }
 
