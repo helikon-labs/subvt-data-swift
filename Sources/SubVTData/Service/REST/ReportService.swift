@@ -86,4 +86,15 @@ public final class ReportService: BaseRESTService {
             method: .get
         )
     }
+    
+    public func searchValidators(query: String) -> ServiceResponsePublisher<[ValidatorSearchSummary]> {
+        let parameters: Parameters = [
+            "query": query,
+        ]
+        return perform(
+            path: "/validator/search",
+            method: .get,
+            parameters: parameters
+        )
+    }
 }

@@ -127,10 +127,25 @@ final class ReportServiceTests: BaseTest {
         }
     }
     
+    func test09SearchValidators() {
+        testServiceCall(
+            publisher: service.searchValidators(query: "heli")
+        ) {
+            (report, error) in
+            XCTAssertNil(error)
+            XCTAssertTrue(report?.count ?? 0 > 0)
+        }
+    }
+    
     static var allTests = [
         ("test01GetSingleEraReport", test01GetSingleEraReport),
         ("test02GetMultipleEraReport", test02GetMultipleEraReport),
         ("test03GetSingleEraValidatorReport", test03GetSingleEraValidatorReport),
         ("test04GetMultipleEraValidatorReport", test04GetMultipleEraValidatorReport),
+        ("test05GetValidatorDetailsReport", test05GetValidatorDetailsReport),
+        ("test06GetValidatorListReport", test06GetValidatorListReport),
+        ("test07GetActiveValidatorListReport", test07GetActiveValidatorListReport),
+        ("test08GetInactiveValidatorListReport", test08GetInactiveValidatorListReport),
+        ("test09SearchValidators", test09SearchValidators),
     ]
 }

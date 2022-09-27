@@ -1,5 +1,5 @@
 /**
- A validator represented by the active or inactive validator details service.
+ Validator summary - a subset of the ValidatorDetails struct.
  */
 public struct ValidatorSummary: Codable, Hashable {
     public let accountId: AccountId
