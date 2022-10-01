@@ -254,6 +254,38 @@ final class AppServiceTests: BaseTest {
         }
     }
     
+    func test17CreateDefaultUserNotificationRules() {
+        var channelId: UInt64 = 0
+        let channel = NewUserNotificationChannel(
+            channel: .apns,
+            target: "ABC-1234-DEFG"
+        )
+        let publisher = service
+            .createUserNotificationChannel(channel: channel)
+            .flatMap {
+                (response) -> ServiceResponsePublisher<EmptyResponse> in
+                XCTAssertNil(response.error)
+                XCTAssertNotNil(response.value)
+                channelId = response.value!.id
+                return service.createDefaultUserNotificationRules(channelId: channelId)
+            }
+            .eraseToAnyPublisher()
+            .flatMap {
+                (response) -> ServiceResponsePublisher<[UserNotificationRule]> in
+                XCTAssertNil(response.error)
+                return service.getUserNotificationRules()
+            }
+            .eraseToAnyPublisher()
+        testServiceCall(
+            publisher: publisher
+        ) {
+            (rules, error) in
+            XCTAssertNil(error)
+            XCTAssertNotNil(rules)
+            XCTAssertTrue(rules?.count ?? 0 > 20)
+        }
+    }
+    
     static var allTests = [
         ("test01GetNetworks", test01GetNetworks),
         ("test02GetNotificationChannels", test02GetNotificationChannels),
@@ -271,5 +303,6 @@ final class AppServiceTests: BaseTest {
         ("test14CreateUserNotificationRule", test14CreateUserNotificationRule),
         ("test15DeleteUserNotificationRule", test15DeleteUserNotificationRule),
         ("test16DeleteNonExistingUserNotificationRule", test16DeleteNonExistingUserNotificationRule),
+        ("test17CreateDefaultUserNotificationRules", test17CreateDefaultUserNotificationRules),
     ]
 }

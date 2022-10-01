@@ -97,4 +97,16 @@ public final class AppService: BaseRESTService {
             method: .delete
         )
     }
+    
+    public func createDefaultUserNotificationRules(
+        channelId: UInt64
+    ) -> ServiceResponsePublisher<EmptyResponse> {
+        var body: [String: UInt64] = [:]
+        body["user_notification_channel_id"] = channelId
+        return performWithBody(
+            path: "/secure/user/notification/rule/default",
+            method: .post,
+            body: body
+        )
+    }
 }

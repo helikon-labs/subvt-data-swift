@@ -3,5 +3,6 @@ public enum NotificationPeriodType: String, Codable, Hashable {
          hour,
          day,
          epoch,
-         era
+         era,
+         off
 }
