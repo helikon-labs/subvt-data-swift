@@ -1,5 +1,5 @@
 {
-    "scheme": "https",
+    "useSSL": true,
     "apiHost": "100.100.100.100",
     "rpcHost": "100.100.100.100",
     "networkStatusServicePort": 8000,

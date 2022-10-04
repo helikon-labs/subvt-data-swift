@@ -10,7 +10,7 @@ private func getEnvValue<T>(_ json: [String: AnyObject], _ key: String) -> T {
 
 struct Settings {
     static let shared = Settings()
-    let scheme: String
+    let useSSL: Bool
     let apiHost: String
     let rpcHost: String
     let networkStatusServicePort: UInt16
@@ -41,7 +41,7 @@ struct Settings {
             fatalError("Could not parse environment file JSON data.")
         }
         // read data
-        self.scheme = getEnvValue(json, "scheme")
+        self.useSSL = getEnvValue(json, "useSSL")
         self.apiHost = getEnvValue(json, "apiHost")
         self.rpcHost = getEnvValue(json, "rpcHost")
         self.networkStatusServicePort = getEnvValue(json, "networkStatusServicePort")
@@ -54,13 +54,5 @@ struct Settings {
     
     var isUnitTesting: Bool {
         return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-    }
-    
-    var reportServiceURL: String {
-        return "\(self.scheme)://" + apiHost + ":\(reportServicePort)"
-    }
-    
-    var appServiceURL: String {
-        return "\(self.scheme)://" + apiHost + ":\(appServicePort)"
     }
 }

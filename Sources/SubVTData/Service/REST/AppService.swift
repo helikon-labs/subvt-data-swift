@@ -6,11 +6,14 @@ import Combine
  */
 public final class AppService: BaseRESTService {
     public init() {
-        super.init(baseURL: Settings.shared.appServiceURL)
+        super.init(
+            host: Settings.shared.apiHost,
+            port: Settings.shared.appServicePort
+        )
     }
     
-    public override init(baseURL: String) {
-        super.init(baseURL: baseURL)
+    public override init(host: String, port: UInt16) {
+        super.init(host: host, port: port)
     }
     
     public func getNetworks() -> ServiceResponsePublisher<[Network]> {

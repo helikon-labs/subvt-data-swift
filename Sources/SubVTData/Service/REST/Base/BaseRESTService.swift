@@ -21,8 +21,9 @@ public class BaseRESTService {
     private let jsonEncoder = JSONEncoder()
     private let jsonDecoder = JSONDecoder()
     
-    init(baseURL: String) {
-        self.baseURL = baseURL
+    init(host: String, port: UInt16) {
+        let scheme = Settings.shared.useSSL ? "https" : "http"
+        self.baseURL = "\(scheme)://\(host):\(port)"
         self.session = Session(
             interceptor: AuthInterceptor(storage: KeychainStorage.shared)
         )

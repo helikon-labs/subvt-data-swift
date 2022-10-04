@@ -49,14 +49,14 @@ public class RPCSubscriptionService<T: Codable>: NSObject, ObservableObject, URL
     private var eventBus: PassthroughSubject<RPCEvent<T>, RPCError>!
     
     init(
-        scheme: String,
         host: String,
         port: UInt16,
         subscribeMethod: String,
         unsubscribeMethod: String
     ) {
         log.debug("⬆️ Init RPC subscription service.")
-        let urlString = "wss://\(host):\(port)"
+        let scheme = Settings.shared.useSSL ? "wss" : "ws"
+        let urlString = "\(scheme)://\(host):\(port)"
         guard let url = URL(string: urlString) else {
             fatalError("Invalid host/port resulting in: \(urlString)")
         }

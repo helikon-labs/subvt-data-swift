@@ -6,11 +6,14 @@ import Combine
  */
 public final class ReportService: BaseRESTService {
     public init() {
-        super.init(baseURL: Settings.shared.reportServiceURL)
+        super.init(
+            host: Settings.shared.apiHost,
+            port: Settings.shared.reportServicePort
+        )
     }
     
-    public override init(baseURL: String) {
-        super.init(baseURL: baseURL)
+    public override init(host: String, port: UInt16) {
+        super.init(host: host, port: port)
     }
     
     public func getEraReport(
