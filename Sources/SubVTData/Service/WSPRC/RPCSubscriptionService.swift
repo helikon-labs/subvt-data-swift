@@ -49,6 +49,7 @@ public class RPCSubscriptionService<T: Codable>: NSObject, ObservableObject, URL
     private var eventBus: PassthroughSubject<RPCEvent<T>, RPCError>!
     
     init(
+        scheme: String,
         host: String,
         port: UInt16,
         subscribeMethod: String,

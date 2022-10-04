@@ -3,7 +3,9 @@
  */
 public class ValidatorListService: RPCSubscriptionService<ValidatorListUpdate> {
     public init(active: Bool) {
+        let scheme = (Settings.shared.scheme == "https") ? "wss" : "ws"
         super.init(
+            scheme: scheme,
             host: Settings.shared.rpcHost,
             port: active
                 ? Settings.shared.activeValidatorListServicePort
@@ -17,7 +19,9 @@ public class ValidatorListService: RPCSubscriptionService<ValidatorListUpdate> {
         rpcHost: String,
         rpcPort: UInt16
     ) {
+        let scheme = (Settings.shared.scheme == "https") ? "wss" : "ws"
         super.init(
+            scheme: scheme,
             host: rpcHost,
             port: rpcPort,
             subscribeMethod: "subscribe_validatorList",

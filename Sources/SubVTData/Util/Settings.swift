@@ -10,6 +10,7 @@ private func getEnvValue<T>(_ json: [String: AnyObject], _ key: String) -> T {
 
 struct Settings {
     static let shared = Settings()
+    let scheme: String
     let apiHost: String
     let rpcHost: String
     let networkStatusServicePort: UInt16
@@ -40,14 +41,15 @@ struct Settings {
             fatalError("Could not parse environment file JSON data.")
         }
         // read data
-        apiHost = getEnvValue(json, "apiHost")
-        rpcHost = getEnvValue(json, "rpcHost")
-        networkStatusServicePort = getEnvValue(json, "networkStatusServicePort")
-        activeValidatorListServicePort = getEnvValue(json, "activeValidatorListServicePort")
-        inactiveValidatorListServicePort = getEnvValue(json, "inactiveValidatorListServicePort")
-        validatorDetailsServicePort = getEnvValue(json, "validatorDetailsServicePort")
-        reportServicePort = getEnvValue(json, "reportServicePort")
-        appServicePort = getEnvValue(json, "appServicePort")
+        self.scheme = getEnvValue(json, "scheme")
+        self.apiHost = getEnvValue(json, "apiHost")
+        self.rpcHost = getEnvValue(json, "rpcHost")
+        self.networkStatusServicePort = getEnvValue(json, "networkStatusServicePort")
+        self.activeValidatorListServicePort = getEnvValue(json, "activeValidatorListServicePort")
+        self.inactiveValidatorListServicePort = getEnvValue(json, "inactiveValidatorListServicePort")
+        self.validatorDetailsServicePort = getEnvValue(json, "validatorDetailsServicePort")
+        self.reportServicePort = getEnvValue(json, "reportServicePort")
+        self.appServicePort = getEnvValue(json, "appServicePort")
     }
     
     var isUnitTesting: Bool {
@@ -55,10 +57,10 @@ struct Settings {
     }
     
     var reportServiceURL: String {
-        return "https://" + apiHost + ":\(reportServicePort)"
+        return "\(self.scheme)://" + apiHost + ":\(reportServicePort)"
     }
     
     var appServiceURL: String {
-        return "https://" + apiHost + ":\(appServicePort)"
+        return "\(self.scheme)://" + apiHost + ":\(appServicePort)"
     }
 }
