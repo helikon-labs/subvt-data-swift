@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Create data-env.json file
         env:
+          SCHEME: ${{ secrets.SCHEME }}
           API_HOST: ${{ secrets.API_HOST }}
           RPC_HOST: ${{ secrets.RPC_HOST }}
           NETWORK_STATUS_SERVICE_PORT: ${{ secrets.NETWORK_STATUS_SERVICE_PORT }}
@@ -38,7 +39,7 @@ jobs:
           dqt='"'
           echo
           echo "{" >> data-env.json
-		  echo "    ${dqt}scheme${dqt}: $SCHEME," >> data-env.json
+          echo "    ${dqt}scheme${dqt}: $SCHEME," >> data-env.json
           echo "    ${dqt}apiHost${dqt}: $API_HOST," >> data-env.json
           echo "    ${dqt}rpcHost${dqt}: $RPC_HOST," >> data-env.json
           echo "    ${dqt}networkStatusServicePort${dqt}: $NETWORK_STATUS_SERVICE_PORT," >> data-env.json
