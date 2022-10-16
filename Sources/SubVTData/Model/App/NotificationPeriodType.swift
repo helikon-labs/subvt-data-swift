@@ -1,8 +1,8 @@
-public enum NotificationPeriodType: String, Codable, Hashable {
-    case immediate,
+public enum NotificationPeriodType: String, Codable, Hashable, CaseIterable {
+    case off,
+         immediate,
          hour,
          day,
          epoch,
-         era,
-         off
+         era
 }
