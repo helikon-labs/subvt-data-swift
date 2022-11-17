@@ -137,6 +137,16 @@ final class ReportServiceTests: BaseTest {
         }
     }
     
+    func test10GetOneKVNominatorSummaries() {
+        testServiceCall(
+            publisher: service.getOneKVNominatorSummaries()
+        ) {
+            (report, error) in
+            XCTAssertNil(error)
+            XCTAssertTrue(report?.count ?? 0 > 0)
+        }
+    }
+    
     static var allTests = [
         ("test01GetSingleEraReport", test01GetSingleEraReport),
         ("test02GetMultipleEraReport", test02GetMultipleEraReport),

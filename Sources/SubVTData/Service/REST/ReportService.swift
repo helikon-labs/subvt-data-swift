@@ -100,4 +100,11 @@ public final class ReportService: BaseRESTService {
             parameters: parameters
         )
     }
+    
+    public func getOneKVNominatorSummaries() -> ServiceResponsePublisher<[OneKVNominatorSummary]> {
+        return perform(
+            path: "/onekv/nominator",
+            method: .get
+        )
+    }
 }
