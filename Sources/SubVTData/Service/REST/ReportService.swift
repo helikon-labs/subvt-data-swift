@@ -107,4 +107,18 @@ public final class ReportService: BaseRESTService {
             method: .get
         )
     }
+    
+    public func getAllEras() -> ServiceResponsePublisher<[Era]> {
+        return perform(
+            path: "/era",
+            method: .get
+        )
+    }
+    
+    public func getCurrentEra() -> ServiceResponsePublisher<Era> {
+        return perform(
+            path: "/era/current",
+            method: .get
+        )
+    }
 }

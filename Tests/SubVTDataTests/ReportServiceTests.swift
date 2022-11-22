@@ -147,6 +147,26 @@ final class ReportServiceTests: BaseTest {
         }
     }
     
+    func test10GetCurrentEra() {
+        testServiceCall(
+            publisher: service.getCurrentEra()
+        ) {
+            (era, error) in
+            XCTAssertNil(error)
+            XCTAssertTrue(era?.index ?? 0 > 0)
+        }
+    }
+    
+    func test11GetAllEras() {
+        testServiceCall(
+            publisher: service.getAllEras()
+        ) {
+            (eras, error) in
+            XCTAssertNil(error)
+            XCTAssertTrue(eras?.count ?? 0 > 0)
+        }
+    }
+    
     static var allTests = [
         ("test01GetSingleEraReport", test01GetSingleEraReport),
         ("test02GetMultipleEraReport", test02GetMultipleEraReport),
@@ -157,5 +177,7 @@ final class ReportServiceTests: BaseTest {
         ("test07GetActiveValidatorListReport", test07GetActiveValidatorListReport),
         ("test08GetInactiveValidatorListReport", test08GetInactiveValidatorListReport),
         ("test09SearchValidators", test09SearchValidators),
+        ("test10GetOneKVNominatorSummaries", test10GetOneKVNominatorSummaries),
+        ("test11GetAllEras", test11GetAllEras),
     ]
 }
