@@ -7,9 +7,9 @@ public struct EraReport: Hashable {
     public let maximumStake: Balance?
     public let averageStake: Balance?
     public let medianStake: Balance?
-    public let totalValidatorReward: Balance?
+    public let totalReward: Balance?
     public let totalRewardPoints: UInt64?
-    public let totalReward: Balance
+    public let totalPaidOut: Balance
     public let totalStake: Balance?
     public let activeValidatorCount: UInt32
     public let inactiveValidatorCount: UInt32
@@ -24,9 +24,9 @@ public struct EraReport: Hashable {
         maximumStake: Balance?,
         averageStake: Balance?,
         medianStake: Balance?,
-        totalValidatorReward: Balance?,
+        totalReward: Balance?,
         totalRewardPoints: UInt64?,
-        totalReward: Balance,
+        totalPaidOut: Balance,
         totalStake: Balance?,
         activeValidatorCount: UInt32,
         inactiveValidatorCount: UInt32,
@@ -40,9 +40,9 @@ public struct EraReport: Hashable {
         self.maximumStake = maximumStake
         self.averageStake = averageStake
         self.medianStake = medianStake
-        self.totalValidatorReward = totalValidatorReward
-        self.totalRewardPoints = totalRewardPoints
         self.totalReward = totalReward
+        self.totalRewardPoints = totalRewardPoints
+        self.totalPaidOut = totalPaidOut
         self.totalStake = totalStake
         self.activeValidatorCount = activeValidatorCount
         self.inactiveValidatorCount = inactiveValidatorCount
