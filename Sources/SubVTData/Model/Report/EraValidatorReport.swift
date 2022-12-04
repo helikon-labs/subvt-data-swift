@@ -8,7 +8,7 @@ public struct EraValidatorReport: Hashable {
     public let selfStake: Balance?
     public let totalStake: Balance?
     public let blockCount: UInt32
-    public let rewardPoints: Balance?
+    public let rewardPoints: UInt64?
     public let selfReward: Balance
     public let stakerReward: Balance
     public let offlineOffenceCount: UInt16
@@ -22,7 +22,7 @@ public struct EraValidatorReport: Hashable {
         selfStake: Balance?,
         totalStake: Balance?,
         blockCount: UInt32,
-        rewardPoints: Balance?,
+        rewardPoints: UInt64?,
         selfReward: Balance,
         stakerReward: Balance,
         offlineOffenceCount: UInt16,
