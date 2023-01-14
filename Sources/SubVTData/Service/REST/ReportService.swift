@@ -121,4 +121,22 @@ public final class ReportService: BaseRESTService {
             method: .get
         )
     }
+    
+    public func getValidatorEraRewardReport(
+        validatorAccountId: AccountId
+    ) -> ServiceResponsePublisher<[ValidatorEraRewardReport]> {
+        return perform(
+            path: "/validator/\(validatorAccountId.toHex())/era/reward",
+            method: .get
+        )
+    }
+    
+    public func getValidatorEraPayoutReport(
+        validatorAccountId: AccountId
+    ) -> ServiceResponsePublisher<[ValidatorEraPayoutReport]> {
+        return perform(
+            path: "/validator/\(validatorAccountId.toHex())/era/reward",
+            method: .get
+        )
+    }
 }

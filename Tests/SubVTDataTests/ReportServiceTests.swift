@@ -167,6 +167,26 @@ final class ReportServiceTests: BaseTest {
         }
     }
     
+    func test12GetValidatorEraRewardReport() {
+        testServiceCall(
+            publisher: service.getValidatorEraRewardReport(validatorAccountId: validatorAccountId)
+        ) {
+            (reports, error) in
+            XCTAssertNil(error)
+            XCTAssertTrue(reports?.count ?? 0 > 0)
+        }
+    }
+    
+    func test13GetValidatorEraPayoutReport() {
+        testServiceCall(
+            publisher: service.getValidatorEraRewardReport(validatorAccountId: validatorAccountId)
+        ) {
+            (reports, error) in
+            XCTAssertNil(error)
+            XCTAssertTrue(reports?.count ?? 0 > 0)
+        }
+    }
+    
     static var allTests = [
         ("test01GetSingleEraReport", test01GetSingleEraReport),
         ("test02GetMultipleEraReport", test02GetMultipleEraReport),
@@ -179,5 +199,7 @@ final class ReportServiceTests: BaseTest {
         ("test09SearchValidators", test09SearchValidators),
         ("test10GetOneKVNominatorSummaries", test10GetOneKVNominatorSummaries),
         ("test11GetAllEras", test11GetAllEras),
+        ("test12GetValidatorEraRewardReport", test12GetValidatorEraRewardReport),
+        ("test13GetValidatorEraPayoutReport", test13GetValidatorEraPayoutReport),
     ]
 }
