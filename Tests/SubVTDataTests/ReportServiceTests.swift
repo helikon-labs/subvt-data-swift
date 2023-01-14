@@ -179,7 +179,7 @@ final class ReportServiceTests: BaseTest {
     
     func test13GetValidatorEraPayoutReport() {
         testServiceCall(
-            publisher: service.getValidatorEraRewardReport(validatorAccountId: validatorAccountId)
+            publisher: service.getValidatorEraPayoutReport(validatorAccountId: validatorAccountId)
         ) {
             (reports, error) in
             XCTAssertNil(error)
