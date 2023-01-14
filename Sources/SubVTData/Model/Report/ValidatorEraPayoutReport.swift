@@ -2,14 +2,14 @@ import Foundation
 
 public struct ValidatorEraPayoutReport: Hashable {
     public let era: Era
-    public let reward: Balance
+    public let payout: Balance
     
     public init(
         era: Era,
-        reward: Balance
+        payout: Balance
     ) {
         self.era = era
-        self.reward = reward
+        self.payout = payout
     }
 }
 

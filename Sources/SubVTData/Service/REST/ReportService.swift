@@ -135,7 +135,7 @@ public final class ReportService: BaseRESTService {
         validatorAccountId: AccountId
     ) -> ServiceResponsePublisher<[ValidatorEraPayoutReport]> {
         return perform(
-            path: "/validator/\(validatorAccountId.toHex())/era/reward",
+            path: "/validator/\(validatorAccountId.toHex())/era/payout",
             method: .get
         )
     }
