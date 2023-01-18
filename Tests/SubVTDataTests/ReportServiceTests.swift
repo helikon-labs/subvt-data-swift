@@ -157,7 +157,16 @@ final class ReportServiceTests: BaseTest {
         }
     }
     
-    func test11GetAllEras() {
+    func test11GetCurrentEra() {
+        testServiceCall(
+            publisher: service.getCurrentEra()
+        ) {
+            (session, error) in
+            XCTAssertNil(error)
+        }
+    }
+    
+    func test12GetAllEras() {
         testServiceCall(
             publisher: service.getAllEras()
         ) {
@@ -167,7 +176,7 @@ final class ReportServiceTests: BaseTest {
         }
     }
     
-    func test12GetValidatorEraRewardReport() {
+    func test13GetValidatorEraRewardReport() {
         testServiceCall(
             publisher: service.getValidatorEraRewardReport(validatorAccountId: validatorAccountId)
         ) {
@@ -177,13 +186,52 @@ final class ReportServiceTests: BaseTest {
         }
     }
     
-    func test13GetValidatorEraPayoutReport() {
+    func test14GetValidatorEraPayoutReport() {
         testServiceCall(
             publisher: service.getValidatorEraPayoutReport(validatorAccountId: validatorAccountId)
         ) {
             (reports, error) in
             XCTAssertNil(error)
             XCTAssertTrue(reports?.count ?? 0 > 0)
+        }
+    }
+    
+    func test15GetSingleSessionValidatorReport() {
+        testServiceCall(
+            publisher: service.getSessionValidatorReport(
+                validatorAccountId: validatorAccountId,
+                startSessionIndex: 23441
+            )
+        ) {
+            (reports, error) in
+            XCTAssertNil(error)
+            XCTAssertEqual(1, reports?.count ?? 0)
+            let report = reports![0]
+            XCTAssertNotNil(report.paraVotesSummary)
+            XCTAssertNotNil(report.heartbeatEvent)
+        }
+    }
+    
+    func test16GetMultipleSessionValidatorReport() {
+        testServiceCall(
+            publisher: service.getSessionValidatorReport(
+                validatorAccountId: validatorAccountId,
+                startSessionIndex: 23440,
+                endSessionIndex: 23449
+            )
+        ) {
+            (reports, error) in
+            XCTAssertNil(error)
+            XCTAssertEqual(10, reports?.count ?? 0)
+        }
+    }
+    
+    func test17GetCurrentSession() {
+        testServiceCall(
+            publisher: service.getCurrentSession()
+        ) {
+            (session, error) in
+            XCTAssertNil(error)
         }
     }
     
@@ -198,8 +246,12 @@ final class ReportServiceTests: BaseTest {
         ("test08GetInactiveValidatorListReport", test08GetInactiveValidatorListReport),
         ("test09SearchValidators", test09SearchValidators),
         ("test10GetOneKVNominatorSummaries", test10GetOneKVNominatorSummaries),
-        ("test11GetAllEras", test11GetAllEras),
-        ("test12GetValidatorEraRewardReport", test12GetValidatorEraRewardReport),
-        ("test13GetValidatorEraPayoutReport", test13GetValidatorEraPayoutReport),
+        ("test11GetCurrentEra", test11GetCurrentEra),
+        ("test12GetAllEras", test12GetAllEras),
+        ("test13GetValidatorEraRewardReport", test13GetValidatorEraRewardReport),
+        ("test14GetValidatorEraPayoutReport", test14GetValidatorEraPayoutReport),
+        ("test15GetSingleSessionValidatorReport", test15GetSingleSessionValidatorReport),
+        ("test16GetMultipleSessionValidatorReport", test16GetMultipleSessionValidatorReport),
+        ("test17GetCurrentSession", test17GetCurrentSession),
     ]
 }

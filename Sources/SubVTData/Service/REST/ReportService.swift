@@ -139,4 +139,29 @@ public final class ReportService: BaseRESTService {
             method: .get
         )
     }
+    
+    public func getSessionValidatorReport(
+        validatorAccountId: AccountId,
+        startSessionIndex: Int,
+        endSessionIndex: UInt? = nil
+    ) -> ServiceResponsePublisher<[SessionValidatorReport]> {
+        var parameters: Parameters = [
+            "start_session_index": startSessionIndex,
+        ]
+        if let endSessionIndex = endSessionIndex {
+            parameters["end_session_index"] = endSessionIndex
+        }
+        return perform(
+            path: "/report/session/validator/\(validatorAccountId.toHex())",
+            method: .get,
+            parameters: parameters
+        )
+    }
+    
+    public func getCurrentSession() -> ServiceResponsePublisher<Epoch> {
+        return perform(
+            path: "/session/current",
+            method: .get
+        )
+    }
 }
