@@ -2,7 +2,7 @@
  Substrate era as represented in the SubVT system.
  */
 public struct Era: Hashable {
-    public let index: UInt
+    public let index: UInt32
     public let startTimestamp: UInt64
     public let endTimestamp: UInt64
     
@@ -13,7 +13,7 @@ public struct Era: Hashable {
     }
     
     public init(
-        index: UInt,
+        index: UInt32,
         startTimestamp: UInt64,
         endTimestamp: UInt64
     ) {

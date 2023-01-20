@@ -17,8 +17,8 @@ public final class ReportService: BaseRESTService {
     }
     
     public func getEraReport(
-        startEraIndex: Int,
-        endEraIndex: UInt? = nil
+        startEraIndex: UInt32,
+        endEraIndex: UInt32? = nil
     ) -> ServiceResponsePublisher<[EraReport]> {
         var parameters: Parameters = [
             "start_era_index": startEraIndex,
@@ -35,8 +35,8 @@ public final class ReportService: BaseRESTService {
     
     public func getEraValidatorReport(
         validatorAccountId: AccountId,
-        startEraIndex: Int,
-        endEraIndex: UInt? = nil
+        startEraIndex: UInt32,
+        endEraIndex: UInt32? = nil
     ) -> ServiceResponsePublisher<[EraValidatorReport]> {
         var parameters: Parameters = [
             "start_era_index": startEraIndex,
@@ -142,8 +142,8 @@ public final class ReportService: BaseRESTService {
     
     public func getSessionValidatorReport(
         validatorAccountId: AccountId,
-        startSessionIndex: Int,
-        endSessionIndex: UInt? = nil
+        startSessionIndex: UInt32,
+        endSessionIndex: UInt32? = nil
     ) -> ServiceResponsePublisher<[SessionValidatorReport]> {
         var parameters: Parameters = [
             "start_session_index": startSessionIndex,
