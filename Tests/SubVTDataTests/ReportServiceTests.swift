@@ -200,7 +200,7 @@ final class ReportServiceTests: BaseTest {
         testServiceCall(
             publisher: service.getSessionValidatorReport(
                 validatorAccountId: validatorAccountId,
-                startSessionIndex: 23441
+                startSessionIndex: 27589
             )
         ) {
             (reports, error) in
@@ -216,8 +216,8 @@ final class ReportServiceTests: BaseTest {
         testServiceCall(
             publisher: service.getSessionValidatorReport(
                 validatorAccountId: validatorAccountId,
-                startSessionIndex: 23440,
-                endSessionIndex: 23449
+                startSessionIndex: 27582,
+                endSessionIndex: 27591
             )
         ) {
             (reports, error) in
