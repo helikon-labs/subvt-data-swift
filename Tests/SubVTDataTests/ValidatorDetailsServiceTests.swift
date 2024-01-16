@@ -45,7 +45,7 @@ final class ValidatorDetailsServiceTests: XCTestCase {
                     break
                 }
             }.store(in: &cancellables)
-        waitForExpectations(timeout: 100)
+        waitForExpectations(timeout: 60 * 3)
         XCTAssertNil(error)
     }
     

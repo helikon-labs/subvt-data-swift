@@ -34,11 +34,11 @@ final class AuthInterceptor: Alamofire.RequestInterceptor {
         let digest = SHA256.hash(data: bytesToSign)
         do {
             let signature = try storage.privateKey.signature(for: digest)
-            let signatureDer = try signature.derRepresentation()
+            let signatureDer = try signature.derRepresentation
             let signatureHex = signatureDer.map({
                 String(format: "%02hhX", $0)
             }).joined()
-            let publicKeyHex = storage.publicKey.rawRepresentation.map {
+            let publicKeyHex = storage.publicKey.dataRepresentation.map {
                 String(format: "%02hhX", $0)
             }.joined()
             var urlRequest = urlRequest

@@ -51,7 +51,7 @@ final class ValidatorListServiceTests: XCTestCase {
                     unsubscribeExpectation.fulfill()
                 }
             }.store(in: &cancellables)
-        waitForExpectations(timeout: 100)
+        waitForExpectations(timeout: 60 * 3)
         XCTAssertNil(error)
     }
     

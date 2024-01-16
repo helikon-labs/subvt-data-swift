@@ -18,13 +18,11 @@ public enum IdenticonError: Error {
 }
 
 fileprivate func deriveInternalIdFromBytes(_ bytes: [UInt8]) throws -> [UInt8] {
-    let zero: [UInt8] = try Blake2.hash(
-        .b2b,
+    let zero: [UInt8] = try Blake2b.hash(
         size: 64,
         data: Data(repeating: 0, count: 32)
     ).map { $0 }
-    var bytes: [UInt8] = try Blake2.hash(
-        .b2b,
+    var bytes: [UInt8] = try Blake2b.hash(
         size: 64,
         data: Data(bytes)
     ).map { $0 }

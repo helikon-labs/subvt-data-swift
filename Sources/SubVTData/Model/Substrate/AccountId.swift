@@ -55,7 +55,7 @@ public struct AccountId: CustomStringConvertible, Hashable {
         }
         
         if accountId.count != accountIdLength {
-            accountId = try Blake2.hash(.b2b, size: accountIdLength, data: accountId)
+            accountId = try Blake2b.hash(size: accountIdLength, data: accountId)
         }
         addressData.append(accountId)
         
@@ -63,7 +63,7 @@ public struct AccountId: CustomStringConvertible, Hashable {
         let ss58PreData = ss58Pre.data(using: .utf8) ?? Data()
         checksumData.append(ss58PreData)
         checksumData.append(addressData as Data)
-        let hash = try Blake2.hash(.b2b, size: blake2bMaxLength, data: checksumData as Data)
+        let hash = try Blake2b.hash(size: blake2bMaxLength, data: checksumData as Data)
         addressData.append(hash.subdata(in: 0..<checksumLength))
         let addressBytes = Array(addressData as Data)
         return Base58.base58Encode(addressBytes)

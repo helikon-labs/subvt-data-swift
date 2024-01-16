@@ -20,7 +20,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/Alamofire/Alamofire.git",
-            .upToNextMinor(from: "5.6.1")
+            .upToNextMinor(from: "5.8.1")
         ),
         .package(
             url: "https://github.com/konkab/AlamofireNetworkActivityLogger.git",
@@ -29,7 +29,7 @@ let package = Package(
         .package(
             name: "Base58Swift",
             url: "https://github.com/keefertaylor/Base58Swift.git",
-            .upToNextMinor(from: "2.1.0")
+            .upToNextMinor(from: "2.1.7")
         ),
         .package(
             url: "https://github.com/attaswift/BigInt.git",
@@ -38,7 +38,7 @@ let package = Package(
         .package(
             name: "Blake2",
             url: "https://github.com/tesseract-one/Blake2.swift.git",
-            .upToNextMinor(from: "0.1.0")
+            .upToNextMinor(from: "0.2.0")
         ),
         .package(
             url: "https://github.com/kishikawakatsumi/KeychainAccess.git",
@@ -47,11 +47,11 @@ let package = Package(
         .package(
             name: "secp256k1",
             url: "https://github.com/GigaBitcoin/secp256k1.swift.git",
-            .upToNextMinor(from: "0.4.0")
+            .upToNextMinor(from: "0.15.0")
         ),
         .package(
             url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git",
-            .upToNextMajor(from: "1.9.0")
+            .upToNextMajor(from: "2.0.0")
         )
     ],
     targets: [
