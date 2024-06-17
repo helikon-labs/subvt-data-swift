@@ -11,6 +11,9 @@ let log = logger()
 
 fileprivate func logger() -> SwiftyBeaver.Type  {
     let log = SwiftyBeaver.self
-    log.addDestination(ConsoleDestination())
+    let console = ConsoleDestination()
+    if !log.destinations.contains(console) {
+        log.addDestination(console)
+    }
     return log
 }

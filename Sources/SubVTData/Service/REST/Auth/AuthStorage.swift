@@ -1,3 +1,4 @@
+import Foundation
 import KeychainAccess
 import secp256k1
 
@@ -21,7 +22,7 @@ protocol AuthStorage: AnyObject {
 /**
  Keychain authentication storage.
  */
-class KeychainStorage: AuthStorage {
+public class KeychainStorage: AuthStorage {
     static let shared: KeychainStorage = KeychainStorage()
     var privateKey: PrivateKey
     var publicKey: PublicKey
@@ -44,6 +45,16 @@ class KeychainStorage: AuthStorage {
         } catch {
             fatalError("Cannot initialize keychain: \(error.localizedDescription)")
         }
+    }
+    
+    public func setPrivateKey(data: Data) {
+        self.keychain[data: privateKeyKey] = data
+        self.privateKey = try! PrivateKey(dataRepresentation: data)
+        self.publicKey = self.privateKey.publicKey
+    }
+    
+    public func getPrivateKeyData() -> Data {
+        return self.privateKey.dataRepresentation
     }
     
     func resetUser() {
