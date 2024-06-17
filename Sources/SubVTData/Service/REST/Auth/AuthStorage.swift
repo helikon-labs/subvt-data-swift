@@ -23,7 +23,7 @@ protocol AuthStorage: AnyObject {
  Keychain authentication storage.
  */
 public class KeychainStorage: AuthStorage {
-    static let shared: KeychainStorage = KeychainStorage()
+    public static let shared: KeychainStorage = KeychainStorage()
     var privateKey: PrivateKey
     var publicKey: PublicKey
     private let keychain = Keychain(service: "io.helikon.subvt.data")

@@ -6,6 +6,7 @@ final class ValidatorDetailsServiceTests: XCTestCase {
     private var cancellables: Set<AnyCancellable>!
     
     override func setUp() {
+        initLog()
         cancellables = []
     }
     

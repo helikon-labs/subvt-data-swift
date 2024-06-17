@@ -1,11 +1,19 @@
 import Combine
+import SwiftyBeaver
 import XCTest
 @testable import SubVTData
+
+func initLog() {
+    let console = ConsoleDestination()
+    log.addDestination(console)
+}
+
 
 class BaseTest: XCTestCase {
     private var cancellables: Set<AnyCancellable>!
     
     override func setUp() {
+        initLog()
         cancellables = []
     }
  

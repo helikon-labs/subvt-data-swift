@@ -7,13 +7,4 @@
 
 import SwiftyBeaver
 
-let log = logger()
-
-fileprivate func logger() -> SwiftyBeaver.Type  {
-    let log = SwiftyBeaver.self
-    let console = ConsoleDestination()
-    if !log.destinations.contains(console) {
-        log.addDestination(console)
-    }
-    return log
-}
+let log = SwiftyBeaver.self

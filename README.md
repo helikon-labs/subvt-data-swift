@@ -28,7 +28,7 @@ let package = Package(
         // ...
         .package(
             url: "https://github.com/helikon-labs/subvt-data-swift.git",
-            .upToNextMinor(from: "0.17.0")
+            .upToNextMinor(from: "0.17.1")
         )
     ],
     targets: [

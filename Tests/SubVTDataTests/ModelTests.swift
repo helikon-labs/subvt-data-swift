@@ -10,6 +10,11 @@ import Foundation
 import XCTest
 
 final class Model: XCTestCase {
+    
+    override func setUp() {
+        initLog()
+    }
+    
     func testBalanceAdd() {
         XCTAssertEqual(
             Balance(integerLiteral: 123) + Balance(integerLiteral: 345),
