@@ -164,4 +164,11 @@ public final class ReportService: BaseRESTService {
             method: .get
         )
     }
+    
+    public func getNetworkStatus() -> ServiceResponsePublisher<NetworkStatus> {
+        return perform(
+            path: "/network/status",
+            method: .get
+        )
+    }
 }

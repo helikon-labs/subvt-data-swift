@@ -200,7 +200,7 @@ final class ReportServiceTests: BaseTest {
         testServiceCall(
             publisher: service.getSessionValidatorReport(
                 validatorAccountId: validatorAccountId,
-                startSessionIndex: 36217
+                startSessionIndex: 39931
             )
         ) {
             (reports, error) in
@@ -208,7 +208,7 @@ final class ReportServiceTests: BaseTest {
             XCTAssertEqual(1, reports?.count ?? 0)
             let report = reports![0]
             XCTAssertNotNil(report.paraVotesSummary)
-            XCTAssertNotNil(report.heartbeatEvent)
+            XCTAssertNil(report.heartbeatEvent)
         }
     }
     
@@ -216,8 +216,8 @@ final class ReportServiceTests: BaseTest {
         testServiceCall(
             publisher: service.getSessionValidatorReport(
                 validatorAccountId: validatorAccountId,
-                startSessionIndex: 36000,
-                endSessionIndex: 36009
+                startSessionIndex: 39950,
+                endSessionIndex: 39959
             )
         ) {
             (reports, error) in
@@ -231,6 +231,15 @@ final class ReportServiceTests: BaseTest {
             publisher: service.getCurrentSession()
         ) {
             (session, error) in
+            XCTAssertNil(error)
+        }
+    }
+    
+    func test18GetNetworkStatus() {
+        testServiceCall(
+            publisher: service.getNetworkStatus()
+        ) {
+            (networkStatus, error) in
             XCTAssertNil(error)
         }
     }
