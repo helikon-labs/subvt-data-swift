@@ -244,6 +244,18 @@ final class ReportServiceTests: BaseTest {
         }
     }
     
+    func test19GetMonthlyIncome() {
+        testServiceCall(
+            publisher: service.getMonthlyIncomeReport(
+                rewardeeAccountId: validatorAccountId
+            )
+        ) {
+            (report, error) in
+            print("\(report!.monthlyIncome[0].income)")
+            XCTAssertNil(error)
+        }
+    }
+    
     static var allTests = [
         ("test01GetSingleEraReport", test01GetSingleEraReport),
         ("test02GetMultipleEraReport", test02GetMultipleEraReport),
@@ -262,5 +274,7 @@ final class ReportServiceTests: BaseTest {
         ("test15GetSingleSessionValidatorReport", test15GetSingleSessionValidatorReport),
         ("test16GetMultipleSessionValidatorReport", test16GetMultipleSessionValidatorReport),
         ("test17GetCurrentSession", test17GetCurrentSession),
+        ("test18GetNetworkStatus", test18GetNetworkStatus),
+        ("test19GetMonthlyIncome", test19GetMonthlyIncome),
     ]
 }

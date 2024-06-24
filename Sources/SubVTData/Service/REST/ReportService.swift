@@ -171,4 +171,13 @@ public final class ReportService: BaseRESTService {
             method: .get
         )
     }
+    
+    public func getMonthlyIncomeReport(
+        rewardeeAccountId: AccountId
+    ) -> ServiceResponsePublisher<MonthlyIncomeReport> {
+        return perform(
+            path: "/validator/\(rewardeeAccountId.toHex())/income/monthly",
+            method: .get
+        )
+    }
 }
