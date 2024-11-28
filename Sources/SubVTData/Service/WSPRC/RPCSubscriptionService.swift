@@ -102,6 +102,7 @@ public class RPCSubscriptionService<T: Codable>: NSObject, ObservableObject, URL
             let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
             session.configuration.timeoutIntervalForRequest = timeoutSeconds
             self.task = session.webSocketTask(with: url)
+            self.task?.maximumMessageSize = 1024 * 1024 * 2
             self.receive()
             self.task?.resume()
         default:
